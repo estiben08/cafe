@@ -1,0 +1,4 @@
+# .htaccess
+<Files "conexion.php">
+    deny from all
+</Files>

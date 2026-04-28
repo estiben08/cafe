@@ -1,0 +1,1681 @@
+/* Fuente principal */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #FCF6DB !important;
+}
+
+
+
+/* =============================================== */
+/* SECCIÓN BENEFICIOS */
+/* =============================================== */
+
+.benefits-purpose-section {
+    padding: 80px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.benefits-box {
+    background-color: #0D2B02;
+    height: 298px;
+    width: 1091px;
+    border-radius: 69px;
+    padding: 40px 20px;
+    color: white;
+    max-width: 1091px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.benefit-item {
+    flex: 1;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.benefit-item h5 {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1;
+    max-width: 227px;
+    margin: 0 auto 10px;
+}
+
+.benefit-item p {
+    max-width: 227px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    color: #ffffff;
+    line-height: 1;
+    margin: 0 auto;
+}
+
+.icon-img {
+    width: 86px;
+    height: auto;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.img-2 {
+    width: 50.82px;
+    height: 54.86px;
+}
+
+.img-3 {
+    width: 55.36px;
+    height: 59.77px;
+}
+
+.white-line {
+    width: 0;
+    height: 168px;
+    border-left: 2px solid white;
+}
+
+/* =============================================== */
+/* SECCIÓN PROPÓSITO */
+/* =============================================== */
+
+.purpose-content {
+    padding: 80px;
+}
+
+.purpose-image-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 420px;
+    height: 550px;
+}
+
+.purpose-image {
+    object-fit: cover;
+    border-radius: 43px;
+}
+
+.purpose-subtitle {
+    color: #28040A;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.purpose-title {
+    color: #000;
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0.5rem 0 1rem;
+    line-height: 100%;
+}
+
+.purpose-paragraph {
+    color: #333;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.btn-maroon {
+    width: 199.14px;
+    height: 35px;
+    background-color: #28040A;
+    color: white;
+    padding: 0 20px;
+    border-radius: 9.58px;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+    line-height: 35px;
+    text-align: center;
+}
+
+.btn-maroon:hover {
+    background-color: #541818;
+}
+
+.horizontal-line {
+    width: 60%;
+    height: 2px;
+    background-color: #28040A;
+    margin: 0.8rem auto;
+}
+
+/* =============================================== */
+/* SECCIÓN WHY COFFEECOL */
+/* =============================================== */
+
+.why-coffeecol {
+    padding: 100px 40px;
+    background-color: #FFF4DC;
+}
+
+.bajar-columna {
+    margin-top: 90px !important;
+}
+
+.why-text {
+    padding-right: 20px;
+}
+
+.why-title {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 25px;
+    color: #000;
+}
+
+.why-desc {
+    font-size: 18px;
+    color: #000;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.btn-contact {
+    background-color: #28040A;
+    color: white;
+    min-width: 199px;
+    height: 35px;
+    font-size: 16px;
+    line-height: 35px;
+    border-radius: 9px;
+    padding: 0 20px;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-contact:hover {
+    background-color: #3a0b11;
+}
+
+.row.g-3 {
+    --bs-gutter-x: 30px;
+    --bs-gutter-y: 20px;
+    margin: 0;
+}
+
+.feature-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 220px;
+    padding-right: 10px;
+}
+
+.feature-title {
+    font-weight: 600;
+    color: #28040A;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.feature-text {
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+    line-height: 1.5;
+}
+
+/* =============================================== */
+/* GALERÍA */
+/* =============================================== */
+
+.gallery-section {
+    background-color: #fdf5dc;
+    padding: 80px 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.gallery-title {
+    font-size: 35px;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 50px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.tab-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 264px;
+    height: 24px;
+    margin: 0 auto 40px auto;
+    padding: 0;
+    gap: 0;
+    box-sizing: border-box;
+}
+
+.tab-btn {
+    width: 88px;
+    height: 23px;
+    background-color: transparent;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 13px;
+    color: #28040A;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.tab-btn.active {
+    background-color: #28040A;
+    color: #fff;
+}
+
+.tab-btn:hover:not(.active) {
+    background-color: rgba(40, 4, 10, 0.1);
+}
+
+.custom-grid {
+    display: grid;
+    grid-template-columns: 362px 362px 221px;
+    grid-template-rows: 231px 231px;
+    gap: 10px;
+    justify-content: center;
+    align-items: start;
+    max-width: 830px;
+    margin: 0 auto;
+}
+
+.grid-item {
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    width: 100%;
+    height: 100%;
+}
+
+.grid-item:hover {
+    transform: translateY(-5px);
+}
+
+.grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.item1 {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.item2 {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+}
+
+.item3 {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.item4 {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.item5 {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+/* =============================================== */
+/* COFFEE HERO */
+/* =============================================== */
+
+.coffee-hero {
+    background-color: #28040A;
+    min-width: 1090px;
+    height: 537px;
+    display: flex;
+    align-items: center;
+    padding: 60px 80px;
+    border-radius: 33px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.coffee-hero__container {
+    display: grid;
+    grid-template-columns: 1fr 527px;
+    gap: 40px;
+    align-items: center;
+    width: 100%;
+}
+
+.coffee-hero__content {
+    color: white;
+    padding-right: 19px;
+}
+
+.coffee-hero__title {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 100%;
+    margin-bottom: 26px;
+    width: 392px;
+}
+
+.coffee-hero__text {
+    font-size: 18px;
+    line-height: 100%;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.coffee-hero__textt {
+    font-size: 18px;
+    line-height: 100%;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+.coffee-hero__btn {
+    background-color: #FCF6DB;
+    color: #28040A;
+    padding: 5px 30px;
+    height: 35px;
+    width: 199px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.coffee-hero__btn:hover {
+    background-color: #f2e7c1;
+    transform: translateY(-1px);
+}
+
+.coffee-hero__image-wrapper {
+    width: 527px;
+    height: 411px;
+    border-radius: 45px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.coffee-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* =============================================== */
+/* RESPONSIVE DESIGN - SISTEMA OPTIMIZADO */
+/* =============================================== */
+
+/* Pantallas Extra Grandes (1400px+) */
+@media (min-width: 1400px) {
+    .capsule-bg {
+        max-width: 1200px;
+        padding: 60px 70px;
+    }
+    
+    .coffee-hero {
+        min-width: 1200px;
+        height: 580px;
+        padding: 70px 90px;
+    }
+    
+    .coffee-hero__image-wrapper {
+        width: 580px;
+        height: 450px;
+    }
+    
+    .custom-grid {
+        max-width: 900px;
+    }
+}
+
+/* Pantallas Grandes (1200px - 1399px) */
+@media (max-width: 1399.98px) and (min-width: 1200px) {
+    .capsule-bg {
+        max-width: 1000px;
+        padding: 55px 55px;
+    }
+    
+    .coffee-hero {
+        min-width: 1000px;
+        padding: 55px 70px;
+    }
+}
+
+/* Tablets Horizontales Grandes (992px - 1199px) */
+@media (max-width: 1199.98px) {
+    /* Sección Cápsulas */
+    .capsule-section {
+        padding: 60px 0;
+    }
+    
+    .capsule-bg {
+        max-width: 95%;
+        padding: 45px 50px;
+        gap: 25px;
+        border-radius: 45px;
+    }
+
+    .capsule-card {
+        height: 175px;
+    }
+
+    .capsule-card img {
+        width: 170px;
+        top: 30px;
+    }
+
+    .capsule-content {
+        margin-left: 115px;
+        max-width: 135px;
+    }
+    
+    .capsule-content h5 {
+        font-size: 15px;
+    }
+
+    /* Benefits */
+    .benefits-box {
+        width: 95%;
+        max-width: 950px;
+        height: 280px;
+        padding: 35px 15px;
+        border-radius: 55px;
+    }
+
+    .benefit-item h5 {
+        font-size: 15px;
+        max-width: 200px;
+    }
+
+    .benefit-item p {
+        font-size: 13px;
+        max-width: 200px;
+    }
+
+    .icon-img {
+        width: 75px;
+        margin-bottom: 12px;
+    }
+
+    /* Purpose */
+    .purpose-content {
+        padding: 60px 50px;
+    }
+
+    .purpose-title,
+    .why-title {
+        font-size: 36px;
+    }
+
+    .purpose-paragraph,
+    .why-desc {
+        font-size: 17px;
+    }
+
+    .purpose-image-wrapper {
+        width: 380px;
+        height: 500px;
+    }
+
+    /* Galería */
+    .custom-grid {
+        grid-template-columns: 320px 320px 200px;
+        grid-template-rows: 210px 210px;
+        max-width: 750px;
+    }
+
+    /* Coffee Hero */
+    .coffee-hero {
+        min-width: 95%;
+        max-width: 950px;
+        height: 480px;
+        padding: 50px 60px;
+        border-radius: 28px;
+    }
+
+    .coffee-hero__container {
+        grid-template-columns: 1fr 450px;
+        gap: 35px;
+    }
+
+    .coffee-hero__title {
+        font-size: 36px;
+        width: 350px;
+    }
+
+    .coffee-hero__text,
+    .coffee-hero__textt {
+        font-size: 17px;
+    }
+
+    .coffee-hero__image-wrapper {
+        width: 450px;
+        height: 350px;
+        border-radius: 35px;
+    }
+}
+
+/* Tablets Medianas (768px - 991px) */
+@media (max-width: 991.98px) {
+    /* Sección Cápsulas */
+    .capsule-section {
+        padding: 50px 0;
+    }
+
+    .capsule-bg {
+        padding: 35px 30px;
+        border-radius: 35px;
+        gap: 25px;
+        max-width: 98%;
+    }
+
+    .capsule-container {
+        gap: 25px;
+    }
+
+    .capsule-box-left h4 {
+        font-size: 20px;
+        width: auto;
+        max-width: 280px;
+    }
+
+    .capsule-box-left p {
+        font-size: 13px;
+        width: auto;
+        max-width: 280px;
+    }
+
+    .capsule-card {
+        height: 160px;
+        flex: 1 1 280px;
+    }
+
+    .capsule-card img {
+        width: 140px;
+        top: 25px;
+        left: 8px;
+    }
+
+    .capsule-content {
+        margin-left: 100px;
+        max-width: 120px;
+    }
+
+    .capsule-content h5 {
+        font-size: 14px;
+    }
+
+    .capsule-content .subtitulo {
+        font-size: 7.5px;
+    }
+
+    .capsule-content .descripcion {
+        width: 100px;
+        font-size: 6.5px;
+    }
+
+    /* Benefits */
+    .benefits-box {
+        flex-direction: column !important;
+        text-align: center;
+        height: auto;
+        width: 95%;
+        padding: 35px 25px;
+        border-radius: 45px;
+    }
+
+    .benefit-item {
+        margin-bottom: 25px;
+        padding: 0 10px;
+    }
+
+    .benefit-item h5 {
+        font-size: 16px;
+        max-width: 100%;
+    }
+
+    .benefit-item p {
+        font-size: 14px;
+        max-width: 100%;
+    }
+
+    .white-line {
+        display: none;
+    }
+
+    .icon-img {
+        width: 70px;
+    }
+
+    /* Purpose y Why */
+    .purpose-content,
+    .why-coffeecol {
+        padding: 50px 30px;
+    }
+
+    .purpose-title,
+    .why-title {
+        font-size: 32px;
+        text-align: center;
+    }
+
+    .purpose-subtitle {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .purpose-paragraph,
+    .why-desc {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .purpose-image-wrapper {
+        width: 100%;
+        max-width: 350px;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .purpose-image {
+        width: 100%;
+        height: auto;
+        border-radius: 30px;
+    }
+
+    .btn-maroon,
+    .btn-contact {
+        display: block;
+        margin: 0 auto;
+        width: 220px;
+        font-size: 15px;
+    }
+
+    .bajar-columna {
+        margin-top: 30px !important;
+    }
+
+    .why-text {
+        padding-right: 0;
+        text-align: center;
+    }
+
+    .feature-item {
+        text-align: center;
+        align-items: center;
+        padding-right: 0;
+        margin-bottom: 25px;
+        min-height: auto;
+    }
+
+    .feature-title {
+        font-size: 15px;
+    }
+
+    .feature-text {
+        font-size: 14px;
+        max-width: 320px;
+    }
+
+    /* Galería */
+    .gallery-section {
+        padding: 60px 20px;
+    }
+
+    .gallery-title {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+
+    .tab-container {
+        flex-wrap: wrap;
+        gap: 10px;
+        width: auto;
+        height: auto;
+        margin-bottom: 30px;
+    }
+
+    .tab-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+        height: auto;
+        width: auto;
+        min-width: 80px;
+    }
+
+    .custom-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-auto-rows: 220px;
+        gap: 15px;
+        max-width: 100%;
+    }
+
+    .grid-item {
+        grid-column: auto !important;
+        grid-row: auto !important;
+        height: 220px !important;
+        border-radius: 15px;
+    }
+
+    /* Coffee Hero */
+    .coffee-hero {
+        width: 95%;
+        min-width: auto;
+        height: auto;
+        padding: 40px 30px;
+        border-radius: 20px;
+    }
+
+    .coffee-hero__container {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .coffee-hero__content {
+        padding-right: 0;
+    }
+
+    .coffee-hero__title {
+        font-size: 28px;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto 20px;
+    }
+
+    .coffee-hero__text,
+    .coffee-hero__textt {
+        font-size: 16px;
+        line-height: 130%;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .coffee-hero__textt {
+        margin-bottom: 25px;
+    }
+
+    .coffee-hero__btn {
+        width: 100%;
+        max-width: 250px;
+        margin: 0 auto;
+    }
+
+    .coffee-hero__image-wrapper {
+        width: 100%;
+        max-width: 450px;
+        height: auto;
+        aspect-ratio: 527 / 411;
+        border-radius: 25px;
+        margin: 0 auto;
+    }
+}
+
+/* Tablets Pequeñas (576px - 767px) */
+@media (max-width: 767.98px) {
+    /* Sección Cápsulas */
+    .capsule-section {
+        padding: 40px 0;
+    }
+
+    .capsule-bg {
+        flex-direction: column;
+        padding: 30px 20px;
+        border-radius: 30px;
+        gap: 25px;
+        margin: 0 15px;
+    }
+
+    .capsule-container {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .capsule-box-left {
+        text-align: center;
+        align-items: center;
+    }
+
+    .capsule-box-left h4 {
+        font-size: 20px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .capsule-box-left p {
+        font-size: 14px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .capsule-box-left .btn {
+        width: 180px;
+        height: 35px;
+        padding: 10px 20px;
+    }
+
+    .capsule-card {
+        flex-direction: row;
+        height: auto;
+        padding: 20px;
+        align-items: center;
+        margin-top: 0;
+    }
+
+    .capsule-card img {
+        position: static;
+        width: 120px;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    .capsule-content {
+        margin-left: 0;
+        text-align: left;
+        max-width: 100%;
+        flex: 1;
+    }
+
+    .capsule-content h5 {
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    .capsule-content .descripcion {
+        width: auto;
+        font-size: 7px;
+    }
+
+    /* Benefits */
+    .benefits-box {
+        padding: 30px 20px;
+        border-radius: 35px;
+        margin: 0 15px;
+    }
+
+    .benefit-item {
+        margin-bottom: 20px;
+    }
+
+    .icon-img {
+        width: 60px;
+        margin-bottom: 10px;
+    }
+
+    /* Purpose y Why */
+    .purpose-content {
+        padding: 40px 20px;
+    }
+
+    .why-coffeecol {
+        padding: 50px 20px;
+    }
+
+    .purpose-title,
+    .why-title {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    .purpose-subtitle {
+        font-size: 17px;
+    }
+
+    .purpose-paragraph,
+    .why-desc {
+        font-size: 15px;
+        line-height: 140%;
+    }
+
+    .purpose-image-wrapper {
+        max-width: 300px;
+        margin-bottom: 20px;
+    }
+
+    .purpose-image {
+        border-radius: 25px;
+    }
+
+    .btn-maroon,
+    .btn-contact {
+        width: 100%;
+        max-width: 250px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 15px;
+    }
+
+    .feature-text {
+        max-width: 280px;
+        font-size: 14px;
+    }
+
+    /* Galería */
+    .gallery-section {
+        padding: 50px 15px;
+    }
+
+    .gallery-title {
+        font-size: 24px;
+    }
+
+    .tab-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .tab-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+
+    .custom-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .grid-item {
+        height: 200px !important;
+        border-radius: 12px;
+    }
+
+    /* Coffee Hero */
+    .coffee-hero {
+        margin: 0 15px;
+        padding: 35px 20px;
+    }
+
+    .coffee-hero__title {
+        font-size: 24px;
+        max-width: 320px;
+    }
+
+    .coffee-hero__text,
+    .coffee-hero__textt {
+        font-size: 15px;
+        max-width: 320px;
+    }
+
+    .coffee-hero__btn {
+        max-width: 200px;
+        height: 38px;
+        font-size: 14px;
+    }
+
+    .coffee-hero__image-wrapper {
+        border-radius: 20px;
+    }
+}
+
+/* Móviles Grandes (480px - 575px) */
+@media (max-width: 575.98px) {
+    .capsule-bg {
+        padding: 25px 15px;
+        border-radius: 25px;
+        margin: 0 10px;
+    }
+
+    .capsule-box-left h4 {
+        font-size: 18px;
+    }
+
+    .capsule-box-left p {
+        font-size: 13px;
+    }
+
+    .capsule-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .capsule-card img {
+        width: 100px;
+        margin: 0 auto 10px;
+    }
+
+    .capsule-content {
+        text-align: center;
+        align-items: center;
+    }
+
+    .capsule-content h5 {
+        font-size: 14px;
+    }
+
+    /* NUEVO - Mejora específica para .capsule-section */
+    .capsule-section .capsule-bg {
+        padding: 20px 12px;
+    }
+
+    .capsule-section .capsule-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .capsule-section .capsule-box-left {
+        text-align: center;
+        padding: 0 10px;
+    }
+
+    .capsule-section .capsule-box-left .btn {
+        width: 180px;
+        height: 36px;
+        font-size: 13px;
+        margin: 10px auto 0;
+    }
+
+    .capsule-section .capsule-card img {
+        width: 90px;
+    }
+
+    .capsule-section .capsule-content .subtitulo,
+    .capsule-section .capsule-content .descripcion {
+        font-size: 12px;
+    }
+
+    /* Benefits */
+    .benefits-box {
+        padding: 25px 15px;
+        border-radius: 30px;
+        margin: 0 10px;
+    }
+
+    .icon-img {
+        width: 55px;
+    }
+
+    .benefit-item h5 {
+        font-size: 15px;
+    }
+
+    .benefit-item p {
+        font-size: 15px;
+    }
+
+    /* Purpose y Why */
+    .purpose-content {
+        padding: 30px 15px;
+    }
+
+    .why-coffeecol {
+        padding: 40px 15px;
+    }
+
+    .purpose-title,
+    .why-title {
+        font-size: 22px;
+    }
+
+    .purpose-subtitle {
+        font-size: 16px;
+    }
+
+    .purpose-paragraph,
+    .why-desc {
+        font-size: 14px;
+    }
+
+    .purpose-image-wrapper {
+        max-width: 260px;
+    }
+
+    .purpose-image {
+        border-radius: 20px;
+    }
+
+    .btn-maroon,
+    .btn-contact {
+        max-width: 220px;
+        height: 38px;
+        line-height: 38px;
+        font-size: 14px;
+    }
+
+    .feature-title {
+        font-size: 14px;
+    }
+
+    .feature-text {
+        font-size: 13px;
+        max-width: 250px;
+    }
+
+    /* Galería */
+    .gallery-title {
+        font-size: 22px;
+    }
+
+    .tab-btn {
+        font-size: 13px;
+        padding: 7px 12px;
+    }
+
+    .grid-item {
+        height: 180px !important;
+        border-radius: 10px;
+    }
+
+    /* Coffee Hero */
+    .coffee-hero {
+        margin: 0 10px;
+        padding: 30px 15px;
+        border-radius: 15px;
+    }
+
+    .coffee-hero__title {
+        font-size: 22px;
+        max-width: 280px;
+    }
+
+    .coffee-hero__text,
+    .coffee-hero__textt {
+        font-size: 14px;
+        max-width: 280px;
+    }
+
+    .coffee-hero__btn {
+        max-width: 180px;
+        font-size: 13px;
+    }
+}
+
+/* Móviles Medianos (360px - 479px) */
+@media (max-width: 479.98px) {
+    .capsule-bg {
+        padding: 20px 12px;
+        border-radius: 20px;
+        margin: 0 8px;
+    }
+
+    .capsule-box-left h4 {
+        font-size: 17px;
+    }
+
+    .capsule-box-left p {
+        font-size: 12px;
+    }
+
+    .capsule-box-left .btn {
+        width: 160px;
+        height: 32px;
+        font-size: 13px;
+    }
+
+    .capsule-card {
+        padding: 12px;
+    }
+
+    .capsule-card img {
+        width: 85px;
+    }
+
+    .capsule-content h5 {
+        font-size: 13px;
+    }
+
+    .capsule-content .descripcion {
+        font-size: 6px;
+    }
+
+    /* NUEVO - Mejora específica para .capsule-section */
+    .capsule-section .capsule-box-left .btn {
+        width: 160px;
+        height: 34px;
+        font-size: 12px;
+    }
+
+    .capsule-section .capsule-card img {
+        width: 80px;
+    }
+
+    .capsule-section .capsule-content h5 {
+        font-size: 13px;
+    }
+
+    .capsule-section .capsule-content .subtitulo,
+    .capsule-section .capsule-content .descripcion {
+        font-size: 11px;
+    }
+
+    /* Benefits */
+    .benefits-box {
+        padding: 20px 12px;
+        border-radius: 25px;
+        margin: 0 8px;
+    }
+
+    .icon-img {
+        width: 50px;
+    }
+
+    .benefit-item h5 {
+        font-size: 14px;
+    }
+
+    .benefit-item p {
+        font-size: 12px;
+    }
+
+    /* Purpose y Why */
+    .purpose-content {
+        padding: 25px 12px;
+    }
+
+    .why-coffeecol {
+        padding: 35px 12px;
+    }
+
+    .purpose-title,
+    .why-title {
+        font-size: 20px;
+    }
+
+    .purpose-subtitle {
+        font-size: 15px;
+    }
+
+    .purpose-paragraph,
+    .why-desc {
+        font-size: 13px;
+    }
+
+    .purpose-image-wrapper {
+        max-width: 220px;
+    }
+
+    .purpose-image {
+        border-radius: 18px;
+    }
+
+    .btn-maroon,
+    .btn-contact {
+        max-width: 200px;
+        height: 36px;
+        line-height: 36px;
+        font-size: 13px;
+    }
+
+    .feature-title {
+        font-size: 13px;
+    }
+
+    .feature-text {
+        font-size: 12px;
+        max-width: 220px;
+    }
+
+    /* Galería */
+    .gallery-title {
+        font-size: 20px;
+    }
+
+    .tab-btn {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .grid-item {
+        height: 160px !important;
+        border-radius: 8px;
+    }
+
+    /* Coffee Hero */
+    .coffee-hero {
+        margin: 0 8px;
+        padding: 25px 12px;
+        border-radius: 12px;
+    }
+
+    .coffee-hero__title {
+        font-size: 20px;
+        max-width: 250px;
+    }
+
+    .coffee-hero__text,
+    .coffee-hero__textt {
+        font-size: 13px;
+        max-width: 250px;
+    }
+
+    .coffee-hero__btn {
+        max-width: 160px;
+        height: 36px;
+        font-size: 12px;
+    }
+}
+
+/* Móviles Pequeños (hasta 359px) */
+@media (max-width: 359.98px) {
+    .capsule-box-left h4 {
+        font-size: 16px;
+    }
+
+    .capsule-box-left p {
+        font-size: 11px;
+    }
+
+    .capsule-card img {
+        width: 75px;
+    }
+
+    .capsule-content h5 {
+        font-size: 12px;
+    }
+
+    /* NUEVO - Mejora específica para .capsule-section */
+    .capsule-section .capsule-box-left .btn {
+        width: 150px;
+        height: 32px;
+        font-size: 11px;
+    }
+
+    .capsule-section .capsule-card img {
+        width: 70px;
+    }
+
+    .capsule-section .capsule-content h5 {
+        font-size: 12px;
+    }
+
+    .capsule-section .capsule-content .subtitulo,
+    .capsule-section .capsule-content .descripcion {
+        font-size: 10px;
+    }
+
+    .purpose-title,
+    .why-title {
+        font-size: 18px;
+    }
+
+    .purpose-subtitle {
+        font-size: 14px;
+    }
+
+    .purpose-paragraph,
+    .why-desc {
+        font-size: 12px;
+    }
+
+    .btn-maroon,
+    .btn-contact {
+        max-width: 180px;
+        height: 34px;
+        line-height: 34px;
+        font-size: 12px;
+    }
+
+    .gallery-title {
+        font-size: 18px;
+    }
+
+    .coffee-hero__title {
+        font-size: 18px;
+        max-width: 220px;
+    }
+
+    .coffee-hero__text,
+    .coffee-hero__textt {
+        font-size: 12px;
+        max-width: 220px;
+    }
+
+    .coffee-hero__btn {
+        max-width: 150px;
+        height: 34px;
+        font-size: 11px;
+    }
+}
+
+/* Móviles en Landscape */
+@media (max-width: 768px) and (orientation: landscape) {
+    .capsule-bg {
+        flex-direction: row;
+        gap: 20px;
+        padding: 20px 30px;
+    }
+
+    .capsule-container {
+        flex-direction: row;
+    }
+
+    .capsule-box-left {
+        text-align: left;
+        align-items: flex-start;
+        flex: 0 0 300px;
+    }
+
+    .capsule-card {
+        flex-direction: row;
+        height: 140px;
+        padding: 15px;
+    }
+
+    .capsule-card img {
+        width: 90px;
+        margin-right: 10px;
+    }
+
+    .capsule-content {
+        margin-left: 0;
+        text-align: left;
+    }
+
+    .coffee-hero {
+        height: auto;
+        max-height: 400px;
+    }
+
+    .coffee-hero__container {
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        gap: 20px;
+    }
+
+    .coffee-hero__image-wrapper {
+        max-width: 350px;
+        height: 250px;
+    }
+
+    /* NUEVO - Mejora específica para .capsule-section */
+    .capsule-section .capsule-bg {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .capsule-section .capsule-box-left {
+        flex: 1 1 100%;
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+    .capsule-section .capsule-card {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        text-align: left;
+        padding: 12px 10px;
+    }
+
+    .capsule-section .capsule-card img {
+        width: 80px;
+    }
+
+    .capsule-section .capsule-content {
+        text-align: left;
+        max-width: 400px;
+    }
+}
+    /*acaaaa*/
+
+/* Base styles for image containers */
+.image-container {
+    position: absolute;
+}
+
+.coffee-ms img,
+.object-0 img,
+.object-1 img,
+.coffeee-xr img {
+    position: absolute;
+}
+
+/* Large screens (1320px and above) - Original sizes */
+@media (min-width: 1288px) {
+    .coffee-ms img {
+        width: 295.48px;
+        height: 295.48px;
+        top: -2255px;
+        left: -110px;
+        transform: rotate(-25.25deg);
+    }
+    
+    .object-0 img {
+        width: 580.24px;
+        height: 1104.64px;
+        top: -3305.7px;
+        left: 0px;
+    }
+    
+    .object-1 img {
+        width: 700.27px;
+        height: 1115.06px;
+        top: -2545.09px;
+        left: 820.02px;
+    }
+    
+    .coffeee-xr img {
+        width: 249.48px;
+        height: 249.48px;
+        top: -890px;
+        left: 1282px;
+        transform: rotate(-0.25deg);
+    }
+}
+
+/* Large screens (1320px and above) - Original sizes Melo */
+@media (max-width: 1287.99px) and (min-width: 1284px) {
+    .coffee-ms img {
+        width: 295.48px;
+        height: 295.48px;
+        top: -2255px;
+        left: -110px;
+        transform: rotate(-25.25deg);
+    }
+    
+    .object-0 img {
+        width: 520.24px;
+        height: 994.64px;
+        top: -3255.7px;
+        left: 0px;
+    }
+    
+    .object-1 img {
+        width: 540.27px;
+        height: 1085.06px;
+        top: -2455.09px;
+        left: 730.02px;
+    }
+    
+    .coffeee-xr img {
+        width: 229.48px;
+        height: 229.48px;
+        top: -800px;
+        left: 1042px;
+        transform: rotate(-0.25deg);
+    }
+}
+
+/* Large screens (1320px and above) - Original sizes */
+@media (max-width: 1283.99px) and (min-width: 1279px) {
+    .coffee-ms img {
+        width: 295.48px;
+        height: 295.48px;
+        top: -2255px;
+        left: -110px;
+        transform: rotate(-25.25deg);
+    }
+    
+    .object-0 img {
+        width: 520.24px;
+        height: 994.64px;
+        top: -3255.7px;
+        left: 0px;
+    }
+    
+    .object-1 img {
+        width: 540.27px;
+        height: 1085.06px;
+        top: -2455.09px;
+        left: 720.02px;
+    }
+    
+    .coffeee-xr img {
+        width: 229.48px;
+        height: 229.48px;
+        top: -800px;
+        left: 1042px;
+        transform: rotate(-0.25deg);
+    }
+}
+
+
+/* Hide elements on small screens */
+@media (max-width: 1278.99px) {
+    .image-container {
+        display: none !important;
+    }
+    
+    .coffee-ms,
+    .object-0,
+    .object-1,
+    .object-2,
+    .object-3,
+    .coffeee-xr {
+        display: none !important;
+    }
+}

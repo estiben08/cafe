@@ -1,0 +1,2750 @@
+/* RESET GENERAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    background-color: #FCF6DB !important;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* HEADER PRINCIPAL - Medidas exactas de Figma */
+.header-principal {
+    position: fixed;
+    top: 28px;
+    left: 32px;
+    right: 32px;
+    height: 71px;
+    max-width: 1220px;
+    margin: 0 auto;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-custom {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 11px;
+    padding: 8px 0;
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.1),
+        inset 0 3px 3px rgba(0, 0, 0, 0.5);
+    height: 71px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-custom .container {
+    max-width: 1220px;
+    padding: 0 32px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img {
+    height: 42px;
+    width: 115px;
+    transition: transform 0.3s ease;
+}
+
+/* Layout para centrado perfecto */
+.navbar-collapse {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.navbar-left {
+    flex: 1;
+}
+
+.navbar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff !important;
+    font-weight: 500;
+    font-size: 13px;
+    margin: 0 20px;
+    line-height: 100%;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #f0f0f0 !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.navbar-nav .nav-link:active {
+    transform: translateY(0);
+}
+
+/* Íconos sociales */
+.social-icons {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 12px;
+    padding: 6px 14px;
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    z-index: 10;
+}
+
+.social-icons a {
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    font-size: 17.5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    transform: scale(1.15);
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+}
+
+.social-icons a:active {
+    transform: scale(1);
+}
+
+/* Botón del menú móvil */
+.navbar-toggler {
+    border: none;
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-toggler:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    width: 24px;
+    height: 24px;
+}
+
+/* SECCIÓN CONTACTO */
+.seccion-contacto {
+    position: relative;
+    width: 100%;
+    height: 434px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Imagen de fondo */
+.bg-contacto {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* Capa oscura encima de la imagen */
+.overlay-servicios {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(40, 4, 10, 0.53);
+    z-index: 2;
+}
+
+/* Contenedor del título centrado */
+.contenedor-contacto {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 1283px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 32px;
+    margin: 0 auto;
+}
+
+/* Caja que contiene el título con fondo blur */
+.titulo-box {
+    padding: 16px 42px;
+}
+
+/* Texto del título */
+.titulo-contacto {
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
+
+/* seccion contacto y forms */
+.contacto-cafe-section {
+    font-family: 'Inter', sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.form-section {
+    background-color: #47060E;
+    border-radius: 12px;
+    padding: 2rem;
+    color: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 927px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.form-section h5 {
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
+}
+
+.form-label {
+    font-size: 14px;
+    margin-bottom: 0.3rem;
+    display: block;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.form-control {
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.form-control::placeholder {
+    color: #999;
+    opacity: 1;
+}
+
+.btn-send {
+    background-color: white;
+    color: #4b1d0c;
+    font-weight: bold;
+    border: none;
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.btn-send:hover {
+    background-color: #ddd;
+}
+
+.nota-campos {
+    font-size: 12px;
+    margin-bottom: 1rem;
+    color: #fff;
+    font-style: italic;
+}
+
+.contact-header {
+    font-weight: 700;
+    font-size: 44px;
+    color: #28040A;
+    letter-spacing: -1.9%;
+    line-height: 150%;
+    margin-bottom: 30px;
+}
+
+.contact-subtext {
+    font-size: 18px;
+    color: #1E1E1E;
+    width: 794px;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: -1.9%;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.custom-btn-top {
+    background-color: #47060E;
+    color: white;
+    padding: 5px 20px;
+    border: none;
+    font-weight: bold;
+    border-radius: 9.58px;
+    margin-bottom: 1rem;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22.96px;
+    letter-spacing: 0.14px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.visit-section h5 {
+    color: #1E1E1E;
+    width: 414px;
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 46px;
+    letter-spacing: -1.9%;
+    margin-bottom: 90px;
+}
+
+.visit-section span {
+    color: #47060E;
+}
+
+.visit-section p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    line-height: 150%;
+    letter-spacing: -1.9%;
+    font-weight: 400;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;600&display=swap');
+
+.btn-project {
+    background-color: #47060E;
+    font-family: 'Onest', sans-serif;
+    color: #FCF6DB;
+    border: none;
+    font-weight: 500;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 11px 0;
+    width: 413px;
+    height: 39px;
+    margin-top: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-project:hover {
+    background-color: #47060E;
+    color: #FCF6DB;
+}
+
+.ubicacion {
+    width: 467px;
+    height: 245px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.personalizar-1 {
+    color: #0D2B02 !important;
+    margin-right: 20px;
+    font-size: 39px;
+}
+
+.personalizar-2 {
+    color: #0D2B02 !important;
+    margin-right: 10px;
+    font-size: 39px;
+}
+
+/* === IMAGEN FULL === */
+.imagen-full {
+    width: 100%;
+    height: 257px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.imagen-full img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* === FOOTER === */
+.footer-coffeecol {
+    background-image: url('../assets/imagenes/banner17.jpeg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-coffeecol::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(13, 43, 2, 0.9);
+    z-index: 0;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    z-index: 1;
+    position: relative;
+}
+
+.footer-logo {
+    width: 164px;
+    height: 155px;
+    object-fit: contain;
+}
+
+.footer-nav {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.footer-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.footer-nav a:hover {
+    color: #E8E8E8;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.footer-social {
+    display: flex;
+    gap: 0px;
+    margin-top: 5px;
+}
+
+.footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 19px;
+    height: 19px;
+    color: white;
+}
+
+.footer-social a,
+.footer-social a i {
+    text-decoration: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* =============================================== */
+/* RESPONSIVE DESIGN - MEDIA QUERIES COMPLETAS */
+/* =============================================== */
+
+/* Tablets horizontales y pantallas medianas (992px - 1199px) */
+@media (max-width: 1199.98px) {
+
+    /* Header */
+    .header-principal {
+        left: 20px;
+        right: 20px;
+        top: 20px;
+    }
+
+    .navbar-custom .container {
+        padding: 0 20px;
+    }
+
+    /* Contact Header y Subtext */
+    .contact-header {
+        font-size: 38px;
+    }
+
+    .contact-subtext {
+        width: auto;
+        max-width: 700px;
+        font-size: 17px;
+    }
+
+    /* Form Section */
+    .form-section {
+        max-width: 800px;
+        padding: 1.8rem;
+    }
+
+    .form-section h5 {
+        font-size: 26px;
+    }
+
+    /* Visit Section */
+    .visit-section h5 {
+        width: auto;
+        max-width: 380px;
+        font-size: 38px;
+        line-height: 42px;
+        margin-bottom: 70px;
+    }
+
+    .btn-project {
+        width: 380px;
+    }
+
+    .ubicacion {
+        width: 420px;
+        height: 220px;
+    }
+
+    /* Iconos personalizados */
+    .personalizar-1,
+    .personalizar-2 {
+        font-size: 35px;
+    }
+}
+
+/* Tablets verticales (768px - 991px) */
+@media (max-width: 991.98px) {
+
+    /* Header responsive para tablets */
+    .header-principal {
+        left: 16px;
+        right: 16px;
+        top: 16px;
+        height: auto;
+        min-height: 71px;
+    }
+
+    .navbar-custom {
+        height: auto;
+        min-height: 71px;
+        padding: 12px 0;
+    }
+
+    .navbar-custom .container {
+        padding: 0 16px;
+    }
+
+    .navbar-collapse {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .navbar-left,
+    .navbar-center,
+    .navbar-right {
+        flex: none;
+        width: 100%;
+    }
+
+    .navbar-center {
+        justify-content: center;
+        margin: 15px 0;
+    }
+
+    .navbar-right {
+        justify-content: center;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .navbar-nav .nav-link {
+        margin: 0 10px;
+        padding: 12px 16px;
+        text-align: center;
+    }
+
+    /* Sección contacto para tablets */
+    .seccion-contacto {
+        height: 350px;
+    }
+
+    .titulo-contacto {
+        font-size: 30px;
+    }
+
+    .titulo-box {
+        padding: 12px 32px;
+    }
+
+    /* Contact content para tablets */
+    .contact-header {
+        font-size: 32px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    .contact-subtext {
+        width: auto;
+        max-width: 90%;
+        font-size: 16px;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    /* Form Section para tablets */
+    .form-section {
+        max-width: 90%;
+        padding: 1.5rem;
+        margin: 20px auto;
+    }
+
+    .form-section h5 {
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 1.2rem;
+    }
+
+    .form-label {
+        font-size: 13px;
+    }
+
+    .btn-send {
+        padding: 0.6rem;
+        font-size: 15px;
+    }
+
+    .nota-campos {
+        font-size: 11px;
+        text-align: center;
+    }
+
+    .custom-btn-top {
+        padding: 4px 18px;
+        font-size: 15px;
+        display: block;
+        margin: 0 auto 1rem auto;
+    }
+
+    /* Visit Section para tablets */
+    .visit-section {
+        text-align: center;
+        padding: 40px 16px;
+    }
+
+    .visit-section h5 {
+        width: auto;
+        max-width: 100%;
+        font-size: 32px;
+        line-height: 36px;
+        margin-bottom: 50px;
+        text-align: center;
+    }
+
+    .visit-section p {
+        font-size: 16px;
+        max-width: 90%;
+        margin: 0 auto 18px auto;
+    }
+
+    .btn-project {
+        width: 90%;
+        max-width: 380px;
+        height: 45px;
+        margin: 1rem auto 0 auto;
+    }
+
+    .ubicacion {
+        width: 90%;
+        max-width: 400px;
+        height: 200px;
+        margin: 20px auto;
+        display: block;
+    }
+
+    /* Iconos personalizados */
+    .personalizar-1,
+    .personalizar-2 {
+        font-size: 32px;
+        margin-right: 15px;
+    }
+
+    /* Footer para tablets */
+    .footer-coffeecol {
+        padding: 35px 15px;
+    }
+
+    .footer-logo {
+        width: 120px;
+        height: 113px;
+    }
+
+    .footer-nav {
+        gap: 15px;
+    }
+
+    .footer-nav a {
+        font-size: 12px;
+    }
+}
+
+/* Móviles grandes (576px - 767px) */
+@media (max-width: 767.98px) {
+
+    /* Header para móviles grandes */
+    .header-principal {
+        left: 12px;
+        right: 12px;
+        top: 12px;
+    }
+
+    .navbar-brand img {
+        height: 36px;
+        width: auto;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+
+    .social-icons {
+        padding: 4px 10px;
+    }
+
+    .social-icons a {
+        width: 22px;
+        height: 22px;
+        font-size: 16px;
+    }
+
+    /* Sección contacto para móviles grandes */
+    .seccion-contacto {
+        height: 300px;
+    }
+
+    .titulo-contacto {
+        font-size: 26px;
+    }
+
+    .titulo-box {
+        padding: 10px 24px;
+    }
+
+    .contenedor-contacto {
+        padding: 0 16px;
+    }
+
+    /* Contact content para móviles grandes */
+    .contact-header {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .contact-subtext {
+        font-size: 15px;
+        line-height: 140%;
+        margin-bottom: 20px;
+    }
+
+    /* Form Section para móviles grandes */
+    .form-section {
+        max-width: 95%;
+        padding: 1.2rem;
+        border-radius: 10px;
+    }
+
+    .form-section h5 {
+        font-size: 22px;
+        margin-bottom: 1rem;
+    }
+
+    .form-label {
+        font-size: 12px;
+    }
+
+    .form-control {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .btn-send {
+        padding: 0.5rem;
+        font-size: 14px;
+    }
+
+    .custom-btn-top {
+        padding: 3px 16px;
+        font-size: 14px;
+    }
+
+    /* Visit Section para móviles grandes */
+    .visit-section {
+        padding: 30px 12px;
+    }
+
+    .visit-section h5 {
+        font-size: 26px;
+        line-height: 30px;
+        margin-bottom: 35px;
+    }
+
+    .visit-section p {
+        font-size: 15px;
+        line-height: 140%;
+        margin-bottom: 15px;
+    }
+
+    .btn-project {
+        width: 95%;
+        height: 42px;
+        font-size: 15px;
+    }
+
+    .ubicacion {
+        width: 95%;
+        height: 180px;
+        border-radius: 10px;
+    }
+
+    /* Iconos personalizados */
+    .personalizar-1,
+    .personalizar-2 {
+        font-size: 28px;
+        margin-right: 12px;
+    }
+
+    /* Imagen full para móviles grandes */
+    .imagen-full {
+        height: 200px;
+    }
+
+    /* Footer para móviles grandes */
+    .footer-coffeecol {
+        padding: 30px 12px;
+    }
+
+    .footer-logo {
+        width: 80px;
+        height: 75px;
+    }
+
+    .footer-nav {
+        gap: 12px;
+        flex-direction: column;
+    }
+
+    .footer-nav a {
+        font-size: 13px;
+    }
+
+    .footer-social {
+        gap: 15px;
+        margin-top: 15px;
+    }
+
+    .footer-social a {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* Móviles pequeños (hasta 575px) */
+@media (max-width: 575.98px) {
+
+    /* Header para móviles pequeños */
+    .header-principal {
+        left: 8px;
+        right: 8px;
+        top: 8px;
+    }
+
+    .navbar-custom .container {
+        padding: 0 12px;
+    }
+
+    .navbar-brand img {
+        height: 32px;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 13px;
+        margin: 0 5px;
+        padding: 8px 10px;
+    }
+
+    .social-icons {
+        padding: 3px 8px;
+    }
+
+    .social-icons a {
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+    }
+
+    /* Sección contacto para móviles pequeños */
+    .seccion-contacto {
+        height: 250px;
+    }
+
+    .contenedor-contacto {
+        padding: 0 12px;
+    }
+
+    .titulo-contacto {
+        font-size: 22px;
+        line-height: 26px;
+    }
+
+    .titulo-box {
+        padding: 8px 20px;
+    }
+
+    /* Contact content para móviles pequeños */
+    .contact-header {
+        font-size: 24px;
+        margin-bottom: 15px;
+        line-height: 130%;
+    }
+
+    .contact-subtext {
+        font-size: 14px;
+        line-height: 130%;
+        margin-bottom: 15px;
+    }
+
+    /* Form Section para móviles pequeños */
+    .form-section {
+        max-width: 98%;
+        padding: 1rem;
+        border-radius: 8px;
+    }
+
+    .form-section h5 {
+        font-size: 20px;
+        margin-bottom: 0.8rem;
+    }
+
+    .form-label {
+        font-size: 11px;
+        margin-bottom: 0.2rem;
+    }
+
+    .form-control {
+        padding: 6px;
+        font-size: 13px;
+        border-radius: 4px;
+    }
+
+    .btn-send {
+        padding: 0.4rem;
+        font-size: 13px;
+        border-radius: 4px;
+    }
+
+    .nota-campos {
+        font-size: 10px;
+        margin-bottom: 0.8rem;
+    }
+
+    .custom-btn-top {
+        padding: 2px 14px;
+        font-size: 13px;
+        border-radius: 6px;
+    }
+
+    /* Visit Section para móviles pequeños */
+    .visit-section {
+        padding: 25px 8px;
+    }
+
+    .visit-section h5 {
+        font-size: 22px;
+        line-height: 26px;
+        margin-bottom: 25px;
+    }
+
+    .visit-section p {
+        font-size: 14px;
+        line-height: 130%;
+        margin-bottom: 12px;
+    }
+
+    .btn-project {
+        width: 100%;
+        height: 40px;
+        font-size: 14px;
+        border-radius: 8px;
+        padding: 8px 0;
+    }
+
+    .ubicacion {
+        width: 100%;
+        height: 160px;
+        border-radius: 8px;
+        margin: 15px auto;
+    }
+
+    /* Iconos personalizados */
+    .personalizar-1,
+    .personalizar-2 {
+        font-size: 24px;
+        margin-right: 8px;
+    }
+
+    /* Imagen full para móviles pequeños */
+    .imagen-full {
+        height: 180px;
+    }
+
+    /* Footer para móviles pequeños */
+    .footer-coffeecol {
+        padding: 25px 8px;
+    }
+
+    .footer-logo {
+        width: 60px;
+        height: 56px;
+    }
+
+    .footer-nav a {
+        font-size: 12px;
+    }
+
+    .footer-social a {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Móviles muy pequeños (hasta 375px) */
+@media (max-width: 374.98px) {
+    .header-principal {
+        left: 4px;
+        right: 4px;
+        top: 4px;
+    }
+
+    .navbar-custom .container {
+        padding: 0 8px;
+    }
+
+    .navbar-brand img {
+        height: 28px;
+    }
+
+    .titulo-contacto {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    .contact-header {
+        font-size: 22px;
+        line-height: 26px;
+    }
+
+    .contact-subtext {
+        font-size: 13px;
+    }
+
+    .form-section h5 {
+        font-size: 18px;
+    }
+
+    .form-label {
+        font-size: 10px;
+    }
+
+    .form-control {
+        font-size: 12px;
+    }
+
+    .btn-send {
+        font-size: 12px;
+    }
+
+    .custom-btn-top {
+        font-size: 12px;
+        padding: 2px 12px;
+    }
+
+    .visit-section h5 {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    .visit-section p {
+        font-size: 13px;
+    }
+
+    .btn-project {
+        font-size: 13px;
+        height: 38px;
+    }
+
+    .ubicacion {
+        height: 140px;
+    }
+
+    .personalizar-1,
+    .personalizar-2 {
+        font-size: 22px;
+        margin-right: 6px;
+    }
+
+    .imagen-full {
+        height: 150px;
+    }
+
+    .footer-logo {
+        width: 50px;
+        height: 47px;
+    }
+}
+
+/* Ajuste adicional para pantallas grandes (1200px+) */
+@media (min-width: 1200px) {
+    .header-principal {
+        top: 28px;
+        left: 32px;
+        right: 32px;
+    }
+}
+/* RESET GENERAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    background-color: #FCF6DB !important;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* HEADER PRINCIPAL - Medidas exactas de Figma */
+.header-principal {
+    position: fixed;
+    top: 28px;
+    left: 32px;
+    right: 32px;
+    height: 71px;
+    max-width: 1220px;
+    margin: 0 auto;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-custom {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 11px;
+    padding: 8px 0;
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.1),
+        inset 0 3px 3px rgba(0, 0, 0, 0.5);
+    height: 71px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-custom .container {
+    max-width: 1220px;
+    padding: 0 32px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img {
+    height: 42px;
+    width: 115px;
+    transition: transform 0.3s ease;
+}
+
+/* Layout para centrado perfecto */
+.navbar-collapse {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.navbar-left {
+    flex: 1;
+}
+
+.navbar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff !important;
+    font-weight: 500;
+    font-size: 13px;
+    margin: 0 20px;
+    line-height: 100%;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #f0f0f0 !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.navbar-nav .nav-link:active {
+    transform: translateY(0);
+}
+
+/* Íconos sociales */
+.social-icons {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 12px;
+    padding: 6px 14px;
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    z-index: 10;
+}
+
+.social-icons a {
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    font-size: 17.5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    transform: scale(1.15);
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+}
+
+.social-icons a:active {
+    transform: scale(1);
+}
+
+/* Botón del menú móvil */
+.navbar-toggler {
+    border: none;
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-toggler:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    width: 24px;
+    height: 24px;
+}
+
+/* SECCIÓN CONTACTO */
+.seccion-contacto {
+    position: relative;
+    width: 100%;
+    height: 434px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Imagen de fondo */
+.bg-contacto {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* Capa oscura encima de la imagen */
+.overlay-servicios {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(40, 4, 10, 0.53);
+    z-index: 2;
+}
+
+/* Contenedor del título centrado */
+.contenedor-contacto {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 1283px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 32px;
+    margin: 0 auto;
+}
+
+/* Caja que contiene el título con fondo blur */
+.titulo-box {
+    padding: 16px 42px;
+}
+
+/* Texto del título */
+.titulo-contacto {
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
+
+/* seccion contacto y forms */
+.contacto-cafe-section {
+    font-family: 'Inter', sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.form-section {
+    background-color: #47060E;
+    border-radius: 12px;
+    padding: 2rem;
+    color: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 927px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.form-section h5 {
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
+}
+
+.form-label {
+    font-size: 14px;
+    margin-bottom: 0.3rem;
+    display: block;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.form-control {
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.form-control::placeholder {
+    color: #999;
+    opacity: 1;
+}
+
+.btn-send {
+    background-color: white;
+    color: #4b1d0c;
+    font-weight: bold;
+    border: none;
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.btn-send:hover {
+    background-color: #ddd;
+}
+
+.nota-campos {
+    font-size: 12px;
+    margin-bottom: 1rem;
+    color: #fff;
+    font-style: italic;
+}
+
+.contact-header {
+    font-weight: 700;
+    font-size: 44px;
+    color: #28040A;
+    letter-spacing: -1.9%;
+    line-height: 150%;
+    margin-bottom: 30px;
+}
+
+.contact-subtext {
+    font-size: 18px;
+    color: #1E1E1E;
+    width: 794px;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: -1.9%;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.custom-btn-top {
+    background-color: #47060E;
+    color: white;
+    padding: 5px 20px;
+    border: none;
+    font-weight: bold;
+    border-radius: 9.58px;
+    margin-bottom: 1rem;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22.96px;
+    letter-spacing: 0.14px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.visit-section h5 {
+    color: #1E1E1E;
+    width: 414px;
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 46px;
+    letter-spacing: -1.9%;
+    margin-bottom: 90px;
+}
+
+.visit-section span {
+    color: #47060E;
+}
+
+.visit-section p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    line-height: 150%;
+    letter-spacing: -1.9%;
+    font-weight: 400;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;600&display=swap');
+
+.btn-project {
+    background-color: #47060E;
+    font-family: 'Onest', sans-serif;
+    color: #FCF6DB;
+    border: none;
+    font-weight: 500;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 11px 0;
+    width: 413px;
+    height: 39px;
+    margin-top: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-project:hover {
+    background-color: #47060E;
+    color: #FCF6DB;
+}
+
+.ubicacion {
+    width: 467px;
+    height: 245px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.personalizar-1 {
+    color: #0D2B02 !important;
+    margin-right: 20px;
+    font-size: 39px;
+}
+
+.personalizar-2 {
+    color: #0D2B02 !important;
+    margin-right: 10px;
+    font-size: 39px;
+}
+
+/* === IMAGEN FULL === */
+.imagen-full {
+    width: 100%;
+    height: 257px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.imagen-full img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* === FOOTER === */
+.footer-coffeecol {
+    background-image: url('../assets/imagenes/banner17.jpeg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-coffeecol::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(13, 43, 2, 0.9);
+    z-index: 0;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    z-index: 1;
+    position: relative;
+}
+
+.footer-logo {
+    width: 164px;
+    height: 155px;
+    object-fit: contain;
+}
+
+.footer-nav {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.footer-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.footer-nav a:hover {
+    color: #E8E8E8;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.footer-social {
+    display: flex;
+    gap: 0px;
+    margin-top: 5px;
+}
+
+.footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 19px;
+    height: 19px;
+    color: white;
+}
+
+.footer-social a,
+.footer-social a i {
+    text-decoration: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* =============================================== */
+/* RESPONSIVE DESIGN - MEDIA QUERIES COMPLETAS */
+/* =============================================== */
+
+/* Tablets horizontales y pantallas medianas (992px - 1199px) */
+@media (max-width: 1199.98px) {
+
+    /* Header */
+    .header-principal {
+        left: 20px;
+        right: 20px;
+        top: 20px;
+    }
+
+    .navbar-custom .container {
+        padding: 0 20px;
+    }
+
+    /* Contact Header y Subtext */
+    .contact-header {
+        font-size: 38px;
+    }
+
+    .contact-subtext {
+        width: auto;
+        max-width: 700px;
+        font-size: 17px;
+    }
+
+    /* Form Section */
+    .form-section {
+        max-width: 800px;
+        padding: 1.8rem;
+    }
+
+    .form-section h5 {
+        font-size: 26px;
+    }
+
+    /* Visit Section */
+    .visit-section h5 {
+        width: auto;
+        max-width: 380px;
+        font-size: 38px;
+        line-height: 42px;
+        margin-bottom: 70px;
+    }
+
+    .btn-project {
+        width: 380px;
+    }
+
+    .ubicacion {
+        width: 420px;
+        height: 220px;
+    }
+
+    /* Iconos personalizados */
+    .personalizar-1,
+    .personalizar-2 {
+        font-size: 35px;
+    }
+}
+
+/* Tablets verticales (768px - 991px) */
+@media (max-width: 991.98px) {
+
+    /* Header responsive para tablets */
+    .header-principal {
+        left: 16px;
+        right: 16px;
+        top: 16px;
+        height: auto;
+        min-height: 71px;
+    }
+
+    .navbar-custom {
+        height: auto;
+        min-height: 71px;
+        padding: 12px 0;
+    }
+
+    .navbar-custom .container {
+        padding: 0 16px;
+    }
+
+    .navbar-collapse {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .navbar-left,
+    .navbar-center,
+    .navbar-right {
+        flex: none;
+        width: 100%;
+    }
+
+    .navbar-center {
+        justify-content: center;
+        margin: 15px 0;
+    }
+
+    .navbar-right {
+        justify-content: center;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .navbar-nav .nav-link {
+        margin: 0 10px;
+        padding: 12px 16px;
+        text-align: center;
+    }
+
+    /* Sección contacto para tablets */
+    .seccion-contacto {
+        height: 350px;
+    }
+
+    .titulo-contacto {
+        font-size: 30px;
+    }
+
+    .titulo-box {
+        padding: 12px 32px;
+    }
+
+    /* Contact content para tablets */
+    .contact-header {
+        font-size: 32px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    .contact-subtext {
+        width: auto;
+        max-width: 90%;
+        font-size: 16px;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    /* Form Section para tablets */
+    .form-section {
+        max-width: 90%;
+        padding: 1.5rem;
+        margin: 20px auto;
+    }
+
+    .form-section h5 {
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 1.2rem;
+    }
+
+    .form-label {
+        font-size: 13px;
+    }
+
+    .btn-send {
+        padding: 0.6rem;
+        font-size: 15px;
+    }
+
+    .nota-campos {
+        font-size: 11px;
+        text-align: center;
+    }
+
+    .custom-btn-top {
+        padding: 4px 18px;
+        font-size: 15px;
+        display: block;
+        margin: 0 auto 1rem auto;
+    }
+
+    /* Visit Section para tablets */
+    .visit-section {
+        text-align: center;
+        padding: 40px 16px;
+    }
+
+    .visit-section h5 {
+        width: auto;
+        max-width: 100%;
+        font-size: 32px;
+        line-height: 36px;
+        margin-bottom: 50px;
+        text-align: center;
+    }
+
+    .visit-section p {
+        font-size: 16px;
+        max-width: 90%;
+        margin: 0 auto 18px auto;
+    }
+
+    .btn-project {
+        width: 90%;
+        max-width: 380px;
+        height: 45px;
+        margin: 1rem auto 0 auto;
+    }
+
+    .ubicacion {
+        width: 90%;
+        max-width: 400px;
+        height: 200px;
+        margin: 20px auto;
+        display: block;
+    }
+
+    /* Iconos personalizados */
+    .personalizar-1,
+    .personalizar-2 {
+        font-size: 32px;
+        margin-right: 15px;
+    }
+
+    /* Footer para tablets */
+    .footer-coffeecol {
+        padding: 35px 15px;
+    }
+
+    .footer-logo {
+        width: 120px;
+        height: 113px;
+    }
+
+    .footer-nav {
+        gap: 15px;
+    }
+
+    .footer-nav a {
+        font-size: 12px;
+    }
+}
+
+/* Móviles grandes (576px - 767px) */
+@media (max-width: 767.98px) {
+
+    /* Header para móviles grandes */
+    .header-principal {
+        left: 12px;
+        right: 12px;
+        top: 12px;
+    }
+
+    .navbar-brand img {
+        height: 36px;
+        width: auto;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+
+    .social-icons {
+        padding: 4px 10px;
+    }
+
+    .social-icons a {
+        width: 22px;
+        height: 22px;
+        font-size: 16px;
+    }
+
+    /* Sección contacto para móviles grandes */
+    .seccion-contacto {
+        height: 300px;
+    }
+
+    .titulo-contacto {
+        font-size: 26px;
+    }
+
+    .titulo-box {
+        padding: 10px 24px;
+    }
+
+    .contenedor-contacto {
+        padding: 0 16px;
+    }
+
+    /* Contact content para móviles grandes */
+    .contact-header {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .contact-subtext {
+        font-size: 15px;
+        line-height: 140%;
+        margin-bottom: 20px;
+    }
+
+    /* Form Section para móviles grandes */
+    .form-section {
+        max-width: 95%;
+        padding: 1.2rem;
+        border-radius: 10px;
+    }
+
+    .form-section h5 {
+        font-size: 22px;
+        margin-bottom: 1rem;
+    }
+
+    .form-label {
+        font-size: 12px;
+    }
+
+    .form-control {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .btn-send {
+        padding: 0.5rem;
+        font-size: 14px;
+    }
+
+    .custom-btn-top {
+        padding: 3px 16px;
+        font-size: 14px;
+    }
+
+    /* Visit Section para móviles grandes */
+    .visit-section {
+        padding: 30px 12px;
+    }
+
+    .visit-section h5 {
+        font-size: 26px;
+        line-height: 30px;
+        margin-bottom: 35px;
+    }
+
+    .visit-section p {
+        font-size: 15px;
+        line-height: 140%;
+        margin-bottom: 15px;
+    }
+
+    .btn-project {
+        width: 95%;
+        height: 42px;
+        font-size: 15px;
+    }
+
+    .ubicacion {
+        width: 95%;
+        height: 180px;
+        border-radius: 10px;
+    }
+
+    /* Iconos personalizados */
+    .personalizar-1,
+    .personalizar-2 {
+        font-size: 28px;
+        margin-right: 12px;
+    }
+
+    /* Imagen full para móviles grandes */
+    .imagen-full {
+        height: 200px;
+    }
+
+    /* Footer para móviles grandes */
+    .footer-coffeecol {
+        padding: 30px 12px;
+    }
+
+    .footer-logo {
+        width: 80px;
+        height: 75px;
+    }
+
+    .footer-nav {
+        gap: 12px;
+        flex-direction: column;
+    }
+
+    .footer-nav a {
+        font-size: 13px;
+    }
+
+    .footer-social {
+        gap: 15px;
+        margin-top: 15px;
+    }
+
+    .footer-social a {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* Móviles pequeños (hasta 575px) */
+@media (max-width: 575.98px) {
+
+    /* Header para móviles pequeños */
+    .header-principal {
+        left: 8px;
+        right: 8px;
+        top: 8px;
+    }
+
+    .navbar-custom .container {
+        padding: 0 12px;
+    }
+
+    .navbar-brand img {
+        height: 32px;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 13px;
+        margin: 0 5px;
+        padding: 8px 10px;
+    }
+
+    .social-icons {
+        padding: 3px 8px;
+    }
+
+    .social-icons a {
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+    }
+
+    /* Sección contacto para móviles pequeños */
+    .seccion-contacto {
+        height: 250px;
+    }
+
+    .contenedor-contacto {
+        padding: 0 12px;
+    }
+
+    .titulo-contacto {
+        font-size: 22px;
+        line-height: 26px;
+    }
+
+    .titulo-box {
+        padding: 8px 20px;
+    }
+
+    /* Contact content para móviles pequeños */
+    .contact-header {
+        font-size: 24px;
+        margin-bottom: 15px;
+        line-height: 130%;
+    }
+
+    .contact-subtext {
+        font-size: 14px;
+        line-height: 130%;
+        margin-bottom: 15px;
+    }
+
+    /* Form Section para móviles pequeños */
+    .form-section {
+        max-width: 98%;
+        padding: 1rem;
+        border-radius: 8px;
+    }
+
+    .form-section h5 {
+        font-size: 20px;
+        margin-bottom: 0.8rem;
+    }
+
+    .form-label {
+        font-size: 11px;
+        margin-bottom: 0.2rem;
+    }
+
+    .form-control {
+        padding: 6px;
+        font-size: 13px;
+        border-radius: 4px;
+    }
+
+    .btn-send {
+        padding: 0.4rem;
+        font-size: 13px;
+        border-radius: 4px;
+    }
+
+    .nota-campos {
+        font-size: 10px;
+        margin-bottom: 0.8rem;
+    }
+
+    .custom-btn-top {
+        padding: 2px 14px;
+        font-size: 13px;
+        border-radius: 6px;
+    }
+
+    /* Visit Section para móviles pequeños */
+    .visit-section {
+        padding: 25px 8px;
+    }
+
+    .visit-section h5 {
+        font-size: 22px;
+        line-height: 26px;
+        margin-bottom: 25px;
+    }
+
+    .visit-section p {
+        font-size: 14px;
+        line-height: 130%;
+        margin-bottom: 12px;
+    }
+
+    .btn-project {
+        width: 100%;
+        height: 40px;
+        font-size: 14px;
+        border-radius: 8px;
+        padding: 8px 0;
+    }
+
+    .ubicacion {
+        width: 100%;
+        height: 160px;
+        border-radius: 8px;
+        margin: 15px auto;
+    }
+
+    /* Iconos personalizados */
+    .personalizar-1,
+    .personalizar-2 {
+        font-size: 24px;
+        margin-right: 8px;
+    }
+
+    /* Imagen full para móviles pequeños */
+    .imagen-full {
+        height: 180px;
+    }
+
+    /* Footer para móviles pequeños */
+    .footer-coffeecol {
+        padding: 25px 8px;
+    }
+
+    .footer-logo {
+        width: 60px;
+        height: 56px;
+    }
+
+    .footer-nav a {
+        font-size: 12px;
+    }
+
+    .footer-social a {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Móviles muy pequeños (hasta 375px) */
+@media (max-width: 374.98px) {
+    .header-principal {
+        left: 4px;
+        right: 4px;
+        top: 4px;
+    }
+
+    .navbar-custom .container {
+        padding: 0 8px;
+    }
+
+    .navbar-brand img {
+        height: 28px;
+    }
+
+    .titulo-contacto {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    .contact-header {
+        font-size: 22px;
+        line-height: 26px;
+    }
+
+    .contact-subtext {
+        font-size: 13px;
+    }
+
+    .form-section h5 {
+        font-size: 18px;
+    }
+
+    .form-label {
+        font-size: 10px;
+    }
+
+    .form-control {
+        font-size: 12px;
+    }
+
+    .btn-send {
+        font-size: 12px;
+    }
+
+    .custom-btn-top {
+        font-size: 12px;
+        padding: 2px 12px;
+    }
+
+    .visit-section h5 {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    .visit-section p {
+        font-size: 13px;
+    }
+
+    .btn-project {
+        font-size: 13px;
+        height: 38px;
+    }
+
+    .ubicacion {
+        height: 140px;
+    }
+
+    .personalizar-1,
+    .personalizar-2 {
+        font-size: 22px;
+        margin-right: 6px;
+    }
+
+    .imagen-full {
+        height: 150px;
+    }
+
+    .footer-logo {
+        width: 50px;
+        height: 47px;
+    }
+}
+
+/* Ajuste adicional para pantallas grandes (1200px+) */
+@media (min-width: 1200px) {
+    .header-principal {
+        top: 28px;
+        left: 32px;
+        right: 32px;
+    }
+}
+
+/* Base styles for image containers */
+.image-container {
+    position: absolute;
+}
+
+.coffee-ms img,
+.object-0 img,
+.object-1 img,
+.object-2 img,
+.object-3 img,
+.coffeee-xr img {
+    position: absolute;
+}
+
+/* Large screens (1320px and above) - Original sizes Melo */
+@media (min-width: 1288px) {
+    .coffee-ms img {
+        width: 240.48px;
+        height: 240.48px;
+        top: -155px;
+        left: -13px;
+        transform: rotate(-95.25deg);
+    }
+    
+    .object-0 img {
+        width: 280.24px;
+        height: 464.64px;
+        top: -1695.7px;
+        left: 0px;
+    }
+    
+    .object-1 img {
+        width: 380.27px;
+        height: 400.06px;
+        top: -1605.09px;
+        left: 1140.02px;
+    }
+    
+    .object-2 img {
+        width: 165.27px;
+        height: 418.06px;
+        top: -677.37px;
+        left: 0px;
+    }
+    
+    .object-3 img {
+        width: 361.73px;
+        height: 545.83px;
+        top: -525.09px;
+        left: 1158.02px;
+    }
+    
+    .coffeee-xr img {
+        width: 270.48px;
+        height: 270.48px;
+        top: -1300px;
+        left: 1152px;
+        transform: rotate(-25.25deg);
+    }
+}
+
+/* Large screens (1320px and above) - Original sizes Melo */
+@media (max-width: 1287.99px) and (min-width: 1284px) {
+    .coffee-ms img {
+        width: 220.48px;
+        height: 220.48px;
+        top: -160px;
+        left: -13px;
+        transform: rotate(-95.25deg);
+    }
+    
+    .object-0 img {
+        width: 230.24px;
+        height: 324.64px;
+        top: -1630.7px;
+        left: 0px;
+    }
+    
+    .object-1 img {
+        width: 360.27px;
+        height: 340.06px;
+        top: -1585.09px;
+        left: 910.02px;
+    }
+    
+    .object-2 img {
+        width: 125.27px;
+        height: 418.06px;
+        top: -677.37px;
+        left: 0px;
+    }
+    
+    .object-3 img {
+        width: 221.73px;
+        height: 545.83px;
+        top: -545.09px;
+        left: 1048.02px;
+    }
+    
+    .coffeee-xr img {
+        width: 250.48px;
+        height: 250.48px;
+        top: -1300px;
+        left: 952px;
+        transform: rotate(-25.25deg);
+    }
+}
+
+/* Large screens (1320px and above) - Original sizes Melo */
+@media (max-width: 1283.99px) and (min-width: 1279px) {
+    .coffee-ms img {
+        width: 220.48px;
+        height: 220.48px;
+        top: -160px;
+        left: -13px;
+        transform: rotate(-95.25deg);
+    }
+    
+    .object-0 img {
+        width: 230.24px;
+        height: 324.64px;
+        top: -1630.7px;
+        left: 0px;
+    }
+    
+    .object-1 img {
+        width: 360.27px;
+        height: 340.06px;
+        top: -1585.09px;
+        left: 903.02px;
+    }
+    
+    .object-2 img {
+        width: 125.27px;
+        height: 418.06px;
+        top: -677.37px;
+        left: 0px;
+    }
+    
+    .object-3 img {
+        width: 221.73px;
+        height: 545.83px;
+        top: -545.09px;
+        left: 1038.02px;
+    }
+    
+    .coffeee-xr img {
+        width: 250.48px;
+        height: 250.48px;
+        top: -1300px;
+        left: 952px;
+        transform: rotate(-25.25deg);
+    }
+}
+
+/* Large screens (1320px and above) - Original sizes Melo */
+@media (max-width: 1278.99px) and (min-width: 1267px) {
+    .coffee-ms img {
+        width: 220.48px;
+        height: 220.48px;
+        top: -160px;
+        left: -13px;
+        transform: rotate(-95.25deg);
+    }
+    
+    .object-0 img {
+        width: 230.24px;
+        height: 324.64px;
+        top: -1630.7px;
+        left: 0px;
+    }
+    
+    .object-1 img {
+        width: 330.27px;
+        height: 340.06px;
+        top: -1585.09px;
+        left: 920.02px;
+    }
+    
+    .object-2 img {
+        width: 105.27px;
+        height: 418.06px;
+        top: -677.37px;
+        left: 0px;
+    }
+    
+    .object-3 img {
+        width: 180.73px;
+        height: 545.83px;
+        top: -545.09px;
+        left: 1070.02px;
+    }
+    
+    .coffeee-xr img {
+        width: 240.48px;
+        height: 240.48px;
+        top: -1300px;
+        left: 952px;
+        transform: rotate(-25.25deg);
+    }
+}
+
+/* Large screens (1320px and above) - Original sizes */
+@media (max-width: 1266.99px) and (min-width: 1255px) {
+    .coffee-ms img {
+        width: 200.48px;
+        height: 200.48px;
+        top: -160px;
+        left: -13px;
+        transform: rotate(-95.25deg);
+    }
+    
+    .object-0 img {
+        width: 230.24px;
+        height: 324.64px;
+        top: -1630.7px;
+        left: 0px;
+    }
+    
+    .object-1 img {
+        width: 330.27px;
+        height: 340.06px;
+        top: -1585.09px;
+        left: 905.02px;
+    }
+    
+    .object-2 img {
+        width: 85.27px;
+        height: 418.06px;
+        top: -677.37px;
+        left: 0px;
+    }
+    
+    .object-3 img {
+        width: 150.73px;
+        height: 545.83px;
+        top: -545.09px;
+        left: 1086.02px;
+    }
+    
+    .coffeee-xr img {
+        width: 230.48px;
+        height: 230.48px;
+        top: -1300px;
+        left: 942px;
+        transform: rotate(-25.25deg);
+    }
+}
+
+/* Large screens (1320px and above) - Original sizes */
+@media (max-width: 1254.99px) and (min-width: 1240px) {
+    .coffee-ms img {
+        width: 200.48px;
+        height: 200.48px;
+        top: -140px;
+        left: -13px;
+        transform: rotate(-95.25deg);
+    }
+    
+    .object-0 img {
+        width: 230.24px;
+        height: 324.64px;
+        top: -1630.7px;
+        left: 0px;
+    }
+    
+    .object-1 img {
+        width: 330.27px;
+        height: 340.06px;
+        top: -1585.09px;
+        left: 895.02px;
+    }
+    
+    .object-2 img {
+        width: 75.27px;
+        height: 418.06px;
+        top: -677.37px;
+        left: 0px;
+    }
+    
+    .object-3 img {
+        width: 150.73px;
+        height: 545.83px;
+        top: -545.09px;
+        left: 1076.02px;
+    }
+    
+    .coffeee-xr img {
+        width: 230.48px;
+        height: 230.48px;
+        top: -1300px;
+        left: 942px;
+        transform: rotate(-25.25deg);
+    }
+}
+
+/* Large screens (1320px and above) - Original sizes */
+@media (max-width: 1239.99px) and (min-width: 1226px) {
+    .coffee-ms img {
+        width: 200.48px;
+        height: 200.48px;
+        top: -130px;
+        left: -13px;
+        transform: rotate(-95.25deg);
+    }
+    
+    .object-0 img {
+        width: 230.24px;
+        height: 324.64px;
+        top: -1630.7px;
+        left: 0px;
+    }
+    
+    .object-1 img {
+        width: 330.27px;
+        height: 340.06px;
+        top: -1585.09px;
+        left: 875.02px;
+    }
+    
+    .object-2 img {
+        width: 75.27px;
+        height: 418.06px;
+        top: -677.37px;
+        left: 0px;
+    }
+    
+    .object-3 img {
+        width: 150.73px;
+        height: 545.83px;
+        top: -545.09px;
+        left: 1056.02px;
+    }
+    
+    .coffeee-xr img {
+        width: 230.48px;
+        height: 230.48px;
+        top: -1300px;
+        left: 942px;
+        transform: rotate(-25.25deg);
+    }
+}
+
+/* Large screens (1320px and above) - Original sizes */
+@media (max-width: 1225.99px) and (min-width: 1210px) {
+    .coffee-ms img {
+        width: 200.48px;
+        height: 200.48px;
+        top: -130px;
+        left: -13px;
+        transform: rotate(-95.25deg);
+    }
+    
+    .object-0 img {
+        width: 210.24px;
+        height: 324.64px;
+        top: -1630.7px;
+        left: 0px;
+    }
+    
+    .object-1 img {
+        width: 330.27px;
+        height: 340.06px;
+        top: -1585.09px;
+        left: 865.02px;
+    }
+    
+    .object-2 img {
+        width: 65.27px;
+        height: 418.06px;
+        top: -677.37px;
+        left: 0px;
+    }
+    
+    .object-3 img {
+        width: 150.73px;
+        height: 545.83px;
+        top: -545.09px;
+        left: 1044.02px;
+    }
+    
+    .coffeee-xr img {
+        width: 220.48px;
+        height: 220.48px;
+        top: -1290px;
+        left: 912px;
+        transform: rotate(-25.25deg);
+    }
+}
+
+/* Hide elements on small screens */
+@media (max-width: 1209.99px) {
+    .image-container {
+        display: none !important;
+    }
+    
+    .coffee-ms,
+    .object-0,
+    .object-1,
+    .object-2,
+    .object-3,
+    .coffeee-xr {
+        display: none !important;
+    }
+}

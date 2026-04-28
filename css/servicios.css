@@ -1,0 +1,1420 @@
+/* RESET GENERAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    color: #000;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #FCF6DB !important;
+}
+
+/* HEADER PRINCIPAL - Medidas exactas de Figma */
+.header-principal {
+    position: fixed;
+    top: 28px;
+    left: 32px;
+    right: 32px;
+    height: 71px;
+    max-width: 1220px;
+    margin: 0 auto;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-custom {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 11px;
+    padding: 8px 0;
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.1),
+        inset 0 3px 3px rgba(0, 0, 0, 0.5);
+    height: 71px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-custom .container {
+    max-width: 1220px;
+    padding: 0 32px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img {
+    height: 42px;
+    width: 115px;
+    transition: transform 0.3s ease;
+}
+
+/* Layout para centrado perfecto */
+.navbar-collapse {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.navbar-left {
+    flex: 1;
+}
+
+.navbar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff !important;
+    font-weight: 500;
+    font-size: 13px;
+    margin: 0 20px;
+    line-height: 100%;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #f0f0f0 !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.navbar-nav .nav-link:active {
+    transform: translateY(0);
+}
+
+/* Íconos sociales */
+.social-icons {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 12px;
+    padding: 6px 14px;
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    z-index: 10;
+}
+
+.social-icons a {
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    font-size: 17.5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    transform: scale(1.15);
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+}
+
+.social-icons a:active {
+    transform: scale(1);
+}
+
+/* Botón del menú móvil */
+.navbar-toggler {
+    border: none;
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-toggler:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    width: 24px;
+    height: 24px;
+}
+
+/* SECCIÓN SERVICIOS */
+.seccion-servicios {
+    position: relative;
+    width: 100%;
+    height: 434px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Imagen de fondo */
+.bg-servicios {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* Capa oscura encima de la imagen */
+.overlay-servicios {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(40, 4, 10, 0.53);
+    z-index: 2;
+}
+
+/* Contenedor del título centrado */
+.contenedor-servicios {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 1283px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 32px;
+    margin: 0 auto;
+}
+
+/* Caja que contiene el título con fondo blur */
+.titulo-box {
+    padding: 16px 42px;
+}
+
+/* Texto del título */
+.titulo-servicios {
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
+
+/* === SECCIÓN MAQUILA DE CÁPSULAS === */
+.capsulas-servicio {
+    padding: 80px 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Grano decorativo */
+.capsulas-decoracion {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 60px;
+    z-index: 0;
+}
+
+/* Contenido central */
+.capsulas-header {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto 60px auto;
+    text-align: center;
+    z-index: 1;
+}
+
+.capsulas-titulos h2 {
+    color: #47060E;
+    font-size: 44px;
+    font-weight: 700;
+    letter-spacing: -1.9%;
+    line-height: 40px;
+    margin-bottom: 55px;
+}
+
+.capsulas-titulos h3 {
+    font-size: 35px;
+    color: #28040A;
+    font-weight: 700;
+    margin-bottom: 18px;
+    letter-spacing: -1.9%;
+    line-height: 40px;
+    margin-bottom: 25px;
+}
+
+.capsulas-titulos p {
+    max-width: 947px;
+    margin: 0 auto;
+    font-size: 18px;
+    color: #555;
+    line-height: 150%;
+    letter-spacing: -1.9%;
+}
+
+/* === ASESORÍA PERSONALIZADA === */
+.asesoria-box {
+    position: relative;
+    width: 772px;
+    height: 343px;
+    margin: 0 auto;
+    border: 1px solid #47060E;
+    border-radius: 42px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;
+}
+
+.asesoria-info {
+    flex: 1;
+    z-index: 2;
+}
+
+.asesoria-info h3 {
+    font-size: 44px;
+    color: #47060E;
+    font-weight: 700;
+    margin-bottom: 12px;
+    margin-left: 40px;
+}
+
+.asesoria-titulo {
+    font-size: 35px;
+    font-weight: 400;
+    color: #28040A;
+    margin-bottom: 20px;
+    line-height: 40px;
+    letter-spacing: -0.019em;
+    text-align: center;
+    width: 583px;
+}
+
+.asesoria-titulo strong {
+    font-weight: 700;
+    display: block;
+    text-align: left;
+    margin-left: 0px;
+}
+
+.asesoria-info p {
+    font-size: 18px;
+    color: #1E1E1E;
+    line-height: 1.9;
+    font-weight: 400;
+    max-width: 542px;
+    text-align: center;
+}
+
+/* Imagen del caficultor */
+.asesoria-img-wrapper {
+    position: absolute;
+    top: -94px;
+    right: -200px;
+    z-index: 3;
+}
+
+.asesoria-img-wrapper img {
+    width: 441px;
+    height: 437px;
+    object-fit: contain;
+    border-radius: 0;
+}
+
+/* === SECCIÓN FAQ === */
+.faq-section {
+    padding: 60px 40px;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+/* === TÍTULO === */
+.faq-title {
+    text-align: center;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 150%;
+    letter-spacing: -1.9%;
+    color: #28040A;
+    margin-bottom: 90px;
+}
+
+/* === CONTENEDOR PRINCIPAL === */
+.faq-container {
+    display: flex;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+/* === COLUMNA IZQUIERDA (preguntas) === */
+.faq-left {
+    width: 631px;
+    flex-shrink: 0;
+}
+
+/* === COLUMNA DERECHA (buscador + ayuda) === */
+.faq-right {
+    width: 268px;
+    height: 500px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* === BUSCADOR === */
+.faq-search {
+    position: relative;
+}
+
+.faq-search input {
+    width: 100%;
+    padding: 12px 45px 12px 16px;
+    border: 2px solid #47060E;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    background-color: #fff;
+    color: #28040A;
+}
+
+.faq-search input::placeholder {
+    color: #9CA3AF;
+}
+
+.faq-search input:focus {
+    outline: none;
+    border-color: #47060E;
+}
+
+.faq-search .search-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9CA3AF;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    pointer-events: auto;
+}
+
+.faq-search .search-icon:hover {
+    color: #47060E;
+}
+
+.faq-search input:focus+.search-icon {
+    color: #47060E;
+}
+
+/* === LISTA DE PREGUNTAS === */
+.faq-items {
+    display: flex;
+    flex-direction: column;
+}
+
+/* === ITEM INDIVIDUAL === */
+.faq-item {
+    background-color: #fff;
+    border: 2px solid #D9C1B3;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 5px 7px 3px 7px;
+}
+
+.faq-item.active {
+    border-color: #47060E;
+    background-color: #FFF8F2;
+}
+
+/* === BOTÓN DE PREGUNTA === */
+.faq-question {
+    background: none;
+    border: 2px dotted #47060E;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 24px;
+    padding: 5px 5px;
+    width: 100%;
+    text-align: left;
+    color: #47060E;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    line-height: 150%;
+    letter-spacing: -1.9%;
+    margin-bottom: 5px;
+}
+
+/* ÍCONO estilo Figma: cuadrado con borde */
+.faq-question .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 2px solid #ffffff;
+    background-color: #47060E;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 16px;
+    flex-shrink: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.faq-item.active .icon {
+    background-color: #47060E;
+    color: #fff;
+}
+
+/* === RESPUESTA === */
+.faq-answer {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    border: 2px dotted #47060E;
+    border-radius: 8px;
+    transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.3s ease;
+    padding: 0 24px;
+    font-size: 18px;
+    color: #6B7280;
+    line-height: 20px;
+    letter-spacing: -1.9%;
+    font-weight: 500;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 300px;
+    opacity: 1;
+    padding: 15;
+    padding-top: 15px;
+}
+
+/* === CAJA DE AYUDA === */
+.faq-help {
+    background-color: #28040A;
+    color: white;
+    padding: 32px 24px;
+    border-radius: 16px;
+    width: 100%;
+    text-align: left;
+    position: relative;
+    height: fit-content;
+}
+
+.faq-help h3 {
+    font-size: 23.58px;
+    margin-bottom: 30px;
+    color: #FCF6DB;
+    font-weight: 500;
+    text-align: center;
+    line-height: 29.47px;
+    letter-spacing: -1.9%;
+}
+
+.faq-help p {
+    width: 214px;
+    font-size: 16px;
+    margin-bottom: 24px;
+    color: #FCF6DB;
+    letter-spacing: -1.9%;
+    line-height: 20px;
+}
+
+/* === BOTÓN DE CONTACTO === */
+.contact-button {
+    background-color: #FCF6DB;
+    color: #28040A;
+    padding: 12px 24px;
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.contact-button:hover {
+    transform: translateY(-1px);
+}
+
+.contact-button:active {
+    transform: translateY(0);
+}
+
+/* === IMAGEN FULL === */
+.imagen-full {
+    width: 100%;
+    height: 257px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.imagen-full img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* === FOOTER === */
+.footer-coffeecol {
+    background-image: url('../assets/imagenes/banner17.jpeg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-coffeecol::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(13, 43, 2, 0.9);
+    z-index: 0;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    z-index: 1;
+    position: relative;
+}
+
+.footer-logo {
+    width: 164px;
+    height: 155px;
+    object-fit: contain;
+}
+
+.footer-nav {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.footer-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.footer-nav a:hover {
+    color: #E8E8E8;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.footer-social {
+    display: flex;
+    gap: 0px;
+    margin-top: 5px;
+}
+
+.footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 19px;
+    height: 19px;
+    color: white;
+}
+
+.footer-social a,
+.footer-social a i {
+    text-decoration: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* =============================================== */
+/* RESPONSIVE DESIGN - MEDIA QUERIES COMPLETAS */
+/* =============================================== */
+
+/* Tablets horizontales y pantallas medianas (992px - 1199px) */
+@media (max-width: 1199.98px) {
+
+    /* Header */
+    .header-principal {
+        left: 20px;
+        right: 20px;
+        top: 20px;
+    }
+
+    .navbar-custom .container {
+        padding: 0 20px;
+    }
+
+    /* Sección Cápsulas */
+    .capsulas-servicio {
+        padding: 60px 20px;
+    }
+
+    .capsulas-titulos h2 {
+        font-size: 38px;
+        margin-bottom: 45px;
+    }
+
+    .capsulas-titulos h3 {
+        font-size: 30px;
+    }
+
+    /* Asesoría Box */
+    .asesoria-box {
+        width: 90%;
+        max-width: 700px;
+        padding: 30px;
+    }
+
+    .asesoria-info h3 {
+        font-size: 38px;
+        margin-left: 20px;
+    }
+
+    .asesoria-titulo {
+        font-size: 30px;
+        width: auto;
+        max-width: 500px;
+    }
+
+    .asesoria-img-wrapper {
+        right: -150px;
+    }
+
+    .asesoria-img-wrapper img {
+        width: 380px;
+        height: 376px;
+    }
+
+    /* FAQ */
+    .faq-section {
+        padding: 50px 30px;
+    }
+
+    .faq-title {
+        font-size: 38px;
+        margin-bottom: 70px;
+    }
+
+    .faq-left {
+        width: 580px;
+    }
+
+    .faq-right {
+        width: 250px;
+    }
+}
+
+/* Tablets verticales (768px - 991px) */
+@media (max-width: 991.98px) {
+
+    /* Header responsive para tablets */
+    .header-principal {
+        left: 16px;
+        right: 16px;
+        top: 16px;
+        height: auto;
+        min-height: 71px;
+    }
+
+    .navbar-custom {
+        height: auto;
+        min-height: 71px;
+        padding: 12px 0;
+    }
+
+    .navbar-custom .container {
+        padding: 0 16px;
+    }
+
+    .navbar-collapse {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .navbar-left,
+    .navbar-center,
+    .navbar-right {
+        flex: none;
+        width: 100%;
+    }
+
+    .navbar-center {
+        justify-content: center;
+        margin: 15px 0;
+    }
+
+    .navbar-right {
+        justify-content: center;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .navbar-nav .nav-link {
+        margin: 0 10px;
+        padding: 12px 16px;
+        text-align: center;
+    }
+
+    /* Sección servicios para tablets */
+    .seccion-servicios {
+        height: 350px;
+    }
+
+    .titulo-servicios {
+        font-size: 30px;
+    }
+
+    .titulo-box {
+        padding: 12px 32px;
+    }
+
+    /* Sección Cápsulas para tablets */
+    .capsulas-servicio {
+        padding: 50px 16px;
+    }
+
+    .capsulas-titulos h2 {
+        font-size: 32px;
+        margin-bottom: 35px;
+        line-height: 36px;
+    }
+
+    .capsulas-titulos h3 {
+        font-size: 26px;
+        line-height: 30px;
+    }
+
+    .capsulas-titulos p {
+        font-size: 16px;
+        max-width: 90%;
+    }
+
+    /* Asesoría Box para tablets */
+    .asesoria-box {
+        width: 95%;
+        height: auto;
+        min-height: 300px;
+        padding: 25px;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .asesoria-info h3 {
+        font-size: 32px;
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .asesoria-titulo {
+        font-size: 26px;
+        width: auto;
+        max-width: 100%;
+        text-align: center;
+        line-height: 32px;
+    }
+
+    .asesoria-titulo strong {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .asesoria-info p {
+        max-width: 100%;
+        font-size: 16px;
+    }
+
+    .asesoria-img-wrapper {
+        position: relative;
+        top: 20px;
+        right: 0;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .asesoria-img-wrapper img {
+        width: 280px;
+        height: 277px;
+        margin: 0 auto;
+    }
+
+    /* FAQ para tablets */
+    .faq-section {
+        padding: 40px 16px;
+        min-height: auto;
+    }
+
+    .faq-title {
+        font-size: 32px;
+        margin-bottom: 50px;
+    }
+
+    .faq-container {
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .faq-left,
+    .faq-right {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .faq-right {
+        height: auto;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .faq-question {
+        font-size: 20px;
+        padding: 15px;
+    }
+
+    .faq-answer {
+        font-size: 16px;
+        padding: 0 20px;
+    }
+
+    .faq-item.active .faq-answer {
+        padding: 15px 20px;
+    }
+
+    /* Footer para tablets */
+    .footer-coffeecol {
+        padding: 35px 15px;
+    }
+
+    .footer-logo {
+        width: 120px;
+        height: 113px;
+    }
+
+    .footer-nav {
+        gap: 15px;
+    }
+
+    .footer-nav a {
+        font-size: 12px;
+    }
+}
+
+/* Móviles grandes (576px - 767px) */
+@media (max-width: 767.98px) {
+
+    /* Header para móviles grandes */
+    .header-principal {
+        left: 12px;
+        right: 12px;
+        top: 12px;
+    }
+
+    .navbar-brand img {
+        height: 36px;
+        width: auto;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+
+    .social-icons {
+        padding: 4px 10px;
+    }
+
+    .social-icons a {
+        width: 22px;
+        height: 22px;
+        font-size: 16px;
+    }
+
+    /* Sección servicios para móviles grandes */
+    .seccion-servicios {
+        height: 300px;
+    }
+
+    .titulo-servicios {
+        font-size: 26px;
+    }
+
+    .titulo-box {
+        padding: 10px 24px;
+    }
+
+    /* Sección Cápsulas para móviles grandes */
+    .capsulas-servicio {
+        padding: 40px 12px;
+    }
+
+    .capsulas-titulos h2 {
+        font-size: 28px;
+        margin-bottom: 30px;
+        line-height: 32px;
+    }
+
+    .capsulas-titulos h3 {
+        font-size: 22px;
+        line-height: 26px;
+        margin-bottom: 15px;
+    }
+
+    .capsulas-titulos p {
+        font-size: 15px;
+        line-height: 140%;
+    }
+
+    /* Asesoría Box para móviles grandes */
+    .asesoria-box {
+        width: 98%;
+        padding: 20px;
+        border-radius: 24px;
+        min-height: 250px;
+    }
+
+    .asesoria-info h3 {
+        font-size: 26px;
+        margin-bottom: 15px;
+    }
+
+    .asesoria-titulo {
+        font-size: 22px;
+        line-height: 26px;
+        margin-bottom: 15px;
+    }
+
+    .asesoria-info p {
+        font-size: 15px;
+        line-height: 140%;
+    }
+
+    .asesoria-img-wrapper img {
+        width: 220px;
+        height: 218px;
+    }
+
+    /* FAQ para móviles grandes */
+    .faq-title {
+        font-size: 28px;
+        margin-bottom: 40px;
+    }
+
+    .faq-question {
+        font-size: 18px;
+        padding: 12px;
+    }
+
+    .faq-question .icon {
+        width: 24px;
+        height: 24px;
+        font-size: 16px;
+        margin-left: 12px;
+    }
+
+    .faq-answer {
+        font-size: 15px;
+    }
+
+    .faq-help {
+        padding: 24px 20px;
+    }
+
+    .faq-help h3 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .faq-help p {
+        width: auto;
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    /* Imagen full para móviles grandes */
+    .imagen-full {
+        height: 200px;
+    }
+
+    /* Footer para móviles grandes */
+    .footer-coffeecol {
+        padding: 30px 12px;
+    }
+
+    .footer-logo {
+        width: 80px;
+        height: 75px;
+    }
+
+    .footer-nav {
+        gap: 12px;
+        flex-direction: column;
+    }
+
+    .footer-nav a {
+        font-size: 13px;
+    }
+
+    .footer-social {
+        gap: 15px;
+        margin-top: 15px;
+    }
+
+    .footer-social a {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* Móviles pequeños (hasta 575px) */
+@media (max-width: 575.98px) {
+
+    /* Header para móviles pequeños */
+    .header-principal {
+        left: 8px;
+        right: 8px;
+        top: 8px;
+    }
+
+    .navbar-custom .container {
+        padding: 0 12px;
+    }
+
+    .navbar-brand img {
+        height: 32px;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 13px;
+        margin: 0 5px;
+        padding: 8px 10px;
+    }
+
+    .social-icons {
+        padding: 3px 8px;
+    }
+
+    .social-icons a {
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+    }
+
+    /* Sección servicios para móviles pequeños */
+    .seccion-servicios {
+        height: 250px;
+    }
+
+    .contenedor-servicios {
+        padding: 0 16px;
+    }
+
+    .titulo-servicios {
+        font-size: 22px;
+        line-height: 26px;
+    }
+
+    .titulo-box {
+        padding: 8px 20px;
+    }
+
+    /* Sección Cápsulas para móviles pequeños */
+    .capsulas-servicio {
+        padding: 30px 8px;
+    }
+
+    .capsulas-decoracion {
+        width: 40px;
+    }
+
+    .capsulas-titulos h2 {
+        font-size: 24px;
+        margin-bottom: 25px;
+        line-height: 28px;
+    }
+
+    .capsulas-titulos h3 {
+        font-size: 20px;
+        line-height: 24px;
+        margin-bottom: 12px;
+    }
+
+    .capsulas-titulos p {
+        font-size: 14px;
+        line-height: 130%;
+    }
+
+    /* Asesoría Box para móviles pequeños */
+    .asesoria-box {
+        width: 100%;
+        padding: 15px;
+        border-radius: 20px;
+        min-height: 200px;
+    }
+
+    .asesoria-info h3 {
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+
+    .asesoria-titulo {
+        font-size: 18px;
+        line-height: 22px;
+        margin-bottom: 12px;
+    }
+
+    .asesoria-info p {
+        font-size: 14px;
+        line-height: 130%;
+    }
+
+    .asesoria-img-wrapper {
+        margin-top: 15px;
+    }
+
+    .asesoria-img-wrapper img {
+        width: 180px;
+        height: 178px;
+    }
+
+    /* FAQ para móviles pequeños */
+    .faq-section {
+        padding: 30px 8px;
+    }
+
+    .faq-title {
+        font-size: 24px;
+        margin-bottom: 30px;
+        line-height: 28px;
+    }
+
+    .faq-question {
+        font-size: 16px;
+        padding: 10px;
+        line-height: 130%;
+    }
+
+    .faq-question .icon {
+        width: 22px;
+        height: 22px;
+        font-size: 14px;
+        margin-left: 10px;
+    }
+
+    .faq-answer {
+        font-size: 14px;
+        padding: 0 15px;
+        line-height: 130%;
+    }
+
+    .faq-item.active .faq-answer {
+        padding: 12px 15px;
+    }
+
+    .faq-search input {
+        padding: 10px 40px 10px 12px;
+        font-size: 14px;
+    }
+
+    .faq-search .search-icon {
+        right: 12px;
+        font-size: 14px;
+    }
+
+    .faq-help {
+        padding: 20px 16px;
+    }
+
+    .faq-help h3 {
+        font-size: 18px;
+        margin-bottom: 16px;
+        line-height: 22px;
+    }
+
+    .faq-help p {
+        font-size: 14px;
+        margin-bottom: 16px;
+        line-height: 130%;
+    }
+
+    .contact-button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    /* Imagen full para móviles pequeños */
+    .imagen-full {
+        height: 180px;
+    }
+
+    /* Footer para móviles pequeños */
+    .footer-coffeecol {
+        padding: 25px 8px;
+    }
+
+    .footer-logo {
+        width: 60px;
+        height: 56px;
+    }
+
+    .footer-nav a {
+        font-size: 12px;
+    }
+
+    .footer-social a {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Móviles muy pequeños (hasta 375px) */
+@media (max-width: 374.98px) {
+    .header-principal {
+        left: 4px;
+        right: 4px;
+        top: 4px;
+    }
+
+    .navbar-custom .container {
+        padding: 0 8px;
+    }
+
+    .navbar-brand img {
+        height: 28px;
+    }
+
+    .titulo-servicios {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    .capsulas-titulos h2 {
+        font-size: 22px;
+        line-height: 26px;
+    }
+
+    .capsulas-titulos h3 {
+        font-size: 18px;
+        line-height: 22px;
+    }
+
+    .capsulas-titulos p {
+        font-size: 13px;
+    }
+
+    .asesoria-info h3 {
+        font-size: 20px;
+    }
+
+    .asesoria-titulo {
+        font-size: 16px;
+        line-height: 20px;
+    }
+
+    .asesoria-info p {
+        font-size: 13px;
+    }
+
+    .asesoria-img-wrapper img {
+        width: 150px;
+        height: 148px;
+    }
+
+    .faq-title {
+        font-size: 22px;
+        line-height: 26px;
+    }
+
+    .faq-question {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .faq-answer {
+        font-size: 13px;
+    }
+
+    .imagen-full {
+        height: 150px;
+    }
+
+    .footer-logo {
+        width: 50px;
+        height: 47px;
+    }
+}
+
+/* Ajuste adicional para pantallas grandes (1200px+) */
+@media (min-width: 1200px) {
+    .header-principal {
+        top: 28px;
+        left: 32px;
+        right: 32px;
+    }
+}
