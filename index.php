@@ -190,9 +190,9 @@
                     <!-- Beneficio 1 -->
                     <div class="benefit-item text-center">
                         <div class="benefit-icon mb-3">
-                            <img src="assets/imagenes/banner7.png" alt="Mapa de Colombia" class="icon-img img-1">
+                            <img src="assets/imagenes/banner1000.png" alt="Mapa de Colombia" class="icon-img img-1">
                         </div>
-                        <h5>100% Producción nacional</h5>
+                        <h5>100% Producción del Departamento</h5>
                         <p>
                             Todo el proceso de encapsulado y empaque se realiza en Colombia, con proveedores locales y
                             control de calidad directo.

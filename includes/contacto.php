@@ -53,21 +53,22 @@
               <a class="nav-link" href="nosotros.php">Nosotros</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="servicios.php">Servicios</a>
+              <a class="nav-link" href="servicios.php">Productos</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="contacto.php">Contáctanos</a>
             </li>
           </ul>
 
-          <div class="social-icons">
-            <a href="#" title="Facebook" aria-label="Facebook">
-              <i class="fa-brands fa-facebook"></i>
-            </a>
-            <a href="#" title="Instagram" aria-label="Instagram">
-              <i class="fab fa-instagram"></i>
-            </a>
-          </div>
+                    <div class="social-icons">
+                        <a href="#" title="Facebook" aria-label="Facebook">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </a>
+                        <a href="#" title="Instagram" aria-label="Instagram">
+                            <i class="fa-solid fa-user"></i>
+                        </a>
+                        </a>
+                    </div>
         </div>
       </div>
     </nav>
@@ -216,7 +217,7 @@
         <nav class="footer-nav">
           <a href="../index.php">Inicio</a>
           <a href="nosotros.php">Nosotros</a>
-          <a href="servicios.php">Servicios</a>
+          <a href="servicios.php">Productos</a>
           <a href="contacto.php">Contáctanos</a>
         </nav>
 

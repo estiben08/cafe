@@ -167,7 +167,7 @@
                 <nav class="footer-nav">
                     <a href="../index.php">Inicio</a>
                     <a href="includes/nosotros.php">Nosotros</a>
-                    <a href="includes/servicios.php">Servicios</a>
+                    <a href="includes/servicios.php">Productos</a>
                     <a href="includes/contacto.php">Contáctanos</a>
                 </nav>
 

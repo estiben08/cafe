@@ -863,7 +863,7 @@
                                 <a class="nav-link" href="includes/nosotros.php">Nosotros</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="includes/servicios.php">Servicios</a>
+                                <a class="nav-link" href="includes/servicios.php">Productos</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="includes/contacto.php">Contáctanos</a>
@@ -871,8 +871,8 @@
                         </ul>
 
                         <div class="social-icons">
-                            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="Facebook"><i class="fa-solid fa-cart-shopping"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fa-solid fa-user"></i></a>
                         </div>
                     </div>
                 </div>
