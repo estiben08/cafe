@@ -84,10 +84,481 @@
         <!-- Contenido centrado -->
         <div class="contenedor-servicios">
             <div class="titulo-box">
-                <h2 class="titulo-servicios">Servicios</h2>
+                <h2 class="titulo-servicios">Conoce cada una de nuestras presentaciones</h2>
             </div>
         </div>
     </section>
+
+    <div class="tienda-info-band">
+        <div class="info-band-grid">
+            <div class="info-band-item">
+                <div class="info-band-icon"><i class="fas fa-truck"></i></div>
+                <div class="info-band-text">
+                    <strong>Envío gratis</strong>
+                    <span>En pedidos mayores a $150.000</span>
+                </div>
+            </div>
+            <div class="info-band-item">
+                <div class="info-band-icon"><i class="fas fa-leaf"></i></div>
+                <div class="info-band-text">
+                    <strong>100% Sostenible</strong>
+                    <span>Empaque biodegradable</span>
+                </div>
+            </div>
+            <div class="info-band-item">
+                <div class="info-band-icon"><i class="fas fa-award"></i></div>
+                <div class="info-band-text">
+                    <strong>Calidad garantizada</strong>
+                    <span>Tostión artesanal certificada</span>
+                </div>
+            </div>
+            <div class="info-band-item">
+                <div class="info-band-icon"><i class="fas fa-headset"></i></div>
+                <div class="info-band-text">
+                    <strong>Asesoría personalizada</strong>
+                    <span>Te acompañamos en cada paso</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         FILTROS DE CATEGORÍA
+    ══════════════════════════════════════════════════════════ -->
+    <div class="tienda-filtros">
+        <div class="filtros-wrap">
+            <button class="filtro-btn active" data-categoria="todos">Todos</button>
+            <button class="filtro-btn" data-categoria="tueste-claro">Tueste Claro</button>
+            <button class="filtro-btn" data-categoria="tueste-medio">Tueste Medio</button>
+            <button class="filtro-btn" data-categoria="tueste-oscuro">Tueste Oscuro</button>
+            <button class="filtro-btn" data-categoria="capsulas">Cápsulas</button>
+            <button class="filtro-btn" data-categoria="origen-especial">Origen Especial</button>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         GRID DE PRODUCTOS
+    ══════════════════════════════════════════════════════════ -->
+    <div class="tienda-section">
+
+        <div class="tienda-section-header">
+            <h2 class="tienda-section-title">Nuestros productos</h2>
+            <div class="tienda-section-line"></div>
+            <span class="tienda-section-count" id="contadorProductos">8 productos</span>
+        </div>
+
+        <div class="productos-grid" id="productosGrid">
+
+            <!-- ── Producto 1 ── -->
+            <div class="producto-card" data-categoria="tueste-medio" data-id="1">
+                <div class="producto-badge badge-popular">⭐ Popular</div>
+                <button class="btn-favorito" aria-label="Agregar a favoritos">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="producto-img-wrap">
+                    <!-- Reemplaza por: <img class="producto-img" src="../assets/imagenes/producto1.jpg" alt="Supremo Huila Reserve"> -->
+                    <div class="producto-img-placeholder"><i class="fas fa-mug-hot"></i></div>
+                </div>
+                <div class="producto-info">
+                    <div class="producto-categoria">Tueste Medio</div>
+                    <h3 class="producto-nombre">Supremo Huila Reserve</h3>
+                    <p class="producto-descripcion">Notas de caramelo, frutos rojos y chocolate oscuro. Acidez
+                        balanceada con cuerpo completo.</p>
+                    <div class="producto-rating">
+                        <span class="estrellas">★★★★★</span>
+                        <span class="rating-num">4.9 (128)</span>
+                    </div>
+                    <div class="producto-footer">
+                        <div class="producto-precio">
+                            <span class="precio-antes">$58.000</span>
+                            <span class="precio-actual">$49.900</span>
+                            <span class="precio-unidad">500g · molido o en grano</span>
+                        </div>
+                        <button class="btn-agregar" onclick="agregarAlCarrito(1)">
+                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Producto 2 ── -->
+            <div class="producto-card" data-categoria="origen-especial" data-id="2">
+                <div class="producto-badge badge-limitado">Limitado</div>
+                <button class="btn-favorito" aria-label="Agregar a favoritos">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="producto-img-wrap">
+                    <div class="producto-img-placeholder"><i class="fas fa-seedling"></i></div>
+                </div>
+                <div class="producto-info">
+                    <div class="producto-categoria">Origen Especial</div>
+                    <h3 class="producto-nombre">Geisha Nariño Natural</h3>
+                    <p class="producto-descripcion">Perfil floral único con notas de jazmín, melocotón y té blanco.
+                        Proceso natural de fermentación.</p>
+                    <div class="producto-rating">
+                        <span class="estrellas">★★★★★</span>
+                        <span class="rating-num">5.0 (43)</span>
+                    </div>
+                    <div class="producto-footer">
+                        <div class="producto-precio">
+                            <span class="precio-actual">$89.900</span>
+                            <span class="precio-unidad">200g · grano entero</span>
+                        </div>
+                        <button class="btn-agregar" onclick="agregarAlCarrito(2)">
+                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Producto 3 ── -->
+            <div class="producto-card" data-categoria="capsulas" data-id="3">
+                <div class="producto-badge badge-nuevo">Nuevo</div>
+                <button class="btn-favorito" aria-label="Agregar a favoritos">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="producto-img-wrap">
+                    <div class="producto-img-placeholder"><i class="fas fa-capsules"></i></div>
+                </div>
+                <div class="producto-info">
+                    <div class="producto-categoria">Cápsulas</div>
+                    <h3 class="producto-nombre">Cápsulas Blend Andino</h3>
+                    <p class="producto-descripcion">Compatibles con Nespresso®. Mezcla de orígenes colombianos,
+                        intensidad media. Caja de 10 unidades.</p>
+                    <div class="producto-rating">
+                        <span class="estrellas">★★★★☆</span>
+                        <span class="rating-num">4.7 (67)</span>
+                    </div>
+                    <div class="producto-footer">
+                        <div class="producto-precio">
+                            <span class="precio-actual">$32.900</span>
+                            <span class="precio-unidad">10 cápsulas</span>
+                        </div>
+                        <button class="btn-agregar" onclick="agregarAlCarrito(3)">
+                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Producto 4 ── -->
+            <div class="producto-card" data-categoria="tueste-oscuro" data-id="4">
+                <button class="btn-favorito" aria-label="Agregar a favoritos">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="producto-img-wrap">
+                    <div class="producto-img-placeholder"><i class="fas fa-fire"></i></div>
+                </div>
+                <div class="producto-info">
+                    <div class="producto-categoria">Tueste Oscuro</div>
+                    <h3 class="producto-nombre">Volcánico Espresso Blend</h3>
+                    <p class="producto-descripcion">Intenso y robusto. Cuerpo pleno con notas de chocolate amargo, nuez
+                        y un final largo y persistente.</p>
+                    <div class="producto-rating">
+                        <span class="estrellas">★★★★★</span>
+                        <span class="rating-num">4.8 (95)</span>
+                    </div>
+                    <div class="producto-footer">
+                        <div class="producto-precio">
+                            <span class="precio-antes">$52.000</span>
+                            <span class="precio-actual">$44.900</span>
+                            <span class="precio-unidad">500g · molido espresso</span>
+                        </div>
+                        <button class="btn-agregar" onclick="agregarAlCarrito(4)">
+                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Producto 5 ── -->
+            <div class="producto-card" data-categoria="tueste-claro" data-id="5">
+                <div class="producto-badge badge-nuevo">Nuevo</div>
+                <button class="btn-favorito" aria-label="Agregar a favoritos">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="producto-img-wrap">
+                    <div class="producto-img-placeholder"><i class="fas fa-sun"></i></div>
+                </div>
+                <div class="producto-info">
+                    <div class="producto-categoria">Tueste Claro</div>
+                    <h3 class="producto-nombre">Aurora Cold Brew</h3>
+                    <p class="producto-descripcion">Perfil luminoso para cold brew o filtrado. Acidez vívida con notas
+                        cítricas, uva verde y lavanda.</p>
+                    <div class="producto-rating">
+                        <span class="estrellas">★★★★☆</span>
+                        <span class="rating-num">4.6 (31)</span>
+                    </div>
+                    <div class="producto-footer">
+                        <div class="producto-precio">
+                            <span class="precio-actual">$54.900</span>
+                            <span class="precio-unidad">250g · molido grueso</span>
+                        </div>
+                        <button class="btn-agregar" onclick="agregarAlCarrito(5)">
+                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Producto 6 ── -->
+            <div class="producto-card" data-categoria="origen-especial" data-id="6">
+                <button class="btn-favorito" aria-label="Agregar a favoritos">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="producto-img-wrap">
+                    <div class="producto-img-placeholder"><i class="fas fa-mountain"></i></div>
+                </div>
+                <div class="producto-info">
+                    <div class="producto-categoria">Origen Especial</div>
+                    <h3 class="producto-nombre">Washed Castillo Cauca</h3>
+                    <p class="producto-descripcion">Varietal Castillo lavado en su máxima expresión. Dulzura de panela,
+                        naranja y miel de abeja silvestre.</p>
+                    <div class="producto-rating">
+                        <span class="estrellas">★★★★★</span>
+                        <span class="rating-num">4.9 (58)</span>
+                    </div>
+                    <div class="producto-footer">
+                        <div class="producto-precio">
+                            <span class="precio-actual">$67.900</span>
+                            <span class="precio-unidad">300g · grano entero</span>
+                        </div>
+                        <button class="btn-agregar" onclick="agregarAlCarrito(6)">
+                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Producto 7 ── -->
+            <div class="producto-card" data-categoria="capsulas" data-id="7">
+                <div class="producto-badge badge-popular">⭐ Popular</div>
+                <button class="btn-favorito" aria-label="Agregar a favoritos">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="producto-img-wrap">
+                    <div class="producto-img-placeholder"><i class="fas fa-circle-dot"></i></div>
+                </div>
+                <div class="producto-info">
+                    <div class="producto-categoria">Cápsulas</div>
+                    <h3 class="producto-nombre">Cápsulas Dark Intenso</h3>
+                    <p class="producto-descripcion">Para los amantes del espresso potente. Alta intensidad, crema densa
+                        y retrogusto largo. Pack 20 uds.</p>
+                    <div class="producto-rating">
+                        <span class="estrellas">★★★★★</span>
+                        <span class="rating-num">4.8 (112)</span>
+                    </div>
+                    <div class="producto-footer">
+                        <div class="producto-precio">
+                            <span class="precio-antes">$72.000</span>
+                            <span class="precio-actual">$59.900</span>
+                            <span class="precio-unidad">20 cápsulas</span>
+                        </div>
+                        <button class="btn-agregar" onclick="agregarAlCarrito(7)">
+                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Producto 8 ── -->
+            <div class="producto-card" data-categoria="tueste-medio" data-id="8">
+                <button class="btn-favorito" aria-label="Agregar a favoritos">
+                    <i class="far fa-heart"></i>
+                </button>
+                <div class="producto-img-wrap">
+                    <div class="producto-img-placeholder"><i class="fas fa-box-open"></i></div>
+                </div>
+                <div class="producto-info">
+                    <div class="producto-categoria">Tueste Medio</div>
+                    <h3 class="producto-nombre">Kit Degustación Colombia</h3>
+                    <p class="producto-descripcion">Cuatro orígenes en un solo kit: Huila, Nariño, Cauca y Sierra
+                        Nevada. Ideal para regalar o explorar.</p>
+                    <div class="producto-rating">
+                        <span class="estrellas">★★★★★</span>
+                        <span class="rating-num">5.0 (22)</span>
+                    </div>
+                    <div class="producto-footer">
+                        <div class="producto-precio">
+                            <span class="precio-actual">$94.900</span>
+                            <span class="precio-unidad">4 × 100g · grano entero</span>
+                        </div>
+                        <button class="btn-agregar" onclick="agregarAlCarrito(8)">
+                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /productos-grid -->
+    </div><!-- /tienda-section -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         CARRITO — OVERLAY + DRAWER LATERAL
+    ══════════════════════════════════════════════════════════ -->
+    <div class="carrito-overlay" id="carritoOverlay" onclick="cerrarCarrito()"></div>
+
+    <div class="carrito-drawer" id="carritoDrawer" role="dialog" aria-label="Carrito de compras">
+
+        <div class="carrito-header">
+            <div class="carrito-titulo">
+                Carrito
+                <span id="carritoContadorHeader">0 artículos</span>
+            </div>
+            <button class="btn-cerrar-carrito" onclick="cerrarCarrito()" aria-label="Cerrar carrito">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Estado vacío -->
+        <div class="carrito-vacio" id="carritoVacio">
+            <i class="fas fa-bag-shopping"></i>
+            <div>
+                <strong>Tu carrito está vacío</strong>
+                <p>Agrega productos para comenzar tu pedido</p>
+            </div>
+        </div>
+
+        <!-- Lista de ítems (renderizada por JS) -->
+        <div class="carrito-items" id="carritoItemsList" style="display:none"></div>
+
+        <!-- Totales + acciones -->
+        <div class="carrito-footer" id="carritoFooter" style="display:none">
+            <div class="carrito-resumen">
+                <div class="resumen-fila">
+                    <span>Subtotal</span>
+                    <span id="subtotalCarrito">$0</span>
+                </div>
+                <div class="resumen-fila">
+                    <span>Envío</span>
+                    <span id="envioCarrito">Por calcular</span>
+                </div>
+                <div class="resumen-fila total">
+                    <span>Total</span>
+                    <span class="precio-total" id="totalCarrito">$0</span>
+                </div>
+            </div>
+            <button class="btn-checkout" onclick="abrirCheckout()">
+                <i class="fas fa-lock"></i> Finalizar pedido
+            </button>
+            <button class="btn-vaciar" onclick="vaciarCarrito()">Vaciar carrito</button>
+        </div>
+
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         BOTÓN FLOTANTE DEL CARRITO
+    ══════════════════════════════════════════════════════════ -->
+    <button class="btn-carrito-flotante" onclick="toggleCarrito()" aria-label="Abrir carrito">
+        <i class="fas fa-bag-shopping"></i>
+        <span class="carrito-badge oculto" id="carritoBadge">0</span>
+    </button>
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         CONTENEDOR DE TOASTS
+    ══════════════════════════════════════════════════════════ -->
+    <div class="toast-container-custom" id="toastContainer"></div>
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         MODAL CHECKOUT
+    ══════════════════════════════════════════════════════════ -->
+    <div class="modal-checkout-overlay" id="modalCheckoutOverlay">
+        <div class="modal-checkout" role="dialog" aria-label="Formulario de pedido">
+
+            <!-- Formulario -->
+            <div class="modal-form-content" id="modalFormContent">
+                <h2 class="modal-checkout-title">Finalizar pedido</h2>
+                <p class="modal-checkout-sub">Completa tus datos para procesar el envío</p>
+
+                <form id="formCheckout" novalidate>
+
+                    <div class="form-fila">
+                        <div class="form-grupo">
+                            <label for="co-nombre">Nombre</label>
+                            <input type="text" id="co-nombre" placeholder="Tu nombre" autocomplete="given-name">
+                            <div class="form-error-msg" id="err-nombre">Ingresa tu nombre (solo letras)</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="co-apellido">Apellido</label>
+                            <input type="text" id="co-apellido" placeholder="Tu apellido" autocomplete="family-name">
+                            <div class="form-error-msg" id="err-apellido">Ingresa tu apellido (solo letras)</div>
+                        </div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label for="co-email">Correo electrónico</label>
+                        <input type="email" id="co-email" placeholder="correo@ejemplo.com" autocomplete="email">
+                        <div class="form-error-msg" id="err-email">Ingresa un correo electrónico válido</div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label for="co-telefono">Teléfono</label>
+                        <input type="tel" id="co-telefono" placeholder="+57 300 000 0000" autocomplete="tel"
+                            maxlength="20">
+                        <div class="form-error-msg" id="err-telefono">Ingresa un número de teléfono válido</div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label for="co-ciudad">Ciudad</label>
+                        <select id="co-ciudad" autocomplete="address-level2">
+                            <option value="">Selecciona tu ciudad</option>
+                            <option>Bogotá</option>
+                            <option>Medellín</option>
+                            <option>Cali</option>
+                            <option>Barranquilla</option>
+                            <option>Bucaramanga</option>
+                            <option>Cartagena</option>
+                            <option>Pereira</option>
+                            <option>Manizales</option>
+                            <option>Armenia</option>
+                            <option>Otra ciudad</option>
+                        </select>
+                        <div class="form-error-msg" id="err-ciudad">Selecciona tu ciudad</div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label for="co-direccion">Dirección de entrega</label>
+                        <input type="text" id="co-direccion" placeholder="Calle 00 # 00-00, Apto/Casa"
+                            autocomplete="street-address">
+                        <div class="form-error-msg" id="err-direccion">Ingresa una dirección válida (mínimo 5
+                            caracteres)</div>
+                    </div>
+
+                    <!-- Resumen del pedido (llenado por JS) -->
+                    <div class="modal-checkout-resumen" id="modalResumen"></div>
+
+                    <div class="modal-acciones">
+                        <button type="button" class="btn-cancelar-modal" onclick="cerrarCheckout()">Volver</button>
+                        <button type="submit" class="btn-confirmar-modal">
+                            <i class="fas fa-check-circle"></i> Confirmar pedido
+                        </button>
+                    </div>
+
+                </form>
+            </div><!-- /modal-form-content -->
+
+            <!-- Estado de éxito -->
+            <div class="modal-success" id="modalSuccess">
+                <div class="success-icon"><i class="fas fa-check"></i></div>
+                <h3 class="success-titulo">¡Pedido confirmado!</h3>
+                <p class="success-msg">
+                    Hemos recibido tu pedido con éxito. Pronto te contactaremos al correo
+                    registrado para confirmar los detalles del envío.
+                    <br><br><strong>¡Gracias por elegir CoffeeCol!</strong>
+                </p>
+                <button class="btn-cerrar-success" onclick="cerrarTodo()">Continuar comprando</button>
+            </div>
+
+        </div>
+    </div><!-- /modal-checkout-overlay -->
+
+
 
     <section class="capsulas-servicio">
 
@@ -125,88 +596,15 @@
         </div>
     </section>
 
-    <section class="faq-section" id="faq">
-        <h2 class="faq-title">Lo que más nos preguntan</h2>
 
 
-        <div class="faq-container">
 
-            <!-- Columna izquierda: Preguntas -->
-            <div class="faq-left">
-                <div class="faq-items">
-
-                    <div class="faq-item active">
-                        <button class="faq-question">
-                            ¿Puedo traer mi propio café?
-                            <span class="icon">−</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Sí, trabajamos con el café que cultivas o con opciones seleccionadas si aún no tienes tu
-                                propio grano.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <button class="faq-question">
-                            ¿Cuál es la producción mínima?
-                            <span class="icon">＋</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Nuestra producción mínima es de 50 kg de café verde. Esto nos permite garantizar la
-                                calidad del proceso de tostado y ofrecer precios competitivos para nuestros clientes.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <button class="faq-question">
-                            ¿Puedo exportar con ustedes?
-                            <span class="icon">＋</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Sí, ofrecemos servicios de exportación. Contamos con todos los permisos y certificaciones
-                                necesarias para exportar café de alta calidad a diferentes países.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <button class="faq-question">
-                            ¿Ofrecen envases compostables?
-                            <span class="icon">＋</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Absolutamente. Tenemos una línea completa de envases biodegradables y compostables,
-                                comprometidos con la sostenibilidad ambiental.</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Columna derecha: Buscador + ayuda -->
-            <div class="faq-right">
-                <div class="faq-search">
-                    <input type="text" id="faqSearch" placeholder="Buscar..." />
-                    <i class="fas fa-search search-icon"></i>
-                </div>
-                <div class="faq-help">
-                    <h3>¡Necesitas ayuda!</h3>
-                    <p>Si tienes alguna pregunta o algo que decirnos no dudes en escribirnos, ¡estamos aquí para
-                        ayudarte!</p>
-                    <button class="contact-button">Contáctanos</button>
-                </div>
-            </div>
-
-        </div>
-
-    </section>
-
-            <!-- Granos de café -->
+    <!-- Granos de café -->
     <div class="image-container coffee-ms">
         <img src="../assets/imagenes/pepacafe.png" alt="Granos de café">
     </div>
 
-    <!-- Objeto 0 --> 
+    <!-- Objeto 0 -->
     <div class="image-container object-0">
         <img src="../assets/imagenes/OBJECTS55.png" alt="Objeto 0">
     </div>
@@ -230,7 +628,7 @@
     <div class="image-container coffeee-xr">
         <img src="../assets/imagenes/pepacafe.png" alt="Granos de café">
     </div>
-        <br>
+    <br>
 
     <div class="imagen-full">
         <img src="../assets/imagenes/banner23.png" alt="Banner">
@@ -256,191 +654,50 @@
         </footer>
     </div>
 
+    <!-- ══════════════════════════════════════════════════════════
+         SCRIPTS
+         Bootstrap primero, luego el JS de la tienda.
+    ══════════════════════════════════════════════════════════ -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-
+    <!-- Script global del sitio (scroll header, menú móvil, etc.) -->
     <script>
-        // === FUNCIONALIDAD FAQ ===
-        document.addEventListener('DOMContentLoaded', function () {
-            initializeFAQ();
-            initializeContactButton();
-            initializeSearch();
-        });
-
-        function initializeFAQ() {
-            const faqItems = document.querySelectorAll('.faq-item');
-
-            faqItems.forEach(item => {
-                const button = item.querySelector('.faq-question');
-
-                if (button) {
-                    button.addEventListener('click', () => toggleFAQItem(item, faqItems));
-
-                    button.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            toggleFAQItem(item, faqItems);
-                        }
-                    });
-                }
-            });
-        }
-
-        function toggleFAQItem(currentItem, allItems) {
-            const isCurrentlyActive = currentItem.classList.contains('active');
-
-            // Cerrar todos los otros items
-            allItems.forEach(item => {
-                if (item !== currentItem) {
-                    closeFAQItem(item);
-                }
-            });
-
-            // Toggle del item actual
-            if (isCurrentlyActive) {
-                closeFAQItem(currentItem);
-            } else {
-                openFAQItem(currentItem);
-            }
-        }
-
-        function openFAQItem(item) {
-            const icon = item.querySelector('.icon');
-            const answer = item.querySelector('.faq-answer');
-
-            item.classList.add('active');
-
-            if (icon) {
-                icon.textContent = '−';
-                icon.setAttribute('aria-expanded', 'true');
-            }
-
-            if (answer) {
-                answer.setAttribute('aria-hidden', 'false');
-            }
-        }
-
-        function closeFAQItem(item) {
-            const icon = item.querySelector('.icon');
-            const answer = item.querySelector('.faq-answer');
-
-            item.classList.remove('active');
-
-            if (icon) {
-                icon.textContent = '＋';
-                icon.setAttribute('aria-expanded', 'false');
-            }
-
-            if (answer) {
-                answer.setAttribute('aria-hidden', 'true');
-            }
-        }
-
-        function initializeContactButton() {
-            const contactButton = document.querySelector('.contact-button');
-
-            if (contactButton) {
-                contactButton.addEventListener('click', handleContactClick);
-
-                contactButton.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        handleContactClick();
-                    }
-                });
-            }
-        }
-
-        function handleContactClick() {
-            alert('¡Contáctanos!\n\nTeléfono: +57 300 123 4567\nEmail: info@cafeteria.com\nHorario: Lunes a Viernes 8:00 AM - 6:00 PM');
-        }
-
-        function initializeSearch() {
-            const searchInput = document.getElementById('faqSearch');
-            const faqItems = document.querySelectorAll('.faq-item');
-
-            if (searchInput) {
-                searchInput.addEventListener('input', function () {
-                    const searchTerm = this.value.toLowerCase();
-
-                    faqItems.forEach(item => {
-                        const question = item.querySelector('.faq-question').textContent.toLowerCase();
-                        const answer = item.querySelector('.faq-answer p').textContent.toLowerCase();
-
-                        if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-                            item.style.display = 'block';
-                        } else {
-                            item.style.display = searchTerm === '' ? 'block' : 'none';
-                        }
-                    });
-                });
-            }
-        }
-
-        // Funciones adicionales disponibles globalmente
-        window.FAQUtils = {
-            closeAll: function () {
-                const faqItems = document.querySelectorAll('.faq-item');
-                faqItems.forEach(item => closeFAQItem(item));
-            },
-            openByIndex: function (index) {
-                const faqItems = document.querySelectorAll('.faq-item');
-                if (faqItems[index]) {
-                    window.FAQUtils.closeAll();
-                    openFAQItem(faqItems[index]);
-                }
-            }
-        };
-
-        // ✅ JavaScript completo - mantiene bordes originales de 11px
-
+        /* ── Scroll del header (igual que en servicios.php original) ── */
         let ticking = false;
-
         function updateScrollPosition() {
             const scrolled = window.pageYOffset;
             const header = document.querySelector('.header-principal');
-
             if (scrolled > 50) {
-                // ✅ HEADER NEGRO al hacer scroll (mantiene bordes originales)
                 header.style.backdropFilter = 'blur(25px)';
                 header.style.background = 'rgba(0, 0, 0, 0.3)';
-                header.style.borderRadius = '11px'; //
+                header.style.borderRadius = '11px';
             } else {
-                // Estado original - transparente
                 header.style.backdropFilter = 'blur(20px)';
                 header.style.background = 'transparent';
                 header.style.borderRadius = '0';
             }
-
-
             ticking = false;
         }
+        window.addEventListener('scroll', () => {
+            if (!ticking) { requestAnimationFrame(updateScrollPosition); ticking = true; }
+        });
 
-        function requestTick() {
-            if (!ticking) {
-                requestAnimationFrame(updateScrollPosition);
-                ticking = true;
-            }
-        }
-
-        // ✅ Event listener para el scroll
-        window.addEventListener('scroll', requestTick);
-
-        // ✅ Cerrar menú móvil al hacer clic en un enlace
+        /* ── Cerrar menú móvil al hacer clic en un enlace ── */
         document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 const navbarCollapse = document.querySelector('.navbar-collapse');
                 if (navbarCollapse && navbarCollapse.classList.contains('show')) {
                     const collapse = bootstrap.Collapse.getInstance(navbarCollapse);
-                    if (collapse) {
-                        collapse.hide();
-                    }
+                    if (collapse) collapse.hide();
                 }
             });
         });
     </script>
 
- <!-- Bootstrap JS con Popper (necesario para navbar en móviles) -->
+
+    <!-- Bootstrap JS con Popper (necesario para navbar en móviles) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/service.js"></script>
 
 </body>
 

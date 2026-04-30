@@ -1,0 +1,273 @@
+:root {
+  --coffee: #3b2a1f;
+  --coffee-dark: #2a1d15;
+  --coffee-light: #5a3e2b;
+  --cream: #f5efe6;
+  --gold: #c8a96a;
+  --green: #4caf50;
+  --red: #e74c3c;
+  --gray: #777;
+  --bg: #f8f6f2;
+  --white: #ffffff;
+}
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--coffee);
+}
+
+/* LOGIN */
+#login-screen {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--coffee), var(--coffee-dark));
+}
+
+.login-card {
+  background: var(--white);
+  padding: 40px;
+  border-radius: 16px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.login-logo {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.login-card h1 {
+  margin-bottom: 5px;
+}
+
+.login-card p {
+  color: var(--gray);
+  margin-bottom: 20px;
+}
+
+.login-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.login-group label {
+  font-size: 13px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.login-group input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.btn-login {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: var(--coffee);
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-login:hover {
+  background: var(--coffee-light);
+}
+
+/* APP */
+#app {
+  display: none;
+}
+
+/* TOPBAR */
+.topbar {
+  background: var(--coffee);
+  color: white;
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar-logo span {
+  color: var(--gold);
+}
+
+.btn-logout {
+  background: var(--red);
+  border: none;
+  padding: 8px 12px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* MAIN */
+.admin-main {
+  padding: 25px;
+}
+
+/* STATS */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.stat-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.stat-icon {
+  font-size: 22px;
+}
+
+.stat-num {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* TABLE */
+.table-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.table-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.input-buscar {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.btn-nuevo {
+  background: var(--green);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* TABLA */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: var(--coffee);
+  color: white;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+tbody tr {
+  border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+  background: #f3eee7;
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-box {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 600px;
+  max-width: 90%;
+}
+
+.modal-title {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.f-group.full {
+  grid-column: 1 / 3;
+}
+
+.f-group input,
+.f-group select,
+.f-group textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* BOTONES */
+.modal-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-save {
+  background: var(--coffee);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+}
+
+.btn-cancel {
+  background: #ccc;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+}
