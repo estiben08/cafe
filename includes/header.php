@@ -870,13 +870,63 @@
                             </li>
                         </ul>
 
-                        <div class="social-icons">
-                            <a href="#" aria-label="Facebook"><i class="fa-solid fa-cart-shopping"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fa-solid fa-user"></i></a>
+                        <!-- Íconos header -->
+                        <div class="social-icons" style="position:relative;">
+                        <a href="#" aria-label="Carrito">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </a>
+
+                        <a href="includes/login.php" id="btn-usuario" aria-label="Usuario">
+                            <i class="fa-solid fa-user"></i>
+                        </a>
+
+                        <!-- Menú desplegable -->
+                        <div id="menu-usuario" class="menu-usuario-dropdown">
+                            <p id="nombre-usuario" class="menu-usuario-nombre"></p>
+                            <button id="btn-logout" class="menu-usuario-btn">
+                            <i class="fa-solid fa-right-from-bracket me-1"></i> Cerrar sesión
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
             </nav>
+
+            <script type="module">
+                import { observarUsuario, cerrarSesion } from '../js/auth.js';
+
+                const btnUsuario  = document.getElementById('btn-usuario');
+                const menuUsuario = document.getElementById('menu-usuario');
+                const nombreEl   = document.getElementById('nombre-usuario');
+
+                observarUsuario(
+                    (user) => {
+                    // Está logueado
+                    nombreEl.textContent = user.displayName || user.email;
+                    btnUsuario.removeAttribute('href');
+                    btnUsuario.style.cursor = 'pointer';
+                    btnUsuario.onclick = (e) => {
+                        e.preventDefault();
+                        menuUsuario.classList.toggle('visible');
+                    };
+                    },
+                    () => {
+                    // No logueado
+                    btnUsuario.href = 'includes/login.php';
+                    }
+                );
+
+                document.getElementById('btn-logout').addEventListener('click', () => {
+                    cerrarSesion();
+                });
+
+                // Cerrar menú al hacer clic fuera
+                document.addEventListener('click', (e) => {
+                    if (!btnUsuario?.contains(e.target) && !menuUsuario?.contains(e.target)) {
+                    menuUsuario.classList.remove('visible');
+                    }
+                });
+            </script>
         </header>
 
         <!-- Hero Section -->
