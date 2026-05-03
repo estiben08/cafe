@@ -141,259 +141,9 @@
     <!-- ══════════════════════════════════════════════════════════
          GRID DE PRODUCTOS
     ══════════════════════════════════════════════════════════ -->
-    <div class="tienda-section">
-
-        <div class="tienda-section-header">
-            <h2 class="tienda-section-title">Nuestros productos</h2>
-            <div class="tienda-section-line"></div>
-            <span class="tienda-section-count" id="contadorProductos">8 productos</span>
-        </div>
-
-        <div class="productos-grid" id="productosGrid">
-
-            <!-- ── Producto 1 ── -->
-            <div class="producto-card" data-categoria="tueste-medio" data-id="1">
-                <div class="producto-badge badge-popular">⭐ Popular</div>
-                <button class="btn-favorito" aria-label="Agregar a favoritos">
-                    <i class="far fa-heart"></i>
-                </button>
-                <div class="producto-img-wrap">
-                    <!-- Reemplaza por: <img class="producto-img" src="../assets/imagenes/producto1.jpg" alt="Supremo Huila Reserve"> -->
-                    <div class="producto-img-placeholder"><i class="fas fa-mug-hot"></i></div>
-                </div>
-                <div class="producto-info">
-                    <div class="producto-categoria">Tueste Medio</div>
-                    <h3 class="producto-nombre">Supremo Huila Reserve</h3>
-                    <p class="producto-descripcion">Notas de caramelo, frutos rojos y chocolate oscuro. Acidez
-                        balanceada con cuerpo completo.</p>
-                    <div class="producto-rating">
-                        <span class="estrellas">★★★★★</span>
-                        <span class="rating-num">4.9 (128)</span>
-                    </div>
-                    <div class="producto-footer">
-                        <div class="producto-precio">
-                            <span class="precio-antes">$58.000</span>
-                            <span class="precio-actual">$49.900</span>
-                            <span class="precio-unidad">500g · molido o en grano</span>
-                        </div>
-                        <button class="btn-agregar" onclick="agregarAlCarrito(1)">
-                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ── Producto 2 ── -->
-            <div class="producto-card" data-categoria="origen-especial" data-id="2">
-                <div class="producto-badge badge-limitado">Limitado</div>
-                <button class="btn-favorito" aria-label="Agregar a favoritos">
-                    <i class="far fa-heart"></i>
-                </button>
-                <div class="producto-img-wrap">
-                    <div class="producto-img-placeholder"><i class="fas fa-seedling"></i></div>
-                </div>
-                <div class="producto-info">
-                    <div class="producto-categoria">Origen Especial</div>
-                    <h3 class="producto-nombre">Geisha Nariño Natural</h3>
-                    <p class="producto-descripcion">Perfil floral único con notas de jazmín, melocotón y té blanco.
-                        Proceso natural de fermentación.</p>
-                    <div class="producto-rating">
-                        <span class="estrellas">★★★★★</span>
-                        <span class="rating-num">5.0 (43)</span>
-                    </div>
-                    <div class="producto-footer">
-                        <div class="producto-precio">
-                            <span class="precio-actual">$89.900</span>
-                            <span class="precio-unidad">200g · grano entero</span>
-                        </div>
-                        <button class="btn-agregar" onclick="agregarAlCarrito(2)">
-                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ── Producto 3 ── -->
-            <div class="producto-card" data-categoria="capsulas" data-id="3">
-                <div class="producto-badge badge-nuevo">Nuevo</div>
-                <button class="btn-favorito" aria-label="Agregar a favoritos">
-                    <i class="far fa-heart"></i>
-                </button>
-                <div class="producto-img-wrap">
-                    <div class="producto-img-placeholder"><i class="fas fa-capsules"></i></div>
-                </div>
-                <div class="producto-info">
-                    <div class="producto-categoria">Cápsulas</div>
-                    <h3 class="producto-nombre">Cápsulas Blend Andino</h3>
-                    <p class="producto-descripcion">Compatibles con Nespresso®. Mezcla de orígenes colombianos,
-                        intensidad media. Caja de 10 unidades.</p>
-                    <div class="producto-rating">
-                        <span class="estrellas">★★★★☆</span>
-                        <span class="rating-num">4.7 (67)</span>
-                    </div>
-                    <div class="producto-footer">
-                        <div class="producto-precio">
-                            <span class="precio-actual">$32.900</span>
-                            <span class="precio-unidad">10 cápsulas</span>
-                        </div>
-                        <button class="btn-agregar" onclick="agregarAlCarrito(3)">
-                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ── Producto 4 ── -->
-            <div class="producto-card" data-categoria="tueste-oscuro" data-id="4">
-                <button class="btn-favorito" aria-label="Agregar a favoritos">
-                    <i class="far fa-heart"></i>
-                </button>
-                <div class="producto-img-wrap">
-                    <div class="producto-img-placeholder"><i class="fas fa-fire"></i></div>
-                </div>
-                <div class="producto-info">
-                    <div class="producto-categoria">Tueste Oscuro</div>
-                    <h3 class="producto-nombre">Volcánico Espresso Blend</h3>
-                    <p class="producto-descripcion">Intenso y robusto. Cuerpo pleno con notas de chocolate amargo, nuez
-                        y un final largo y persistente.</p>
-                    <div class="producto-rating">
-                        <span class="estrellas">★★★★★</span>
-                        <span class="rating-num">4.8 (95)</span>
-                    </div>
-                    <div class="producto-footer">
-                        <div class="producto-precio">
-                            <span class="precio-antes">$52.000</span>
-                            <span class="precio-actual">$44.900</span>
-                            <span class="precio-unidad">500g · molido espresso</span>
-                        </div>
-                        <button class="btn-agregar" onclick="agregarAlCarrito(4)">
-                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ── Producto 5 ── -->
-            <div class="producto-card" data-categoria="tueste-claro" data-id="5">
-                <div class="producto-badge badge-nuevo">Nuevo</div>
-                <button class="btn-favorito" aria-label="Agregar a favoritos">
-                    <i class="far fa-heart"></i>
-                </button>
-                <div class="producto-img-wrap">
-                    <div class="producto-img-placeholder"><i class="fas fa-sun"></i></div>
-                </div>
-                <div class="producto-info">
-                    <div class="producto-categoria">Tueste Claro</div>
-                    <h3 class="producto-nombre">Aurora Cold Brew</h3>
-                    <p class="producto-descripcion">Perfil luminoso para cold brew o filtrado. Acidez vívida con notas
-                        cítricas, uva verde y lavanda.</p>
-                    <div class="producto-rating">
-                        <span class="estrellas">★★★★☆</span>
-                        <span class="rating-num">4.6 (31)</span>
-                    </div>
-                    <div class="producto-footer">
-                        <div class="producto-precio">
-                            <span class="precio-actual">$54.900</span>
-                            <span class="precio-unidad">250g · molido grueso</span>
-                        </div>
-                        <button class="btn-agregar" onclick="agregarAlCarrito(5)">
-                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ── Producto 6 ── -->
-            <div class="producto-card" data-categoria="origen-especial" data-id="6">
-                <button class="btn-favorito" aria-label="Agregar a favoritos">
-                    <i class="far fa-heart"></i>
-                </button>
-                <div class="producto-img-wrap">
-                    <div class="producto-img-placeholder"><i class="fas fa-mountain"></i></div>
-                </div>
-                <div class="producto-info">
-                    <div class="producto-categoria">Origen Especial</div>
-                    <h3 class="producto-nombre">Washed Castillo Cauca</h3>
-                    <p class="producto-descripcion">Varietal Castillo lavado en su máxima expresión. Dulzura de panela,
-                        naranja y miel de abeja silvestre.</p>
-                    <div class="producto-rating">
-                        <span class="estrellas">★★★★★</span>
-                        <span class="rating-num">4.9 (58)</span>
-                    </div>
-                    <div class="producto-footer">
-                        <div class="producto-precio">
-                            <span class="precio-actual">$67.900</span>
-                            <span class="precio-unidad">300g · grano entero</span>
-                        </div>
-                        <button class="btn-agregar" onclick="agregarAlCarrito(6)">
-                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ── Producto 7 ── -->
-            <div class="producto-card" data-categoria="capsulas" data-id="7">
-                <div class="producto-badge badge-popular">⭐ Popular</div>
-                <button class="btn-favorito" aria-label="Agregar a favoritos">
-                    <i class="far fa-heart"></i>
-                </button>
-                <div class="producto-img-wrap">
-                    <div class="producto-img-placeholder"><i class="fas fa-circle-dot"></i></div>
-                </div>
-                <div class="producto-info">
-                    <div class="producto-categoria">Cápsulas</div>
-                    <h3 class="producto-nombre">Cápsulas Dark Intenso</h3>
-                    <p class="producto-descripcion">Para los amantes del espresso potente. Alta intensidad, crema densa
-                        y retrogusto largo. Pack 20 uds.</p>
-                    <div class="producto-rating">
-                        <span class="estrellas">★★★★★</span>
-                        <span class="rating-num">4.8 (112)</span>
-                    </div>
-                    <div class="producto-footer">
-                        <div class="producto-precio">
-                            <span class="precio-antes">$72.000</span>
-                            <span class="precio-actual">$59.900</span>
-                            <span class="precio-unidad">20 cápsulas</span>
-                        </div>
-                        <button class="btn-agregar" onclick="agregarAlCarrito(7)">
-                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ── Producto 8 ── -->
-            <div class="producto-card" data-categoria="tueste-medio" data-id="8">
-                <button class="btn-favorito" aria-label="Agregar a favoritos">
-                    <i class="far fa-heart"></i>
-                </button>
-                <div class="producto-img-wrap">
-                    <div class="producto-img-placeholder"><i class="fas fa-box-open"></i></div>
-                </div>
-                <div class="producto-info">
-                    <div class="producto-categoria">Tueste Medio</div>
-                    <h3 class="producto-nombre">Kit Degustación Colombia</h3>
-                    <p class="producto-descripcion">Cuatro orígenes en un solo kit: Huila, Nariño, Cauca y Sierra
-                        Nevada. Ideal para regalar o explorar.</p>
-                    <div class="producto-rating">
-                        <span class="estrellas">★★★★★</span>
-                        <span class="rating-num">5.0 (22)</span>
-                    </div>
-                    <div class="producto-footer">
-                        <div class="producto-precio">
-                            <span class="precio-actual">$94.900</span>
-                            <span class="precio-unidad">4 × 100g · grano entero</span>
-                        </div>
-                        <button class="btn-agregar" onclick="agregarAlCarrito(8)">
-                            <i class="fas fa-bag-shopping"></i><span>Agregar</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-        </div><!-- /productos-grid -->
-    </div><!-- /tienda-section -->
+    <div class="productos-grid" id="productosGrid">
+        <!-- Se llenará con JS -->
+    </div>
 
 
     <!-- ══════════════════════════════════════════════════════════
@@ -487,7 +237,8 @@
                         <div class="form-grupo">
                             <label for="co-apellido">Apellido</label>
                             <input type="text" id="co-apellido" placeholder="Tu apellido" autocomplete="family-name">
-                            <div class="form-error-msg" id="err-apellido">Ingresa tu apellido (solo letras)</div>
+                            <div class="form-error-msg" id="err-apellido">Ingresa tu apellido (solo letras)
+                            </div>
                         </div>
                     </div>
 
@@ -568,7 +319,8 @@
                 <h2>Maquila de cápsulas</h2>
                 <h3>Maquilamos tu café en cápsulas listas para competir.</h3>
                 <p>
-                    Procesamos tu café en cápsulas compatibles con los sistemas más reconocidos. Nuestro control preciso
+                    Procesamos tu café en cápsulas compatibles con los sistemas más reconocidos. Nuestro control
+                    preciso
                     de
                     temperatura y humedad asegura que cada cápsula preserve los matices únicos del origen.
                 </p>
@@ -586,7 +338,8 @@
                     <strong class="texto-fijo">Nosotros te ayudamos a contarla</strong>
                 </h4>
                 <p>
-                    Desde definir el tueste perfecto, hasta elegir el diseño del empaque y el canal de venta ideal. Te
+                    Desde definir el tueste perfecto, hasta elegir el diseño del empaque y el canal de venta
+                    ideal. Te
                     acompañamos en cada paso para que tu marca llegue lista y sólida al mercado.
                 </p>
             </div>

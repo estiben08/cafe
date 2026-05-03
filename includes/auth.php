@@ -1,46 +1,87 @@
 <?php
+header("Content-Type: application/json");
+require_once __DIR__ . '/../vendor/autoload.php';
 
+use Firebase\JWT\JWT;
+use Dotenv\Dotenv;
 
-require_once __DIR__ . '/../assets/conexion/config.php';
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['success' => false, 'error' => 'Solo POST.']);
+$key = $_ENV['JWT_SECRET'];
+
+// ✅ RATE LIMITING
+session_start();
+$ip = $_SERVER['REMOTE_ADDR'];
+$key_intentos = "intentos_" . $ip;
+
+if (!isset($_SESSION[$key_intentos])) {
+    $_SESSION[$key_intentos] = ['cantidad' => 0, 'ultimo' => time()];
+}
+
+// Resetear después de 15 minutos
+if (time() - $_SESSION[$key_intentos]['ultimo'] > 900) {
+    $_SESSION[$key_intentos] = ['cantidad' => 0, 'ultimo' => time()];
+}
+
+// Bloquear después de 5 intentos
+if ($_SESSION[$key_intentos]['cantidad'] >= 5) {
+    $espera = 900 - (time() - $_SESSION[$key_intentos]['ultimo']);
+    http_response_code(429);
+    echo json_encode([
+        "success" => false,
+        "error"   => "Demasiados intentos. Espera " . ceil($espera / 60) . " minutos."
+    ]);
     exit;
 }
 
-$data     = json_decode(file_get_contents('php://input'), true) ?? [];
-$usuario  = trim($data['usuario'] ?? '');
-$password = $data['password'] ?? '';
+$data = json_decode(file_get_contents("php://input"), true);
 
-if (!$usuario || !$password) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'error' => 'Usuario y contraseña requeridos.']);
+if (!$data || !isset($data['usuario']) || !isset($data['password'])) {
+    echo json_encode(["success" => false, "error" => "Datos incompletos"]);
     exit;
 }
 
-$conn = getConnection();
-$stmt = $conn->prepare('SELECT password_hash FROM admin_usuarios WHERE usuario = ? LIMIT 1');
-$stmt->bind_param('s', $usuario);
+$conn = new mysqli(
+    $_ENV['DB_HOST'],
+    $_ENV['DB_USER'],
+    $_ENV['DB_PASS'],
+    $_ENV['DB_NAME']
+);
+
+if ($conn->connect_error) {
+    echo json_encode(["success" => false, "error" => "Error de conexión"]);
+    exit;
+}
+
+$stmt = $conn->prepare("SELECT password FROM admin WHERE usuario = ? LIMIT 1");
+$stmt->bind_param("s", $data['usuario']);
 $stmt->execute();
-$row = $stmt->get_result()->fetch_assoc();
-$conn->close();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
 
-if (!$row || !password_verify($password, $row['password_hash'])) {
-    http_response_code(401);
-    echo json_encode(['success' => false, 'error' => 'Credenciales incorrectas.']);
+if (!$row || !password_verify($data['password'], $row['password'])) {
+    // ✅ Sumar intento fallido
+    $_SESSION[$key_intentos]['cantidad']++;
+    $_SESSION[$key_intentos]['ultimo'] = time();
+
+    $restantes = 5 - $_SESSION[$key_intentos]['cantidad'];
+    echo json_encode([
+        "success" => false,
+        "error"   => "Credenciales incorrectas. Intentos restantes: $restantes"
+    ]);
     exit;
 }
 
-/* ── Generar token diario ── */
-$secret  = 'coffeecol_secret_2024';   // Debe coincidir con products.php
-$today   = date('Y-m-d');
-$tomorrow = date('Y-m-d', strtotime('+1 day'));
-$token   = hash('sha256', $usuario . '|' . $today . $secret);
+// ✅ Login exitoso — resetear intentos
+$_SESSION[$key_intentos] = ['cantidad' => 0, 'ultimo' => time()];
 
-echo json_encode([
-    'success' => true,
-    'token'   => $token,
-    'expira'  => $tomorrow,
-    'usuario' => $usuario,
-]);
+$payload = [
+    "sub" => $data['usuario'],
+    "iat" => time(),
+    "exp" => time() + (60 * 60)
+];
+
+$token = JWT::encode($payload, $key, 'HS256');
+
+echo json_encode(["success" => true, "token" => $token]);
