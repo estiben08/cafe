@@ -1,4 +1,10 @@
-# .htaccess
-<Files "conexion.php">
-    deny from all
+Order allow,deny
+Allow from all
+
+<Files "auth.php">
+    Require local
+</Files>
+
+<Files "auth_middleware.php">
+    Require local
 </Files>

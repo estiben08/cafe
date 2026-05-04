@@ -4,6 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "9de9e7dd48eb7bffa166b976156e9139",
     "packages": [
         {
@@ -123,6 +124,11 @@
             "time": "2020-11-24T22:02:12+00:00"
         },
         {
+=======
+    "content-hash": "6bfa10c3f83a313d68a5baa346cab4f2",
+    "packages": [
+        {
+>>>>>>> 5df6e2030835d47956cdfc09be98d306cf76c28e
             "name": "firebase/php-jwt",
             "version": "v7.0.5",
             "source": {
@@ -187,6 +193,7 @@
             "time": "2026-04-01T20:38:03+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "google/auth",
             "version": "v1.50.1",
             "source": {
@@ -699,12 +706,96 @@
                 "ext-curl": "Required for CURL handler support",
                 "ext-intl": "Required for Internationalized Domain Name (IDN) support",
                 "psr/log": "Required for using the Log middleware"
+=======
+            "name": "graham-campbell/result-type",
+            "version": "v1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GrahamCampbell/Result-Type.git",
+                "reference": "e01f4a821471308ba86aa202fed6698b6b695e3b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GrahamCampbell/Result-Type/zipball/e01f4a821471308ba86aa202fed6698b6b695e3b",
+                "reference": "e01f4a821471308ba86aa202fed6698b6b695e3b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2.5 || ^8.0",
+                "phpoption/phpoption": "^1.9.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5.41 || ^9.6.22 || ^10.5.45 || ^11.5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GrahamCampbell\\ResultType\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
+                }
+            ],
+            "description": "An Implementation Of The Result Type",
+            "keywords": [
+                "Graham Campbell",
+                "GrahamCampbell",
+                "Result Type",
+                "Result-Type",
+                "result"
+            ],
+            "support": {
+                "issues": "https://github.com/GrahamCampbell/Result-Type/issues",
+                "source": "https://github.com/GrahamCampbell/Result-Type/tree/v1.1.4"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/graham-campbell/result-type",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2025-12-27T19:43:20+00:00"
+        },
+        {
+            "name": "phpoption/phpoption",
+            "version": "1.9.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmittjoh/php-option.git",
+                "reference": "75365b91986c2405cf5e1e012c5595cd487a98be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/75365b91986c2405cf5e1e012c5595cd487a98be",
+                "reference": "75365b91986c2405cf5e1e012c5595cd487a98be",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2.5 || ^8.0"
+            },
+            "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.8.2",
+                "phpunit/phpunit": "^8.5.44 || ^9.6.25 || ^10.5.53 || ^11.5.34"
+>>>>>>> 5df6e2030835d47956cdfc09be98d306cf76c28e
             },
             "type": "library",
             "extra": {
                 "bamarni-bin": {
                     "bin-links": true,
                     "forward-command": false
+<<<<<<< HEAD
                 }
             },
             "autoload": {
@@ -713,10 +804,21 @@
                 ],
                 "psr-4": {
                     "GuzzleHttp\\": "src/"
+=======
+                },
+                "branch-alias": {
+                    "dev-master": "1.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PhpOption\\": "src/PhpOption/"
+>>>>>>> 5df6e2030835d47956cdfc09be98d306cf76c28e
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
+<<<<<<< HEAD
                 "MIT"
             ],
             "authors": [
@@ -771,6 +873,32 @@
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
                 "source": "https://github.com/guzzle/guzzle/tree/7.9.3"
+=======
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com",
+                    "homepage": "https://github.com/schmittjoh"
+                },
+                {
+                    "name": "Graham Campbell",
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
+                }
+            ],
+            "description": "Option Type for PHP",
+            "keywords": [
+                "language",
+                "option",
+                "php",
+                "type"
+            ],
+            "support": {
+                "issues": "https://github.com/schmittjoh/php-option/issues",
+                "source": "https://github.com/schmittjoh/php-option/tree/1.9.5"
+>>>>>>> 5df6e2030835d47956cdfc09be98d306cf76c28e
             },
             "funding": [
                 {
@@ -778,6 +906,7 @@
                     "type": "github"
                 },
                 {
+<<<<<<< HEAD
                     "url": "https://github.com/Nyholm",
                     "type": "github"
                 },
@@ -2259,21 +2388,64 @@
             },
             "require": {
                 "php": ">=8.1"
+=======
+                    "url": "https://tidelift.com/funding/github/packagist/phpoption/phpoption",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2025-12-27T19:41:33+00:00"
+        },
+        {
+            "name": "symfony/polyfill-ctype",
+            "version": "v1.37.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-ctype.git",
+                "reference": "141046a8f9477948ff284fa65be2095baafb94f2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/141046a8f9477948ff284fa65be2095baafb94f2",
+                "reference": "141046a8f9477948ff284fa65be2095baafb94f2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "provide": {
+                "ext-ctype": "*"
+            },
+            "suggest": {
+                "ext-ctype": "For best performance"
+>>>>>>> 5df6e2030835d47956cdfc09be98d306cf76c28e
             },
             "type": "library",
             "extra": {
                 "thanks": {
+<<<<<<< HEAD
                     "url": "https://github.com/symfony/contracts",
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
                     "dev-main": "3.6-dev"
+=======
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
+>>>>>>> 5df6e2030835d47956cdfc09be98d306cf76c28e
                 }
             },
             "autoload": {
                 "files": [
+<<<<<<< HEAD
                     "function.php"
                 ]
+=======
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Ctype\\": ""
+                }
+>>>>>>> 5df6e2030835d47956cdfc09be98d306cf76c28e
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2281,18 +2453,36 @@
             ],
             "authors": [
                 {
+<<<<<<< HEAD
                     "name": "Nicolas Grekas",
                     "email": "p@tchwork.com"
+=======
+                    "name": "Gert de Pagter",
+                    "email": "BackEndTea@gmail.com"
+>>>>>>> 5df6e2030835d47956cdfc09be98d306cf76c28e
                 },
                 {
                     "name": "Symfony Community",
                     "homepage": "https://symfony.com/contributors"
                 }
             ],
+<<<<<<< HEAD
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
                 "source": "https://github.com/symfony/deprecation-contracts/tree/v3.6.0"
+=======
+            "description": "Symfony polyfill for ctype functions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "ctype",
+                "polyfill",
+                "portable"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.37.0"
+>>>>>>> 5df6e2030835d47956cdfc09be98d306cf76c28e
             },
             "funding": [
                 {
@@ -2304,11 +2494,22 @@
                     "type": "github"
                 },
                 {
+<<<<<<< HEAD
+=======
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+>>>>>>> 5df6e2030835d47956cdfc09be98d306cf76c28e
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2024-09-25T14:21:43+00:00"
+=======
+            "time": "2026-04-10T16:19:22+00:00"
+>>>>>>> 5df6e2030835d47956cdfc09be98d306cf76c28e
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2480,6 +2681,7 @@
             "time": "2026-04-10T16:19:22+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "symfony/polyfill-php81",
             "version": "v1.37.0",
             "source": {
@@ -2558,6 +2760,90 @@
                 }
             ],
             "time": "2024-09-09T11:45:10+00:00"
+=======
+            "name": "vlucas/phpdotenv",
+            "version": "v5.6.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vlucas/phpdotenv.git",
+                "reference": "955e7815d677a3eaa7075231212f2110983adecc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/955e7815d677a3eaa7075231212f2110983adecc",
+                "reference": "955e7815d677a3eaa7075231212f2110983adecc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "graham-campbell/result-type": "^1.1.4",
+                "php": "^7.2.5 || ^8.0",
+                "phpoption/phpoption": "^1.9.5",
+                "symfony/polyfill-ctype": "^1.26",
+                "symfony/polyfill-mbstring": "^1.26",
+                "symfony/polyfill-php80": "^1.26"
+            },
+            "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.8.2",
+                "ext-filter": "*",
+                "phpunit/phpunit": "^8.5.34 || ^9.6.13 || ^10.4.2"
+            },
+            "suggest": {
+                "ext-filter": "Required to use the boolean validator."
+            },
+            "type": "library",
+            "extra": {
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": false
+                },
+                "branch-alias": {
+                    "dev-master": "5.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dotenv\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
+                },
+                {
+                    "name": "Vance Lucas",
+                    "email": "vance@vancelucas.com",
+                    "homepage": "https://github.com/vlucas"
+                }
+            ],
+            "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
+            "keywords": [
+                "dotenv",
+                "env",
+                "environment"
+            ],
+            "support": {
+                "issues": "https://github.com/vlucas/phpdotenv/issues",
+                "source": "https://github.com/vlucas/phpdotenv/tree/v5.6.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/vlucas/phpdotenv",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2025-12-27T19:49:13+00:00"
+>>>>>>> 5df6e2030835d47956cdfc09be98d306cf76c28e
         }
     ],
     "packages-dev": [],
