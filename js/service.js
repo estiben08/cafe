@@ -2,15 +2,11 @@
 
 /* ============================================================
    CONFIGURACIÓN
-   Ajusta API_URL según tu estructura de carpetas.
-   Si service.js está en /js/ y la API en /api/, la ruta es '../api/products.php'
 ============================================================ */
-const API_URL = '../includes/products.php';
+const API_URL = '../api/products.php';
 
 /* ============================================================
    CATÁLOGO EN MEMORIA
-   Se puebla dinámicamente desde la API al cargar la página.
-   Estructura: { [id]: { nombre, precio, icono } }
 ============================================================ */
 let PRODUCTOS = {};
 
@@ -27,7 +23,6 @@ const CATEGORIAS_NOMBRE = {
 
 /* ============================================================
    ESTADO DEL CARRITO
-   Se persiste en localStorage automáticamente.
 ============================================================ */
 let carrito = {};
 
@@ -48,7 +43,7 @@ function formatearPrecio(n) {
 }
 
 /* ============================================================
-   ESTRELLAS — genera el string de estrellas según valor
+   ESTRELLAS
 ============================================================ */
 function generarEstrellas(valor) {
     const llenas = Math.round(parseFloat(valor) || 5);
@@ -70,9 +65,7 @@ function cargarCarritoLocal() {
     try {
         const saved = localStorage.getItem(LS_KEY);
         if (saved) carrito = JSON.parse(saved) || {};
-    } catch (_) {
-        carrito = {};
-    }
+    } catch (_) { carrito = {}; }
 }
 
 /* ============================================================
@@ -82,39 +75,31 @@ async function cargarProductos() {
     const grid = document.getElementById('productosGrid');
     if (!grid) return;
 
-    // Esqueleto de carga
     grid.innerHTML = generarEsqueletos(4);
 
     try {
         const res  = await fetch(API_URL);
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
-
         if (!data.success) throw new Error(data.error || 'Error de API');
 
         const productos = data.productos || [];
 
-        // Poblar catálogo en memoria
         PRODUCTOS = {};
         productos.forEach(p => {
-            PRODUCTOS[p.id] = { nombre: p.nombre, precio: p.precio, icono: p.icono };
+            PRODUCTOS[p.id] = { nombre: p.nombre, precio: p.precio, icono: p.icono, imagen: p.imagen };
         });
 
-        // Renderizar tarjetas
         renderizarProductos(productos);
 
-        // Actualizar contador
         const contador = document.getElementById('contadorProductos');
         if (contador) {
             contador.textContent = `${productos.length} producto${productos.length !== 1 ? 's' : ''}`;
         }
 
-        // Re-inicializar features que dependen del DOM
         inicializarFiltros();
         inicializarFavoritos();
         inicializarAnimaciones();
-
-        // Sincronizar carrito (por si hay ítems guardados de sesiones previas)
         reconstruirCarritoDesdeLocal();
 
     } catch (err) {
@@ -128,16 +113,10 @@ async function cargarProductos() {
     }
 }
 
-/**
- * Tras restaurar el carrito del localStorage, eliminamos ítems
- * cuyo ID ya no existe en PRODUCTOS (fueron borrados del admin).
- */
 function reconstruirCarritoDesdeLocal() {
     const idsValidos = Object.keys(PRODUCTOS).map(Number);
     Object.keys(carrito).forEach(id => {
-        if (!idsValidos.includes(parseInt(id, 10))) {
-            delete carrito[id];
-        }
+        if (!idsValidos.includes(parseInt(id, 10))) delete carrito[id];
     });
     guardarCarritoLocal();
     actualizarUI();
@@ -145,8 +124,7 @@ function reconstruirCarritoDesdeLocal() {
 
 /* ============================================================
    RENDER DE TARJETAS DE PRODUCTO
-   Reproduce fielmente la estructura HTML de servicios.php,
-   usando las mismas clases CSS sin modificarlas.
+   — Muestra imagen real si existe, ícono FA como fallback.
 ============================================================ */
 function renderizarProductos(productos) {
     const grid = document.getElementById('productosGrid');
@@ -161,6 +139,7 @@ function renderizarProductos(productos) {
     }
 
     grid.innerHTML = productos.map(p => {
+
         const badgeHTML = p.badge && p.badge_tipo
             ? `<div class="producto-badge ${sanitizar(p.badge_tipo)}">${sanitizar(p.badge)}</div>`
             : '';
@@ -172,6 +151,26 @@ function renderizarProductos(productos) {
         const categoriaNombre = CATEGORIAS_NOMBRE[p.categoria] || p.categoria;
         const estrellas       = generarEstrellas(p.rating_valor);
 
+        /*
+         * ── IMAGEN vs ÍCONO ──────────────────────────────────
+         * Si el producto tiene imagen guardada en BD, usamos <img>.
+         * Si no, mostramos el ícono de Font Awesome como antes.
+         */
+        const mediaHTML = p.imagen
+            ? `<img
+                    src="../${sanitizar(p.imagen)}"
+                    alt="${sanitizar(p.nombre)}"
+                    class="producto-img-real"
+                    loading="lazy"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+               >
+               <div class="producto-img-fallback" style="display:none;">
+                   <i class="fas ${sanitizar(p.icono || 'fa-mug-hot')}"></i>
+               </div>`
+            : `<div class="producto-img-fallback">
+                   <i class="fas ${sanitizar(p.icono || 'fa-mug-hot')}"></i>
+               </div>`;
+
         return `
         <div class="producto-card" data-categoria="${sanitizar(p.categoria)}" data-id="${p.id}">
             ${badgeHTML}
@@ -179,9 +178,7 @@ function renderizarProductos(productos) {
                 <i class="far fa-heart"></i>
             </button>
             <div class="producto-img-wrap">
-                <div class="producto-img-placeholder">
-                    <i class="fas ${sanitizar(p.icono)}"></i>
-                </div>
+                ${mediaHTML}
             </div>
             <div class="producto-info">
                 <div class="producto-categoria">${sanitizar(categoriaNombre)}</div>
@@ -204,11 +201,36 @@ function renderizarProductos(productos) {
             </div>
         </div>`;
     }).join('');
+
+    /* Inyectar estilos para imagen real (una sola vez) */
+    if (!document.getElementById('producto-img-styles')) {
+        const st = document.createElement('style');
+        st.id = 'producto-img-styles';
+        st.textContent = `
+            .producto-img-real {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                border-radius: inherit;
+                transition: transform 0.4s ease;
+            }
+            .producto-card:hover .producto-img-real {
+                transform: scale(1.06);
+            }
+            .producto-img-fallback {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        `;
+        document.head.appendChild(st);
+    }
 }
 
-/**
- * Genera tarjetas de carga "esqueleto" mientras llega la API.
- */
+/* Esqueletos de carga */
 function generarEsqueletos(n) {
     const card = `
         <div class="producto-card visible" style="pointer-events:none;">
@@ -222,7 +244,6 @@ function generarEsqueletos(n) {
             </div>
         </div>`;
 
-    // Añadir animación shimmer si no existe
     if (!document.getElementById('shimmer-style')) {
         const st = document.createElement('style');
         st.id = 'shimmer-style';
@@ -236,7 +257,6 @@ function generarEsqueletos(n) {
 /* ============================================================
    CARRITO — OPERACIONES CRUD
 ============================================================ */
-
 function agregarAlCarrito(productoId) {
     const id = parseInt(productoId, 10);
     if (isNaN(id) || !PRODUCTOS[id]) return;
@@ -251,29 +271,20 @@ function agregarAlCarrito(productoId) {
     actualizarUI();
     mostrarToast(sanitizar(PRODUCTOS[id].nombre) + ' agregado al carrito', 'fa-bag-shopping');
 
-    // Feedback visual en el botón
     const btn = document.querySelector(`[data-id="${id}"] .btn-agregar`);
     if (btn) {
         btn.classList.add('agregado');
         const textoOriginal = btn.innerHTML;
         btn.innerHTML = '<i class="fas fa-check"></i><span>¡Listo!</span>';
-        setTimeout(() => {
-            btn.classList.remove('agregado');
-            btn.innerHTML = textoOriginal;
-        }, 1400);
+        setTimeout(() => { btn.classList.remove('agregado'); btn.innerHTML = textoOriginal; }, 1400);
     }
 }
 
 function cambiarCantidad(id, delta) {
     id = parseInt(id, 10);
     if (!carrito[id]) return;
-
     carrito[id].cantidad += delta;
-
-    if (carrito[id].cantidad <= 0) {
-        delete carrito[id];
-    }
-
+    if (carrito[id].cantidad <= 0) delete carrito[id];
     guardarCarritoLocal();
     actualizarUI();
 }
@@ -298,25 +309,21 @@ function vaciarCarrito() {
    CARRITO — ACTUALIZACIÓN DE LA INTERFAZ
 ============================================================ */
 function actualizarUI() {
-    const ids        = Object.keys(carrito);
-    const totalItems = ids.reduce((s, id) => s + carrito[id].cantidad, 0);
-    const subtotal   = ids.reduce((s, id) => s + carrito[id].precio * carrito[id].cantidad, 0);
+    const ids         = Object.keys(carrito);
+    const totalItems  = ids.reduce((s, id) => s + carrito[id].cantidad, 0);
+    const subtotal    = ids.reduce((s, id) => s + carrito[id].precio * carrito[id].cantidad, 0);
     const envioGratis = subtotal >= 150000;
     const costoEnvio  = subtotal > 0 ? (envioGratis ? 0 : 12000) : 0;
     const total       = subtotal + costoEnvio;
 
-    // Badge flotante
     const badge = document.getElementById('carritoBadge');
     if (badge) {
         badge.textContent = totalItems;
         badge.classList.toggle('oculto', totalItems === 0);
     }
 
-    // Contador en header del drawer
     const headerCount = document.getElementById('carritoContadorHeader');
-    if (headerCount) {
-        headerCount.textContent = totalItems === 1 ? '1 artículo' : `${totalItems} artículos`;
-    }
+    if (headerCount) headerCount.textContent = totalItems === 1 ? '1 artículo' : `${totalItems} artículos`;
 
     const elVacio  = document.getElementById('carritoVacio');
     const elLista  = document.getElementById('carritoItemsList');
@@ -333,29 +340,27 @@ function actualizarUI() {
     if (elLista)  elLista.style.display  = 'block';
     if (elFooter) elFooter.style.display = 'block';
 
-    // Render ítems del carrito
     if (elLista) {
         elLista.innerHTML = ids.map(id => {
             const item = carrito[id];
+
+            /* Miniatura en carrito: imagen si existe, ícono si no */
+            const miniatura = item.imagen
+                ? `<img src="../${sanitizar(item.imagen)}" alt="${sanitizar(item.nombre)}"
+                        style="width:100%;height:100%;object-fit:cover;border-radius:6px;">`
+                : `<i class="fas ${sanitizar(item.icono || 'fa-mug-hot')}"></i>`;
+
             return `
             <div class="carrito-item" id="ci${id}">
-                <div class="carrito-item-img">
-                    <i class="fas ${sanitizar(item.icono)}"></i>
-                </div>
+                <div class="carrito-item-img">${miniatura}</div>
                 <div class="carrito-item-info">
                     <div class="carrito-item-nombre">${sanitizar(item.nombre)}</div>
                     <div class="carrito-item-precio">${formatearPrecio(item.precio)}</div>
                     <div class="carrito-item-controles">
-                        <button class="btn-cantidad"
-                            onclick="cambiarCantidad(${id}, -1)"
-                            aria-label="Reducir cantidad">−</button>
+                        <button class="btn-cantidad" onclick="cambiarCantidad(${id},-1)" aria-label="Reducir">−</button>
                         <span class="cantidad-num">${item.cantidad}</span>
-                        <button class="btn-cantidad"
-                            onclick="cambiarCantidad(${id}, 1)"
-                            aria-label="Aumentar cantidad">+</button>
-                        <button class="btn-eliminar-item"
-                            onclick="eliminarItem(${id})"
-                            aria-label="Eliminar producto">
+                        <button class="btn-cantidad" onclick="cambiarCantidad(${id},1)" aria-label="Aumentar">+</button>
+                        <button class="btn-eliminar-item" onclick="eliminarItem(${id})" aria-label="Eliminar">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </div>
@@ -364,18 +369,16 @@ function actualizarUI() {
         }).join('');
     }
 
-    // Totales
     const elSubtotal = document.getElementById('subtotalCarrito');
     const elEnvio    = document.getElementById('envioCarrito');
     const elTotal    = document.getElementById('totalCarrito');
-
     if (elSubtotal) elSubtotal.textContent = formatearPrecio(subtotal);
     if (elEnvio)    elEnvio.textContent    = envioGratis ? 'Gratis 🎉' : formatearPrecio(costoEnvio);
     if (elTotal)    elTotal.textContent    = formatearPrecio(total);
 }
 
 /* ============================================================
-   CARRITO — ABRIR / CERRAR DRAWER
+   CARRITO — DRAWER
 ============================================================ */
 function toggleCarrito() {
     const drawer = document.getElementById('carritoDrawer');
@@ -396,25 +399,20 @@ function cerrarCarrito() {
 }
 
 /* ============================================================
-   TOAST / NOTIFICACIONES
+   TOAST
 ============================================================ */
 function mostrarToast(mensaje, icono = 'fa-check') {
     const contenedor = document.getElementById('toastContainer');
     if (!contenedor) return;
-
     const toast = document.createElement('div');
     toast.className = 'toast-notif';
     toast.innerHTML = `<i class="fas ${sanitizar(icono)}"></i> ${sanitizar(mensaje)}`;
     contenedor.appendChild(toast);
-
-    setTimeout(() => {
-        toast.classList.add('saliendo');
-        setTimeout(() => toast.remove(), 250);
-    }, 2500);
+    setTimeout(() => { toast.classList.add('saliendo'); setTimeout(() => toast.remove(), 250); }, 2500);
 }
 
 /* ============================================================
-   CHECKOUT — ABRIR / CERRAR MODAL
+   CHECKOUT
 ============================================================ */
 function abrirCheckout() {
     if (!Object.keys(carrito).length) {
@@ -422,8 +420,8 @@ function abrirCheckout() {
         return;
     }
 
-    const ids       = Object.keys(carrito);
-    const subtotal  = ids.reduce((s, id) => s + carrito[id].precio * carrito[id].cantidad, 0);
+    const ids         = Object.keys(carrito);
+    const subtotal    = ids.reduce((s, id) => s + carrito[id].precio * carrito[id].cantidad, 0);
     const envioGratis = subtotal >= 150000;
     const costoEnvio  = envioGratis ? 0 : 12000;
     const total       = subtotal + costoEnvio;
@@ -450,7 +448,6 @@ function abrirCheckout() {
     document.getElementById('modalFormContent')?.classList.remove('oculto');
     document.getElementById('modalSuccess')?.classList.remove('visible');
     limpiarErrores();
-
     document.getElementById('modalCheckoutOverlay')?.classList.add('visible');
     cerrarCarrito();
     document.body.style.overflow = 'hidden';
@@ -485,31 +482,28 @@ function validarFormulario() {
     limpiarErrores();
     let valido = true;
 
-    const nombre    = document.getElementById('co-nombre')?.value.trim()   || '';
-    const apellido  = document.getElementById('co-apellido')?.value.trim() || '';
-    const email     = document.getElementById('co-email')?.value.trim()    || '';
-    const telefono  = document.getElementById('co-telefono')?.value.trim() || '';
-    const ciudad    = document.getElementById('co-ciudad')?.value          || '';
-    const direccion = document.getElementById('co-direccion')?.value.trim()|| '';
+    const nombre    = document.getElementById('co-nombre')?.value.trim()    || '';
+    const apellido  = document.getElementById('co-apellido')?.value.trim()  || '';
+    const email     = document.getElementById('co-email')?.value.trim()     || '';
+    const telefono  = document.getElementById('co-telefono')?.value.trim()  || '';
+    const ciudad    = document.getElementById('co-ciudad')?.value           || '';
+    const direccion = document.getElementById('co-direccion')?.value.trim() || '';
 
     const soloLetras = /^[a-zA-ZÀ-ÿ\s'\-]{2,50}$/;
     const emailRx    = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~\-]+@[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$/;
 
-    if (!soloLetras.test(nombre))                  { marcarError('co-nombre',    'err-nombre');    valido = false; }
-    if (!soloLetras.test(apellido))                { marcarError('co-apellido',  'err-apellido');  valido = false; }
-    if (!emailRx.test(email) || email.length > 254){ marcarError('co-email',     'err-email');     valido = false; }
+    if (!soloLetras.test(nombre))   { marcarError('co-nombre',    'err-nombre');    valido = false; }
+    if (!soloLetras.test(apellido)) { marcarError('co-apellido',  'err-apellido');  valido = false; }
+    if (!emailRx.test(email) || email.length > 254) { marcarError('co-email', 'err-email'); valido = false; }
     if (!/^[0-9]{7,15}$/.test(telefono.replace(/[\s\-\(\)\+]/g, ''))) {
         marcarError('co-telefono', 'err-telefono'); valido = false;
     }
-    if (!ciudad)                                   { marcarError('co-ciudad',    'err-ciudad');    valido = false; }
+    if (!ciudad)              { marcarError('co-ciudad',    'err-ciudad');    valido = false; }
     if (direccion.length < 5 || direccion.length > 200) { marcarError('co-direccion', 'err-direccion'); valido = false; }
 
     return valido;
 }
 
-/* ============================================================
-   CHECKOUT — ESTADO ÉXITO
-============================================================ */
 function mostrarExitoCheckout(btn) {
     document.getElementById('modalFormContent')?.classList.add('oculto');
     document.getElementById('modalSuccess')?.classList.add('visible');
@@ -524,10 +518,7 @@ function inicializarFiltros() {
     const botones = document.querySelectorAll('.filtro-btn');
     const contador = document.getElementById('contadorProductos');
 
-    botones.forEach(btn => {
-        // Evitar doble listener
-        btn.replaceWith(btn.cloneNode(true));
-    });
+    botones.forEach(btn => btn.replaceWith(btn.cloneNode(true)));
 
     document.querySelectorAll('.filtro-btn').forEach(btn => {
         btn.addEventListener('click', function () {
@@ -550,9 +541,7 @@ function inicializarFiltros() {
                 }
             });
 
-            if (contador) {
-                contador.textContent = `${visibles} producto${visibles !== 1 ? 's' : ''}`;
-            }
+            if (contador) contador.textContent = `${visibles} producto${visibles !== 1 ? 's' : ''}`;
         });
     });
 }
@@ -561,10 +550,7 @@ function inicializarFiltros() {
    FAVORITOS
 ============================================================ */
 function inicializarFavoritos() {
-    document.querySelectorAll('.btn-favorito').forEach(btn => {
-        btn.replaceWith(btn.cloneNode(true));
-    });
-
+    document.querySelectorAll('.btn-favorito').forEach(btn => btn.replaceWith(btn.cloneNode(true)));
     document.querySelectorAll('.btn-favorito').forEach(btn => {
         btn.addEventListener('click', function () {
             this.classList.toggle('activo');
@@ -596,17 +582,13 @@ function inicializarAnimaciones() {
 }
 
 /* ============================================================
-   INICIALIZACIÓN AL CARGAR LA PÁGINA
+   INICIALIZACIÓN
 ============================================================ */
 document.addEventListener('DOMContentLoaded', function () {
 
-    // 1) Restaurar carrito guardado
     cargarCarritoLocal();
-
-    // 2) Cargar productos desde la API y renderizarlos
     cargarProductos();
 
-    // 3) Submit del formulario de checkout
     const formCheckout = document.getElementById('formCheckout');
     if (formCheckout) {
         formCheckout.addEventListener('submit', function (e) {
@@ -615,47 +597,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const btn = this.querySelector('.btn-confirmar-modal');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
-
-            /*
-             * ── INTEGRACIÓN CON BACKEND PHP ──
-             * Descomenta y adapta al conectar con tu endpoint real:
-             *
-             * const payload = {
-             *     nombre:    document.getElementById('co-nombre').value.trim(),
-             *     apellido:  document.getElementById('co-apellido').value.trim(),
-             *     email:     document.getElementById('co-email').value.trim(),
-             *     telefono:  document.getElementById('co-telefono').value.trim(),
-             *     ciudad:    document.getElementById('co-ciudad').value,
-             *     direccion: document.getElementById('co-direccion').value.trim(),
-             *     carrito,
-             * };
-             *
-             * fetch('../api/orders.php', {
-             *     method: 'POST',
-             *     headers: { 'Content-Type': 'application/json' },
-             *     body: JSON.stringify(payload),
-             * })
-             * .then(r => r.json())
-             * .then(data => {
-             *     if (data.ok) mostrarExitoCheckout(btn);
-             *     else mostrarToast('Error al procesar el pedido', 'fa-exclamation-triangle');
-             * })
-             * .catch(() => mostrarToast('Error de conexión', 'fa-wifi'))
-             * .finally(() => { btn.disabled = false; });
-             */
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando…';
 
             // Demo: simula respuesta del servidor
+            // Para conectar con backend real, descomenta el fetch de orders.php aquí
             setTimeout(() => mostrarExitoCheckout(btn), 1500);
         });
     }
 
-    // Cerrar modal al click en overlay
     document.getElementById('modalCheckoutOverlay')?.addEventListener('click', function (e) {
         if (e.target === this) cerrarCheckout();
     });
 
-    // Tecla ESC para cerrar
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') { cerrarCheckout(); cerrarCarrito(); }
     });

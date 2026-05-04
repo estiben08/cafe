@@ -27,12 +27,30 @@ function guardarUsuario(user) {
   }));
 }
 
+// Agrega esta función antes de loginGoogle()
+async function verificarRolYRedirigir(user) {
+  const token = await user.getIdToken();
+  console.log('Token obtenido:', token ? 'SI' : 'NO');
+  
+  const res  = await fetch('/cafe/includes/verificar_rol.php', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({ token })
+  });
+  
+  const text = await res.text();
+  console.log('Respuesta PHP:', text);
+  
+  const data = JSON.parse(text);
+  window.location.href = data.redirect;
+}
+
 // ── Login con Google ─────────────────────────────
 export async function loginGoogle() {
   try {
     const result = await signInWithPopup(auth, new GoogleAuthProvider());
     guardarUsuario(result.user);
-    window.location.href = BASE + '/index.php';
+    await verificarRolYRedirigir(result.user);
   } catch (e) {
     return { error: e.message };
   }
@@ -57,7 +75,7 @@ export async function completarMagicLink() {
     const result = await signInWithEmailLink(auth, email, window.location.href);
     guardarUsuario(result.user);
     localStorage.removeItem('emailForSignIn');
-    window.location.href = BASE + '/index.php';
+    await verificarRolYRedirigir(result.user);
   } catch (e) {
     console.error(e);
   }
