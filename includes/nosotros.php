@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -29,49 +30,7 @@
 
 <body>
 
-    <!-- Header Navigation -->
-    <header class="header-principal">
-        <nav class="navbar navbar-expand-lg navbar-custom">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <div class="coffee-logo">
-                        <img src="../assets/imagenes/banner20.png" alt="Coffee Col Logo">
-                    </div>
-                </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../index.php">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="nosotros.php">Nosotros</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="servicios.php">Productos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contacto.php">Contáctanos</a>
-                        </li>
-                    </ul>
-
-                    <div class="social-icons">
-                        <a href="#" title="Facebook" aria-label="Facebook">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </a>
-                        <a href="#" title="Instagram" aria-label="Instagram">
-                            <i class="fa-solid fa-user"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <?php include 'encabezado.php'; ?>
 
     <!-- Sección Servicios -->
     <section id="servicios" class="seccion-servicios">

@@ -15,6 +15,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: #FCF6DB !important;
+    
 }
 
 /* HEADER PRINCIPAL - Medidas exactas de Figma */
@@ -1826,8 +1827,6 @@ body {
 
 /* ================================================================
    COFFEECOL — CSS PREMIUM: PRODUCTOS + CARRITO
-   Mejora visual exclusiva para las secciones de productos y carrito
-   Mantiene compatibilidad con Bootstrap 5 + Font Awesome
    ================================================================ */
 
 /* ── Variables de diseño ── */
@@ -1950,6 +1949,8 @@ body {
 }
 
 .filtro-btn {
+  /* ✅ CORREGIDO: Poppins → Inter */
+  font-family: 'Inter', sans-serif;
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 1.8px;
@@ -2004,7 +2005,7 @@ body {
 }
 
 /* ================================================================
-   TARJETA DE PRODUCTO — DISEÑO PREMIUM
+   TARJETA DE PRODUCTO
 ================================================================ */
 .producto-card {
   background: var(--white);
@@ -2045,12 +2046,14 @@ body {
   visibility: hidden;
 }
 
-/* ── Badge premium ── */
+/* ── Badge ── */
 .producto-badge {
   position: absolute;
   top: 15px;
   left: 15px;
   z-index: 3;
+  /* ✅ CORREGIDO: Inter heredado, sin declaración de fuente externa */
+  font-family: 'Inter', sans-serif;
   font-size: 9.5px;
   font-weight: 800;
   letter-spacing: 2px;
@@ -2074,7 +2077,7 @@ body {
   border: 1px solid rgba(200, 169, 110, 0.3);
 }
 
-/* ── Área de imagen mejorada ── */
+/* ── Área de imagen ── */
 .producto-img-wrap {
   position: relative;
   height: 230px;
@@ -2083,7 +2086,6 @@ body {
   flex-shrink: 0;
 }
 
-/* Efecto de brillo suave sobre la imagen */
 .producto-img-wrap::before {
   content: '';
   position: absolute;
@@ -2095,7 +2097,6 @@ body {
   pointer-events: none;
 }
 
-/* Línea dorada sutil en la parte inferior de la imagen */
 .producto-img-wrap::after {
   content: '';
   position: absolute;
@@ -2169,7 +2170,7 @@ body {
   box-shadow: 0 4px 14px var(--shadow-warm);
 }
 
-/* ── Cuerpo de la tarjeta ── */
+/* ── Cuerpo de tarjeta ── */
 .producto-info {
   padding: 22px 22px 20px;
   flex: 1;
@@ -2178,6 +2179,7 @@ body {
 }
 
 .producto-categoria {
+  /* ✅ Inter heredado — sin fuente externa */
   font-size: 9.5px;
   font-weight: 800;
   letter-spacing: 2.5px;
@@ -2198,8 +2200,9 @@ body {
   opacity: 0.6;
 }
 
+/* ✅ CORREGIDO: Dancing Script → Inter 700 */
 .producto-nombre {
-  font-family: 'Dancing Script', cursive, 'Goudy Bookletter 1911', serif;
+  font-family: 'Inter', sans-serif;
   font-size: 22px;
   font-weight: 700;
   color: var(--coffee-dark);
@@ -2217,7 +2220,7 @@ body {
   font-weight: 400;
 }
 
-/* ── Rating mejorado ── */
+/* ── Rating ── */
 .producto-rating {
   display: flex;
   align-items: center;
@@ -2258,8 +2261,9 @@ body {
   letter-spacing: 0.5px;
 }
 
+/* ✅ CORREGIDO: Goudy Bookletter 1911 → Inter 700 */
 .precio-actual {
-  font-family: 'Goudy Bookletter 1911', Georgia, serif;
+  font-family: 'Inter', sans-serif;
   font-size: 26px;
   font-weight: 700;
   color: var(--coffee-rich);
@@ -2274,7 +2278,8 @@ body {
   letter-spacing: 0.3px;
 }
 
-/* ── Botón agregar — efecto premium ── */
+/* ── Botón agregar ── */
+/* ✅ CORREGIDO: Poppins → Inter */
 .btn-agregar {
   display: flex;
   align-items: center;
@@ -2284,7 +2289,7 @@ body {
   border: none;
   padding: 11px 18px;
   border-radius: var(--radius-btn);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.5px;
@@ -2296,7 +2301,6 @@ body {
   flex-shrink: 0;
 }
 
-/* Shimmer hover effect */
 .btn-agregar::before {
   content: '';
   position: absolute;
@@ -2315,7 +2319,6 @@ body {
 }
 
 .btn-agregar:hover::before { left: 140%; }
-
 .btn-agregar:active { transform: scale(0.97); }
 
 .btn-agregar.agregado {
@@ -2345,7 +2348,7 @@ body {
 }
 
 /* ================================================================
-   CARRITO — DRAWER LATERAL PREMIUM
+   CARRITO — DRAWER LATERAL
 ================================================================ */
 .carrito-drawer {
   position: fixed;
@@ -2388,9 +2391,10 @@ body {
   pointer-events: none;
 }
 
+/* ✅ CORREGIDO: Dancing Script → Inter 700 */
 .carrito-titulo {
-  font-family: 'Dancing Script', cursive;
-  font-size: 28px;
+  font-family: 'Inter', sans-serif;
+  font-size: 26px;
   font-weight: 700;
   color: var(--cream);
   display: flex;
@@ -2400,7 +2404,8 @@ body {
 }
 
 .carrito-titulo span {
-  font-family: 'Poppins', sans-serif;
+  /* ✅ CORREGIDO: Poppins → Inter */
+  font-family: 'Inter', sans-serif;
   font-size: 11px;
   font-weight: 500;
   color: var(--gold);
@@ -2449,9 +2454,11 @@ body {
   margin-bottom: 6px;
 }
 
+/* ✅ CORREGIDO: Dancing Script → Inter 700 */
 .carrito-vacio strong {
-  font-family: 'Dancing Script', cursive;
-  font-size: 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
   color: var(--coffee-dark);
   display: block;
   margin-bottom: 6px;
@@ -2524,9 +2531,10 @@ body {
 
 .carrito-item-info { flex: 1; min-width: 0; }
 
+/* ✅ CORREGIDO: Dancing Script → Inter 700 */
 .carrito-item-nombre {
-  font-family: 'Dancing Script', cursive;
-  font-size: 17px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
   font-weight: 700;
   color: var(--coffee-dark);
   margin-bottom: 3px;
@@ -2543,9 +2551,10 @@ body {
   letter-spacing: 0.3px;
 }
 
+/* ✅ CORREGIDO: Goudy Bookletter 1911 → Inter 700 */
 .carrito-item-precio {
-  font-family: 'Goudy Bookletter 1911', Georgia, serif;
-  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
   color: var(--coffee-rich);
   font-weight: 700;
   margin-bottom: 10px;
@@ -2650,14 +2659,17 @@ body {
   color: var(--coffee-dark);
 }
 
+/* ✅ CORREGIDO: Goudy Bookletter 1911 → Inter 700 */
 .resumen-fila.total .precio-total {
-  font-family: 'Goudy Bookletter 1911', Georgia, serif;
-  font-size: 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
   color: var(--coffee-rich);
   letter-spacing: -0.5px;
 }
 
 /* ── Botones del carrito ── */
+/* ✅ CORREGIDO: Poppins → Inter */
 .btn-checkout {
   width: 100%;
   background: linear-gradient(135deg, var(--coffee-rich) 0%, #5A0A14 100%);
@@ -2665,7 +2677,7 @@ body {
   border: none;
   padding: 16px;
   border-radius: 14px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.5px;
@@ -2687,6 +2699,7 @@ body {
 
 .btn-checkout:active { transform: translateY(0); }
 
+/* ✅ CORREGIDO: Poppins → Inter */
 .btn-vaciar {
   width: 100%;
   background: transparent;
@@ -2694,7 +2707,7 @@ body {
   border: 1.5px solid rgba(71, 6, 14, 0.1);
   padding: 11px;
   border-radius: 11px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
@@ -2786,6 +2799,7 @@ body {
   color: var(--cream);
   padding: 12px 20px;
   border-radius: 13px;
+  /* ✅ Inter heredado — sin fuente externa */
   font-size: 13px;
   font-weight: 500;
   display: flex;
@@ -2813,7 +2827,7 @@ body {
 }
 
 /* ================================================================
-   MODAL CHECKOUT PREMIUM
+   MODAL CHECKOUT
 ================================================================ */
 .modal-checkout-overlay {
   position: fixed;
@@ -2856,12 +2870,14 @@ body {
   transform: scale(1) translateY(0);
 }
 
+/* ✅ CORREGIDO: Dancing Script → Inter 700 */
 .modal-checkout-title {
-  font-family: 'Dancing Script', cursive;
-  font-size: 34px;
+  font-family: 'Inter', sans-serif;
+  font-size: 32px;
   font-weight: 700;
   color: var(--coffee-dark);
   margin-bottom: 6px;
+  letter-spacing: -0.5px;
 }
 
 .modal-checkout-sub {
@@ -2874,9 +2890,10 @@ body {
 /* ── Campos del formulario ── */
 .form-grupo { margin-bottom: 19px; }
 
+/* ✅ CORREGIDO: Poppins → Inter */
 .form-grupo label {
   display: block;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 1.8px;
@@ -2885,13 +2902,14 @@ body {
   margin-bottom: 8px;
 }
 
+/* ✅ CORREGIDO: Poppins → Inter */
 .form-grupo input,
 .form-grupo select {
   width: 100%;
   padding: 13px 16px;
   border: 1.5px solid rgba(71, 6, 14, 0.12);
   border-radius: 12px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   color: var(--coffee-dark);
   background: var(--cream-soft);
@@ -2951,13 +2969,15 @@ body {
   pointer-events: none;
 }
 
+/* ✅ CORREGIDO: Dancing Script → Inter 700 */
 .resumen-titulo-modal {
-  font-family: 'Dancing Script', cursive;
-  font-size: 19px;
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
   font-weight: 700;
   margin-bottom: 12px;
   color: var(--gold);
   position: relative;
+  letter-spacing: -0.2px;
 }
 
 .resumen-item-modal {
@@ -2981,10 +3001,13 @@ body {
   position: relative;
 }
 
+/* ✅ CORREGIDO: Goudy Bookletter 1911 → Inter 700 */
 .resumen-total-modal span:last-child {
-  font-family: 'Goudy Bookletter 1911', Georgia, serif;
-  font-size: 22px;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
   color: var(--gold-light);
+  letter-spacing: -0.5px;
 }
 
 /* ── Acciones del modal ── */
@@ -2994,6 +3017,7 @@ body {
   margin-top: 8px;
 }
 
+/* ✅ CORREGIDO: Poppins → Inter */
 .btn-cancelar-modal {
   flex: 1;
   padding: 14px;
@@ -3001,7 +3025,7 @@ body {
   border-radius: 12px;
   background: transparent;
   color: var(--text-mid);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
@@ -3014,6 +3038,7 @@ body {
   background: rgba(71, 6, 14, 0.03);
 }
 
+/* ✅ CORREGIDO: Poppins → Inter */
 .btn-confirmar-modal {
   flex: 2;
   padding: 14px;
@@ -3021,7 +3046,7 @@ body {
   border-radius: 12px;
   background: linear-gradient(135deg, var(--coffee-rich) 0%, #5A0A14 100%);
   color: var(--cream);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -3069,12 +3094,14 @@ body {
   to   { transform: scale(1) rotate(0); }
 }
 
+/* ✅ CORREGIDO: Dancing Script → Inter 700 */
 .success-titulo {
-  font-family: 'Dancing Script', cursive;
-  font-size: 32px;
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
   font-weight: 700;
   color: var(--coffee-dark);
   margin-bottom: 12px;
+  letter-spacing: -0.4px;
 }
 
 .success-msg {
@@ -3087,13 +3114,14 @@ body {
   margin-right: auto;
 }
 
+/* ✅ CORREGIDO: Poppins → Inter */
 .btn-cerrar-success {
   background: linear-gradient(135deg, var(--coffee-rich), #5A0A14);
   color: var(--cream);
   border: none;
   padding: 14px 38px;
   border-radius: 12px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -3109,7 +3137,7 @@ body {
 }
 
 /* ================================================================
-   RESPONSIVE MEJORADO
+   RESPONSIVE
 ================================================================ */
 @media (max-width: 1024px) {
   .productos-grid { padding: 40px 28px 80px; }
@@ -3131,7 +3159,7 @@ body {
 
   .modal-checkout        { padding: 28px 20px; border-radius: 20px; }
   .form-fila             { grid-template-columns: 1fr; }
-  .modal-checkout-title  { font-size: 28px; }
+  .modal-checkout-title  { font-size: 26px; }
 
   .btn-carrito-flotante  { bottom: 20px; right: 20px; width: 54px; height: 54px; }
   .toast-container-custom { bottom: 96px; right: 20px; }

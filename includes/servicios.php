@@ -27,51 +27,12 @@
     <link rel="stylesheet" href="../csss/servicioss.css">
 </head>
 
+
+
 <body>
+    <?php include 'encabezado.php'; ?>
 
-    <!-- Header Navigation -->
-    <header class="header-principal">
-        <nav class="navbar navbar-expand-lg navbar-custom">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <div class="coffee-logo">
-                        <img src="../assets/imagenes/banner20.png" alt="Coffee Col Logo">
-                    </div>
-                </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../index.php">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="nosotros.php">Nosotros</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#servicios">Productos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contacto.php">Contáctanos</a>
-                        </li>
-                    </ul>
-
-                    <div class="social-icons">
-                        <a href="#" title="Facebook" aria-label="Facebook">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </a>
-                        <a href="#" title="Instagram" aria-label="Instagram">
-                            <i class="fa-solid fa-user"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
 
     <!-- Sección Servicios -->
     <section id="servicios" class="seccion-servicios">
@@ -407,12 +368,6 @@
         </footer>
     </div>
 
-    <!-- ══════════════════════════════════════════════════════════
-         SCRIPTS
-         Bootstrap primero, luego el JS de la tienda.
-    ══════════════════════════════════════════════════════════ -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
     <!-- Script global del sitio (scroll header, menú móvil, etc.) -->
     <script>
         /* ── Scroll del header (igual que en servicios.php original) ── */
@@ -451,6 +406,7 @@
     <!-- Bootstrap JS con Popper (necesario para navbar en móviles) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/service.js"></script>
+    <script type="module" src="../js/auth-check.js"></script>
 
 </body>
 

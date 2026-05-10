@@ -3,7 +3,8 @@
 /* ============================================================
    CONFIGURACIÓN
 ============================================================ */
-const API_URL = '../api/products.php';
+const API_URL    = '../api/products.php';
+const ORDERS_URL = '../api/orders.php';   // ← BUG #2 fix: endpoint real del backend
 
 /* ============================================================
    CATÁLOGO EN MEMORIA
@@ -78,12 +79,31 @@ async function cargarProductos() {
     grid.innerHTML = generarEsqueletos(4);
 
     try {
-        const res  = await fetch(API_URL);
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
-        if (!data.success) throw new Error(data.error || 'Error de API');
+        console.log('[CoffeeCol] Cargando productos desde:', API_URL);
+
+        const res = await fetch(API_URL);
+
+        // BUG #7 fix: log detallado si la respuesta no es OK
+        if (!res.ok) {
+            console.error('[CoffeeCol] HTTP error al cargar productos. Status:', res.status, res.statusText);
+            throw new Error('HTTP ' + res.status);
+        }
+
+        let data;
+        try {
+            data = await res.json();
+        } catch (jsonErr) {
+            console.error('[CoffeeCol] La respuesta de products.php no es JSON válido:', jsonErr);
+            throw new Error('JSON inválido en products.php');
+        }
+
+        if (!data.success) {
+            console.error('[CoffeeCol] products.php devolvió error:', data.error);
+            throw new Error(data.error || 'Error de API');
+        }
 
         const productos = data.productos || [];
+        console.log('[CoffeeCol] Productos cargados:', productos.length);
 
         PRODUCTOS = {};
         productos.forEach(p => {
@@ -108,7 +128,7 @@ async function cargarProductos() {
             <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#47060E;">
                 <i class="fas fa-exclamation-circle" style="font-size:2rem;opacity:.4;display:block;margin-bottom:12px;"></i>
                 <strong>No se pudieron cargar los productos.</strong><br>
-                <small style="color:#888;">Verifica la conexión con la base de datos.</small>
+                <small style="color:#888;">Verifica la conexión con la base de datos. Detalle: ${sanitizar(err.message)}</small>
             </div>`;
     }
 }
@@ -124,7 +144,6 @@ function reconstruirCarritoDesdeLocal() {
 
 /* ============================================================
    RENDER DE TARJETAS DE PRODUCTO
-   — Muestra imagen real si existe, ícono FA como fallback.
 ============================================================ */
 function renderizarProductos(productos) {
     const grid = document.getElementById('productosGrid');
@@ -139,7 +158,6 @@ function renderizarProductos(productos) {
     }
 
     grid.innerHTML = productos.map(p => {
-
         const badgeHTML = p.badge && p.badge_tipo
             ? `<div class="producto-badge ${sanitizar(p.badge_tipo)}">${sanitizar(p.badge)}</div>`
             : '';
@@ -151,11 +169,6 @@ function renderizarProductos(productos) {
         const categoriaNombre = CATEGORIAS_NOMBRE[p.categoria] || p.categoria;
         const estrellas       = generarEstrellas(p.rating_valor);
 
-        /*
-         * ── IMAGEN vs ÍCONO ──────────────────────────────────
-         * Si el producto tiene imagen guardada en BD, usamos <img>.
-         * Si no, mostramos el ícono de Font Awesome como antes.
-         */
         const mediaHTML = p.imagen
             ? `<img
                     src="../${sanitizar(p.imagen)}"
@@ -202,7 +215,6 @@ function renderizarProductos(productos) {
         </div>`;
     }).join('');
 
-    /* Inyectar estilos para imagen real (una sola vez) */
     if (!document.getElementById('producto-img-styles')) {
         const st = document.createElement('style');
         st.id = 'producto-img-styles';
@@ -215,9 +227,7 @@ function renderizarProductos(productos) {
                 border-radius: inherit;
                 transition: transform 0.4s ease;
             }
-            .producto-card:hover .producto-img-real {
-                transform: scale(1.06);
-            }
+            .producto-card:hover .producto-img-real { transform: scale(1.06); }
             .producto-img-fallback {
                 width: 100%;
                 height: 100%;
@@ -234,8 +244,7 @@ function renderizarProductos(productos) {
 function generarEsqueletos(n) {
     const card = `
         <div class="producto-card visible" style="pointer-events:none;">
-            <div class="producto-img-wrap" style="background:linear-gradient(90deg,#f0ebe0 25%,#e8e3d8 50%,#f0ebe0 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;">
-            </div>
+            <div class="producto-img-wrap" style="background:linear-gradient(90deg,#f0ebe0 25%,#e8e3d8 50%,#f0ebe0 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;"></div>
             <div class="producto-info">
                 <div style="height:10px;border-radius:4px;background:#e8e3d8;margin-bottom:10px;width:50%;"></div>
                 <div style="height:18px;border-radius:4px;background:#e8e3d8;margin-bottom:8px;width:80%;"></div>
@@ -250,7 +259,6 @@ function generarEsqueletos(n) {
         st.textContent = '@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}';
         document.head.appendChild(st);
     }
-
     return Array(n).fill(card).join('');
 }
 
@@ -309,9 +317,9 @@ function vaciarCarrito() {
    CARRITO — ACTUALIZACIÓN DE LA INTERFAZ
 ============================================================ */
 function actualizarUI() {
-    const ids         = Object.keys(carrito);
-    const totalItems  = ids.reduce((s, id) => s + carrito[id].cantidad, 0);
-    const subtotal    = ids.reduce((s, id) => s + carrito[id].precio * carrito[id].cantidad, 0);
+    const ids        = Object.keys(carrito);
+    const totalItems = ids.reduce((s, id) => s + carrito[id].cantidad, 0);
+    const subtotal   = ids.reduce((s, id) => s + carrito[id].precio * carrito[id].cantidad, 0);
     const envioGratis = subtotal >= 150000;
     const costoEnvio  = subtotal > 0 ? (envioGratis ? 0 : 12000) : 0;
     const total       = subtotal + costoEnvio;
@@ -343,8 +351,6 @@ function actualizarUI() {
     if (elLista) {
         elLista.innerHTML = ids.map(id => {
             const item = carrito[id];
-
-            /* Miniatura en carrito: imagen si existe, ícono si no */
             const miniatura = item.imagen
                 ? `<img src="../${sanitizar(item.imagen)}" alt="${sanitizar(item.nombre)}"
                         style="width:100%;height:100%;object-fit:cover;border-radius:6px;">`
@@ -412,7 +418,7 @@ function mostrarToast(mensaje, icono = 'fa-check') {
 }
 
 /* ============================================================
-   CHECKOUT
+   CHECKOUT — ABRIR / CERRAR
 ============================================================ */
 function abrirCheckout() {
     if (!Object.keys(carrito).length) {
@@ -420,8 +426,8 @@ function abrirCheckout() {
         return;
     }
 
-    const ids         = Object.keys(carrito);
-    const subtotal    = ids.reduce((s, id) => s + carrito[id].precio * carrito[id].cantidad, 0);
+    const ids        = Object.keys(carrito);
+    const subtotal   = ids.reduce((s, id) => s + carrito[id].precio * carrito[id].cantidad, 0);
     const envioGratis = subtotal >= 150000;
     const costoEnvio  = envioGratis ? 0 : 12000;
     const total       = subtotal + costoEnvio;
@@ -504,6 +510,72 @@ function validarFormulario() {
     return valido;
 }
 
+/* ============================================================
+   CHECKOUT — ENVÍO AL BACKEND (BUG #1 y #2 CORREGIDOS)
+   Antes: setTimeout simulado. Ahora: fetch real a orders.php
+============================================================ */
+async function enviarPedidoAlServidor(datosCliente, btn) {
+
+    // BUG #4 fix: serializar los ítems del carrito para enviarlos
+    const ids        = Object.keys(carrito);
+    const subtotal   = ids.reduce((s, id) => s + carrito[id].precio * carrito[id].cantidad, 0);
+    const envioGratis = subtotal >= 150000;
+    const costoEnvio  = envioGratis ? 0 : 12000;
+    const total       = subtotal + costoEnvio;
+
+    const items = ids.map(id => ({
+        producto_id:    parseInt(id, 10),
+        cantidad:       carrito[id].cantidad,
+        precio_unitario: carrito[id].precio   // BUG #6 fix: guardamos precio al momento de compra
+    }));
+
+    const payload = {
+        ...datosCliente,
+        total,
+        items
+    };
+
+    console.log('[CoffeeCol] Enviando pedido al servidor:', payload);
+
+    try {
+        const res = await fetch(ORDERS_URL, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(payload)
+        });
+
+        console.log('[CoffeeCol] Respuesta HTTP de orders.php:', res.status, res.statusText);
+
+        // Intentar parsear JSON incluso en error, para ver mensaje del servidor
+        let data;
+        try {
+            data = await res.json();
+        } catch (jsonErr) {
+            console.error('[CoffeeCol] orders.php no devolvió JSON válido:', jsonErr);
+            throw new Error('El servidor no devolvió una respuesta válida.');
+        }
+
+        console.log('[CoffeeCol] Respuesta del servidor:', data);
+
+        if (!res.ok || !data.success) {
+            const errorMsg = data?.error || `Error HTTP ${res.status}`;
+            console.error('[CoffeeCol] El servidor rechazó el pedido:', errorMsg);
+            throw new Error(errorMsg);
+        }
+
+        console.log('[CoffeeCol] ✅ Pedido guardado correctamente. ID:', data.pedido_id);
+
+        // Mostrar pantalla de éxito
+        mostrarExitoCheckout(btn);
+
+    } catch (err) {
+        console.error('[CoffeeCol] Error al guardar pedido:', err);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-check-circle"></i> Confirmar pedido';
+        mostrarToast('Error al procesar el pedido: ' + sanitizar(err.message), 'fa-exclamation-circle');
+    }
+}
+
 function mostrarExitoCheckout(btn) {
     document.getElementById('modalFormContent')?.classList.add('oculto');
     document.getElementById('modalSuccess')?.classList.add('visible');
@@ -515,7 +587,7 @@ function mostrarExitoCheckout(btn) {
    FILTROS DE CATEGORÍA
 ============================================================ */
 function inicializarFiltros() {
-    const botones = document.querySelectorAll('.filtro-btn');
+    const botones  = document.querySelectorAll('.filtro-btn');
     const contador = document.getElementById('contadorProductos');
 
     botones.forEach(btn => btn.replaceWith(btn.cloneNode(true)));
@@ -547,7 +619,7 @@ function inicializarFiltros() {
 }
 
 /* ============================================================
-   FAVORITOS
+   FAVORITOS — BUG #5 CORREGIDO (conatains → contains)
 ============================================================ */
 function inicializarFavoritos() {
     document.querySelectorAll('.btn-favorito').forEach(btn => btn.replaceWith(btn.cloneNode(true)));
@@ -555,6 +627,7 @@ function inicializarFavoritos() {
         btn.addEventListener('click', function () {
             this.classList.toggle('activo');
             const icono = this.querySelector('i');
+            // BUG #5 fix: "conatains" corregido a "contains"
             if (this.classList.contains('activo')) {
                 icono.classList.replace('far', 'fas');
                 mostrarToast('Guardado en favoritos', 'fa-heart');
@@ -591,7 +664,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const formCheckout = document.getElementById('formCheckout');
     if (formCheckout) {
-        formCheckout.addEventListener('submit', function (e) {
+        formCheckout.addEventListener('submit', async function (e) {
             e.preventDefault();
             if (!validarFormulario()) return;
 
@@ -599,9 +672,19 @@ document.addEventListener('DOMContentLoaded', function () {
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando…';
 
-            // Demo: simula respuesta del servidor
-            // Para conectar con backend real, descomenta el fetch de orders.php aquí
-            setTimeout(() => mostrarExitoCheckout(btn), 1500);
+            // BUG #1 fix: reemplaza el setTimeout falso por fetch real
+            const datosCliente = {
+                nombre:    document.getElementById('co-nombre')?.value.trim(),
+                apellido:  document.getElementById('co-apellido')?.value.trim(),
+                email:     document.getElementById('co-email')?.value.trim(),
+                telefono:  document.getElementById('co-telefono')?.value.trim(),
+                ciudad:    document.getElementById('co-ciudad')?.value,
+                direccion: document.getElementById('co-direccion')?.value.trim(),
+            };
+
+            console.log('[CoffeeCol] Datos del cliente:', datosCliente);
+
+            await enviarPedidoAlServidor(datosCliente, btn);
         });
     }
 
