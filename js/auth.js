@@ -19,8 +19,6 @@ const actionCodeSettings = {
 };
 
 // ── Guardar usuario en sessionStorage ───────────
-// sessionStorage se borra AUTOMÁTICAMENTE al cerrar
-// la pestaña o el navegador, a diferencia de localStorage
 function guardarUsuario(user) {
   sessionStorage.setItem('cc_usuario', JSON.stringify({
     nombre: user.displayName || user.email,
@@ -29,10 +27,26 @@ function guardarUsuario(user) {
   }));
 }
 
+// ── Guardar usuario en MySQL ─────────────────────
+async function guardarUsuarioMySQL(token) {
+  try {
+    await fetch('/cafe/includes/guardar_usuario.php', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ token })
+    });
+  } catch (e) {
+    console.error('Error guardando usuario en MySQL:', e);
+  }
+}
+
 // ── Verificar rol y redirigir ────────────────────
 async function verificarRolYRedirigir(user) {
   const token = await user.getIdToken();
   console.log('Token obtenido:', token ? 'SI' : 'NO');
+
+  // ✅ Guardar/actualizar usuario en MySQL
+  await guardarUsuarioMySQL(token);
 
   const res  = await fetch('/cafe/includes/verificar_rol.php', {
     method:  'POST',
@@ -62,8 +76,6 @@ export async function loginGoogle() {
 export async function enviarMagicLink(email) {
   try {
     await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-    // emailForSignIn va en localStorage porque es temporal
-    // y se borra al completar el login
     localStorage.setItem('emailForSignIn', email);
     return { ok: true };
   } catch (e) {
