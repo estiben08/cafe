@@ -104,40 +104,6 @@
         </div>
     </section>
 
-                  <!-- Granos de café -->
-    <div class="image-container coffee-ms">
-        <img src="../assets/imagenes/pepacafe.png" alt="Granos de café">
-    </div>
-
-    <!-- Objeto 0 --> 
-    <div class="image-container object-0">
-        <img src="../assets/imagenes/OBJECTS55.png" alt="Objeto 0">
-    </div>
-
-    <!-- Objeto 1 -->
-    <div class="image-container object-1">
-        <img src="../assets/imagenes/OBJECTS.png" alt="Objeto 1">
-    </div>
-
-    <!-- Objeto 2 -->
-    <div class="image-container object-2">
-        <img src="../assets/imagenes/OBJECTS53.png" alt="Objeto 2">
-    </div>
-
-    <!-- Objeto 3 -->
-    <div class="image-container object-3">
-        <img src="../assets/imagenes/OBJECTS52.png" alt="Objeto 3">
-    </div>
-
-    <!-- Granos de café (segundo) -->
-    <div class="image-container coffeee-xr">
-        <img src="../assets/imagenes/pepacafe.png" alt="Granos de café">
-    </div>
-    <br>
-
-    <div class="imagen-full">
-        <img src="../assets/imagenes/banner23.png" alt="Banner">
-    </div>
 
     <div class="footer-wrapper">
         <footer class="footer-coffeecol">
@@ -159,55 +125,48 @@
         </footer>
     </div>
 
-    <script>
-        // ✅ JavaScript completo - mantiene bordes originales de 11px
+<script>
+    let ticking = false;
+    const tieneVideo = document.querySelector('.video-fondo') !== null;
 
-        let ticking = false;
+    function updateScrollPosition() {
+        const scrolled = document.body.scrollTop || window.pageYOffset;
+        const header = document.querySelector('.navbar-custom');
+        if (!header) return;
 
-        function updateScrollPosition() {
-            const scrolled = window.pageYOffset;
-            const header = document.querySelector('.header-principal');
-
-            if (scrolled > 50) {
-                // ✅ HEADER NEGRO al hacer scroll (mantiene bordes originales)
-                header.style.backdropFilter = 'blur(25px)';
-                header.style.background = 'rgba(0, 0, 0, 0.3)';
-                header.style.borderRadius = '11px'; //
-            } else {
-                // Estado original - transparente
-                header.style.backdropFilter = 'blur(20px)';
-                header.style.background = 'transparent';
-                header.style.borderRadius = '0';
-            }
-
-
-            ticking = false;
+        if (scrolled > 50) {
+            header.style.backdropFilter = 'blur(25px)';
+            header.style.background = 'rgba(0, 0, 0, 0.55)';
+            header.style.borderRadius = '11px'; // ✅ siempre 11px
+        } else {
+            header.style.backdropFilter = 'blur(20px)';
+            header.style.background = tieneVideo ? 'transparent' : 'rgba(0, 0, 0, 0.0)';
+            header.style.borderRadius = '11px'; // ✅ siempre 11px
         }
 
-        function requestTick() {
-            if (!ticking) {
-                requestAnimationFrame(updateScrollPosition);
-                ticking = true;
-            }
+        // ✅ Quitar fondo del contenedor de íconos para que no se duplique
+        const socialIcons = document.querySelector('.social-icons');
+        if (socialIcons) {
+            socialIcons.style.background = 'transparent';
+            socialIcons.style.backdropFilter = 'none';
         }
 
-        // ✅ Event listener para el scroll
-        window.addEventListener('scroll', requestTick);
+        ticking = false;
+    }
 
-        // ✅ Cerrar menú móvil al hacer clic en un enlace
-        document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                const navbarCollapse = document.querySelector('.navbar-collapse');
-                if (navbarCollapse && navbarCollapse.classList.contains('show')) {
-                    const collapse = bootstrap.Collapse.getInstance(navbarCollapse);
-                    if (collapse) {
-                        collapse.hide();
-                    }
-                }
-            });
-        });
-    </script>
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateScrollPosition);
+            ticking = true;
+        }
+    }
 
+    document.body.addEventListener('scroll', requestTick);
+    window.addEventListener('scroll', requestTick);
+
+    // Aplicar estado inicial
+    updateScrollPosition();
+</script>
 
 
 

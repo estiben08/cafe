@@ -751,7 +751,7 @@
 
                     <!-- ── BARRA DESKTOP ── -->
                     <div class="container">
-                        <a class="navbar-brand" href="index.php">
+                        <a class="navbar-brand" href="../index.php">
                             <div class="coffee-logo">
                                 <img src="../assets/imagenes/banner20.png" alt="Coffee Col Logo">
                             </div>
@@ -759,7 +759,7 @@
 
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav mx-auto">
-                                <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+                                <li class="nav-item"><a class="nav-link" href="../index.php">Inicio</a></li>
                                 <li class="nav-item"><a class="nav-link" href="nosotros.php">Nosotros</a></li>
                                 <li class="nav-item"><a class="nav-link" href="servicios.php">Productos</a></li>
                                 <li class="nav-item"><a class="nav-link" href="contacto.php">Contáctanos</a></li>
@@ -806,7 +806,7 @@
                             <span></span>
                         </button>
 
-                        <a class="mobile-logo" href="index.php">
+                        <a class="mobile-logo" href="../index.php">
                             <img src="../assets/imagenes/banner20.png" alt="Coffee Col Logo">
                         </a>
 
@@ -814,7 +814,7 @@
                             <a href="#" id="btn-carrito-mobile" aria-label="Carrito">
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </a>
-                            <a href="includes/loginu.php" id="btn-usuario-mobile" aria-label="Usuario">
+                            <a href="loginu.php" id="btn-usuario-mobile" aria-label="Usuario">
                                 <i class="fa-solid fa-user"></i>
                             </a>
                         </div>
@@ -823,7 +823,7 @@
                 </nav>
 
                 <script type="module">
-                    import { observarUsuario, cerrarSesion } from './js/auth.js';
+                    import { observarUsuario, cerrarSesion } from '<?= str_repeat("../", substr_count($_SERVER["PHP_SELF"], "/") - 2) ?>js/auth.js';
 
                     const btnUsuario     = document.getElementById('btn-usuario');
                     const menuUsuario    = document.getElementById('menu-usuario');
@@ -903,10 +903,10 @@
                         },
                         () => {
                             /* ── Sin sesión ── */
-                            btnUsuario.href = 'includes/loginu.php';
+                            btnUsuario.href = 'loginu.php';
                             drawerGuest.style.display = 'block';
                             drawerUser.style.display  = 'none';
-                            if (btnMobile) btnMobile.href = 'includes/loginu.php';
+                            if (btnMobile) btnMobile.href = 'loginu.php';
                         }
                     );
 
@@ -934,8 +934,8 @@
 
             <div class="drawer" id="drawer">
                 <div class="drawer-header">
-                    <a href="index.php" class="drawer-logo">
-                        <img src="assets/imagenes/banner20.png" alt="Coffee Col Logo"
+                    <a href="../index.php" class="drawer-logo">
+                        <img src="../assets/imagenes/banner20.png" alt="Coffee Col Logo"
                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
                         <span class="drawer-logo-text" style="display:none">CoffeeCol</span>
                     </a>
@@ -945,16 +945,16 @@
                 </div>
 
                 <nav class="drawer-nav">
-                    <a href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a>
-                    <a href="includes/nosotros.php"><i class="fa-solid fa-users"></i> Nosotros</a>
-                    <a href="includes/servicios.php"><i class="fa-solid fa-box-open"></i> Productos</a>
+                    <a href="../index.php"><i class="fa-solid fa-house"></i> Inicio</a>
+                    <a href="nosotros.php"><i class="fa-solid fa-users"></i> Nosotros</a>
+                    <a href="servicios.php"><i class="fa-solid fa-box-open"></i> Productos</a>
                     <div class="drawer-divider"></div>
-                    <a href="includes/contacto.php"><i class="fa-solid fa-envelope"></i> Contáctanos</a>
+                    <a href="contacto.php"><i class="fa-solid fa-envelope"></i> Contáctanos</a>
                 </nav>
 
                 <!-- Footer SIN sesión -->
                 <div class="drawer-footer" id="drawer-footer-guest">
-                    <a href="includes/loginu.php" class="btn-iniciar-sesion">
+                    <a href="loginu.php" class="btn-iniciar-sesion">
                         <i class="fa-solid fa-right-to-bracket"></i>
                         Iniciar sesión
                     </a>
@@ -972,7 +972,7 @@
                         </div>
                     </div>
                     <div class="drawer-user-actions">
-                        <a href="includes/perfilu.php" class="drawer-user-action-btn">
+                        <a href="perfilu.php" class="drawer-user-action-btn">
                             <i class="fa-solid fa-circle-user"></i>
                             Ver perfil
                         </a>
@@ -1016,5 +1016,3 @@
             document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrarDrawer(); });
         </script>
 
-    </body>
-    </html>

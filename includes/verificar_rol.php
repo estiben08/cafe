@@ -22,12 +22,12 @@ try {
     $verified_token = $auth->verifyIdToken($token);
     $claims         = $verified_token->claims();
 
-    setcookie('fb_token', $token, [
-        'expires'  => time() + 3600,
-        'path'     => '/cafe',
-        'httponly' => true,
-        'samesite' => 'Strict'
-    ]);
+        setcookie('fb_token', $token, [
+            'expires'  => 0,               // ← 0 = cookie de sesión, muere al cerrar
+            'path'     => '/cafe',
+            'httponly' => true,
+            'samesite' => 'Strict'
+        ]);
 
     if ($claims->get('admin') === true) {
         echo json_encode(['redirect' => '/cafe/admin/login.php']);

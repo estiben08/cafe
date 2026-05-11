@@ -9,7 +9,7 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
-// ── URL base fija ────────────────────────────────
+// ── URL base ─────────────────────────────────────
 const BASE = 'http://localhost/cafe';
 
 // ── Configuración Magic Link ─────────────────────
@@ -18,29 +18,31 @@ const actionCodeSettings = {
   handleCodeInApp: true
 };
 
-// ── Guardar usuario ──────────────────────────────
+// ── Guardar usuario en sessionStorage ───────────
+// sessionStorage se borra AUTOMÁTICAMENTE al cerrar
+// la pestaña o el navegador, a diferencia de localStorage
 function guardarUsuario(user) {
-  localStorage.setItem('cc_usuario', JSON.stringify({
+  sessionStorage.setItem('cc_usuario', JSON.stringify({
     nombre: user.displayName || user.email,
-    email: user.email,
-    foto: user.photoURL
+    email:  user.email,
+    foto:   user.photoURL
   }));
 }
 
-// Agrega esta función antes de loginGoogle()
+// ── Verificar rol y redirigir ────────────────────
 async function verificarRolYRedirigir(user) {
   const token = await user.getIdToken();
   console.log('Token obtenido:', token ? 'SI' : 'NO');
-  
+
   const res  = await fetch('/cafe/includes/verificar_rol.php', {
     method:  'POST',
     headers: { 'Content-Type': 'application/json' },
     body:    JSON.stringify({ token })
   });
-  
+
   const text = await res.text();
   console.log('Respuesta PHP:', text);
-  
+
   const data = JSON.parse(text);
   window.location.href = data.redirect;
 }
@@ -60,6 +62,8 @@ export async function loginGoogle() {
 export async function enviarMagicLink(email) {
   try {
     await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+    // emailForSignIn va en localStorage porque es temporal
+    // y se borra al completar el login
     localStorage.setItem('emailForSignIn', email);
     return { ok: true };
   } catch (e) {
@@ -81,11 +85,16 @@ export async function completarMagicLink() {
   }
 }
 
-// ── Cerrar sesión ────────────────────────────────
+// ── Cerrar sesión (botón) ────────────────────────
 export async function cerrarSesion() {
   await signOut(auth);
-  localStorage.removeItem('cc_usuario');
-  window.location.reload();
+  sessionStorage.removeItem('cc_usuario');
+  await fetch('/cafe/includes/cerrar_sesion.php', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({ action: 'logout' })
+  });
+  window.location.href = BASE + '/index.php';
 }
 
 // ── Observar estado usuario ──────────────────────

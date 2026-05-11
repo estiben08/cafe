@@ -129,36 +129,6 @@
     </div>
   </section>
 
-              <!-- Granos de café -->
-    <div class="image-container coffee-ms">
-        <img src="../assets/imagenes/pepacafe.png" alt="Granos de café">
-    </div>
-
-    <!-- Objeto 0 --> 
-    <div class="image-container object-0">
-        <img src="../assets/imagenes/OBJECTS55.png" alt="Objeto 0">
-    </div>
-
-    <!-- Objeto 1 -->
-    <div class="image-container object-1">
-        <img src="../assets/imagenes/OBJECTS.png" alt="Objeto 1">
-    </div>
-
-    <!-- Objeto 2 -->
-    <div class="image-container object-2">
-        <img src="../assets/imagenes/OBJECTS53.png" alt="Objeto 2">
-    </div>
-
-    <!-- Objeto 3 -->
-    <div class="image-container object-3">
-        <img src="../assets/imagenes/OBJECTS52.png" alt="Objeto 3">
-    </div>
-
-    <!-- Granos de café (segundo) -->
-    <div class="image-container coffeee-xr">
-        <img src="../assets/imagenes/pepacafe.png" alt="Granos de café">
-    </div>
-    <br>
 
   <br><br><br><br>
 
@@ -187,61 +157,48 @@
   </div>
 
 
-  <script>
-    // ✅ JavaScript completo - mantiene bordes originales de 11px
-
+<script>
     let ticking = false;
+    const tieneVideo = document.querySelector('.video-fondo') !== null;
 
     function updateScrollPosition() {
-      const scrolled = window.pageYOffset;
-      const header = document.querySelector('.header-principal');
+        const scrolled = document.body.scrollTop || window.pageYOffset;
+        const header = document.querySelector('.navbar-custom');
+        if (!header) return;
 
-      if (scrolled > 50) {
-        // ✅ HEADER NEGRO al hacer scroll (mantiene bordes originales)
-        header.style.backdropFilter = 'blur(25px)';
-        header.style.background = 'rgba(0, 0, 0, 0.3)';
-        header.style.borderRadius = '11px'; //
-      } else {
-        // Estado original - transparente
-        header.style.backdropFilter = 'blur(20px)';
-        header.style.background = 'transparent';
-        header.style.borderRadius = '0';
-      }
+        if (scrolled > 50) {
+            header.style.backdropFilter = 'blur(25px)';
+            header.style.background = 'rgba(0, 0, 0, 0.55)';
+            header.style.borderRadius = '11px'; // ✅ siempre 11px
+        } else {
+            header.style.backdropFilter = 'blur(20px)';
+            header.style.background = tieneVideo ? 'transparent' : 'rgba(0, 0, 0, 0.0)';
+            header.style.borderRadius = '11px'; // ✅ siempre 11px
+        }
 
+        // ✅ Quitar fondo del contenedor de íconos para que no se duplique
+        const socialIcons = document.querySelector('.social-icons');
+        if (socialIcons) {
+            socialIcons.style.background = 'transparent';
+            socialIcons.style.backdropFilter = 'none';
+        }
 
-      ticking = false;
+        ticking = false;
     }
 
     function requestTick() {
-      if (!ticking) {
-        requestAnimationFrame(updateScrollPosition);
-        ticking = true;
-      }
+        if (!ticking) {
+            requestAnimationFrame(updateScrollPosition);
+            ticking = true;
+        }
     }
 
-    // ✅ Event listener para el scroll
+    document.body.addEventListener('scroll', requestTick);
     window.addEventListener('scroll', requestTick);
 
-    // ✅ Cerrar menú móvil al hacer clic en un enlace
-    document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        const navbarCollapse = document.querySelector('.navbar-collapse');
-        if (navbarCollapse && navbarCollapse.classList.contains('show')) {
-          const collapse = bootstrap.Collapse.getInstance(navbarCollapse);
-          if (collapse) {
-            collapse.hide();
-          }
-        }
-      });
-    });
-  </script>
-
-
-
-
- <!-- Bootstrap JS con Popper (necesario para navbar en móviles) -->
+    // Aplicar estado inicial
+    updateScrollPosition();
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
-
 </html>
