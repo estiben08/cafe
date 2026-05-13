@@ -3,8 +3,9 @@
 /* ============================================================
    CONFIGURACIÓN
 ============================================================ */
-const API_URL    = '../api/products.php';
-const ORDERS_URL = '../api/orders.php';   // ← BUG #2 fix: endpoint real del backend
+const API_URL      = '../api/products.php';
+const ORDERS_URL   = '../api/orders.php';
+const FAVORITOS_URL = '../api/favoritos.php';
 
 /* ============================================================
    CATÁLOGO EN MEMORIA
@@ -26,6 +27,11 @@ const CATEGORIAS_NOMBRE = {
    ESTADO DEL CARRITO
 ============================================================ */
 let carrito = {};
+
+/* ============================================================
+   FAVORITOS EN MEMORIA
+============================================================ */
+let favoritosActivos = new Set();
 
 /* ============================================================
    SEGURIDAD — Sanitización XSS
@@ -70,6 +76,44 @@ function cargarCarritoLocal() {
 }
 
 /* ============================================================
+   FAVORITOS — CARGAR DESDE SERVIDOR
+============================================================ */
+async function cargarFavoritosUsuario() {
+    try {
+        const res = await fetch(FAVORITOS_URL + '?todos=1');
+        if (!res.ok) return; // no logueado → silencioso
+        const data = await res.json();
+        if (data.success && Array.isArray(data.ids)) {
+            favoritosActivos = new Set(data.ids);
+        }
+    } catch (_) {}
+}
+
+/* ============================================================
+   FAVORITOS — TOGGLE EN SERVIDOR
+============================================================ */
+async function toggleFavoritoServidor(productoId) {
+    try {
+        const res = await fetch(FAVORITOS_URL, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ producto_id: productoId })
+        });
+
+        if (res.status === 401) {
+            mostrarToast('Inicia sesión para guardar favoritos', 'fa-user');
+            setTimeout(() => { window.location.href = '/cafe/includes/loginu.php'; }, 1400);
+            return null;
+        }
+
+        const data = await res.json();
+        return data.success ? data : null;
+    } catch (_) {
+        return null;
+    }
+}
+
+/* ============================================================
    CARGA DINÁMICA DE PRODUCTOS DESDE LA API
 ============================================================ */
 async function cargarProductos() {
@@ -83,7 +127,6 @@ async function cargarProductos() {
 
         const res = await fetch(API_URL);
 
-        // BUG #7 fix: log detallado si la respuesta no es OK
         if (!res.ok) {
             console.error('[CoffeeCol] HTTP error al cargar productos. Status:', res.status, res.statusText);
             throw new Error('HTTP ' + res.status);
@@ -118,7 +161,11 @@ async function cargarProductos() {
         }
 
         inicializarFiltros();
+
+        // Cargar favoritos del servidor ANTES de inicializar los botones
+        await cargarFavoritosUsuario();
         inicializarFavoritos();
+
         inicializarAnimaciones();
         reconstruirCarritoDesdeLocal();
 
@@ -511,12 +558,9 @@ function validarFormulario() {
 }
 
 /* ============================================================
-   CHECKOUT — ENVÍO AL BACKEND (BUG #1 y #2 CORREGIDOS)
-   Antes: setTimeout simulado. Ahora: fetch real a orders.php
+   CHECKOUT — ENVÍO AL BACKEND
 ============================================================ */
 async function enviarPedidoAlServidor(datosCliente, btn) {
-
-    // BUG #4 fix: serializar los ítems del carrito para enviarlos
     const ids        = Object.keys(carrito);
     const subtotal   = ids.reduce((s, id) => s + carrito[id].precio * carrito[id].cantidad, 0);
     const envioGratis = subtotal >= 150000;
@@ -524,16 +568,12 @@ async function enviarPedidoAlServidor(datosCliente, btn) {
     const total       = subtotal + costoEnvio;
 
     const items = ids.map(id => ({
-        producto_id:    parseInt(id, 10),
-        cantidad:       carrito[id].cantidad,
-        precio_unitario: carrito[id].precio   // BUG #6 fix: guardamos precio al momento de compra
+        producto_id:     parseInt(id, 10),
+        cantidad:        carrito[id].cantidad,
+        precio_unitario: carrito[id].precio
     }));
 
-    const payload = {
-        ...datosCliente,
-        total,
-        items
-    };
+    const payload = { ...datosCliente, total, items };
 
     console.log('[CoffeeCol] Enviando pedido al servidor:', payload);
 
@@ -546,7 +586,6 @@ async function enviarPedidoAlServidor(datosCliente, btn) {
 
         console.log('[CoffeeCol] Respuesta HTTP de orders.php:', res.status, res.statusText);
 
-        // Intentar parsear JSON incluso en error, para ver mensaje del servidor
         let data;
         try {
             data = await res.json();
@@ -564,8 +603,6 @@ async function enviarPedidoAlServidor(datosCliente, btn) {
         }
 
         console.log('[CoffeeCol] ✅ Pedido guardado correctamente. ID:', data.pedido_id);
-
-        // Mostrar pantalla de éxito
         mostrarExitoCheckout(btn);
 
     } catch (err) {
@@ -619,20 +656,56 @@ function inicializarFiltros() {
 }
 
 /* ============================================================
-   FAVORITOS — BUG #5 CORREGIDO (conatains → contains)
+   FAVORITOS — INICIALIZAR BOTONES EN LAS TARJETAS
 ============================================================ */
 function inicializarFavoritos() {
     document.querySelectorAll('.btn-favorito').forEach(btn => btn.replaceWith(btn.cloneNode(true)));
+
     document.querySelectorAll('.btn-favorito').forEach(btn => {
-        btn.addEventListener('click', function () {
+        const card       = btn.closest('.producto-card');
+        const productoId = card ? parseInt(card.dataset.id, 10) : null;
+
+        // Marcar los que ya son favoritos del usuario logueado
+        if (productoId && favoritosActivos.has(productoId)) {
+            btn.classList.add('activo');
+            const icono = btn.querySelector('i');
+            if (icono) {
+                icono.classList.remove('far');
+                icono.classList.add('fas');
+            }
+        }
+
+        btn.addEventListener('click', async function () {
+            if (!productoId) return;
+
+            const icono    = this.querySelector('i');
+            const eraActivo = this.classList.contains('activo');
+
+            // Optimistic UI: toggle visual inmediato
             this.classList.toggle('activo');
-            const icono = this.querySelector('i');
-            // BUG #5 fix: "conatains" corregido a "contains"
-            if (this.classList.contains('activo')) {
-                icono.classList.replace('far', 'fas');
-                mostrarToast('Guardado en favoritos', 'fa-heart');
+            if (icono) {
+                icono.classList.toggle('far', eraActivo);
+                icono.classList.toggle('fas', !eraActivo);
+            }
+
+            const resultado = await toggleFavoritoServidor(productoId);
+
+            if (resultado === null) {
+                // Error o redirigido a login: revertir visual
+                this.classList.toggle('activo');
+                if (icono) {
+                    icono.classList.toggle('far', !eraActivo);
+                    icono.classList.toggle('fas', eraActivo);
+                }
+                return;
+            }
+
+            if (resultado.favorito) {
+                favoritosActivos.add(productoId);
+                mostrarToast('Guardado en favoritos ❤️', 'fa-heart');
             } else {
-                icono.classList.replace('fas', 'far');
+                favoritosActivos.delete(productoId);
+                mostrarToast('Eliminado de favoritos', 'fa-heart');
             }
         });
     });
@@ -672,7 +745,6 @@ document.addEventListener('DOMContentLoaded', function () {
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando…';
 
-            // BUG #1 fix: reemplaza el setTimeout falso por fetch real
             const datosCliente = {
                 nombre:    document.getElementById('co-nombre')?.value.trim(),
                 apellido:  document.getElementById('co-apellido')?.value.trim(),
@@ -683,7 +755,6 @@ document.addEventListener('DOMContentLoaded', function () {
             };
 
             console.log('[CoffeeCol] Datos del cliente:', datosCliente);
-
             await enviarPedidoAlServidor(datosCliente, btn);
         });
     }
@@ -696,3 +767,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.key === 'Escape') { cerrarCheckout(); cerrarCarrito(); }
     });
 });
+
+// Al final de document.addEventListener('DOMContentLoaded', function() { ... })
+if (sessionStorage.getItem('abrir_carrito') === '1') {
+    sessionStorage.removeItem('abrir_carrito');
+    setTimeout(() => abrirCarrito(), 600);
+}

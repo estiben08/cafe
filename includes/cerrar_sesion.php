@@ -1,18 +1,13 @@
 <?php
-/**
- * cerrar_sesion.php — includes/cerrar_sesion.php
- * Borra la cookie fb_token y destruye la sesión PHP
- */
+foreach (['/', '/cafe', '/cafe/includes'] as $path) {
+    setcookie('fb_token', '', [
+        'expires'  => time() - 3600,
+        'path'     => $path,
+        'httponly' => true,
+        'samesite' => 'Strict'
+    ]);
+}
 
-// Borrar cookie fb_token
-setcookie('fb_token', '', [
-    'expires'  => time() - 3600,
-    'path'     => '/cafe',
-    'httponly' => true,
-    'samesite' => 'Strict'
-]);
-
-// Destruir sesión PHP si existe
 if (session_status() === PHP_SESSION_NONE) session_start();
 session_destroy();
 

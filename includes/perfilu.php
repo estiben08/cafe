@@ -4,7 +4,6 @@ ini_set('display_errors', 0);
 
 require 'C:/xamppp/htdocs/cafe/vendor/autoload.php';
 
-// ── 1. Verificar token Firebase ───────────────────────────────
 $token = $_COOKIE['fb_token'] ?? '';
 if (!$token) {
     header('Location: /cafe/includes/loginu.php');
@@ -26,13 +25,11 @@ try {
     exit;
 }
 
-// ── 2. Conexión MySQL ─────────────────────────────────────────
 $pdo = new PDO('mysql:host=127.0.0.1;dbname=coffeecol;charset=utf8mb4', 'root', '', [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 ]);
 
-// ── 3. Upsert usuario ─────────────────────────────────────────
 $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE firebase_uid = ?");
 $stmt->execute([$firebase_uid]);
 $usuario = $stmt->fetch();
@@ -46,7 +43,6 @@ if (!$usuario) {
 }
 $usuario_id = $usuario['id'];
 
-// ── 4. Puntos de cumpleaños (una vez por año) ─────────────────
 if ($usuario['fecha_nacimiento']) {
     $hoy   = new DateTime();
     $cumple = new DateTime($usuario['fecha_nacimiento']);
@@ -62,7 +58,6 @@ if ($usuario['fecha_nacimiento']) {
     }
 }
 
-// ── 5. Guardar fecha de nacimiento (POST) ─────────────────────
 $msg_bday = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['fecha_nacimiento'])) {
     $fn = $_POST['fecha_nacimiento'];
@@ -74,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['fecha_nacimiento'])) 
     }
 }
 
-// ── 6. Cargar datos ───────────────────────────────────────────
 $pedidos = $pdo->prepare("
     SELECT p.id, p.numero_pedido, p.total, p.fecha, p.estado,
            GROUP_CONCAT(prod.nombre SEPARATOR ', ') AS productos
@@ -100,13 +94,21 @@ $direcciones = $pdo->prepare("SELECT * FROM usuario_direcciones WHERE usuario_id
 $direcciones->execute([$usuario_id]);
 $direcciones_list = $direcciones->fetchAll();
 
-$total_favoritos  = $pdo->prepare("SELECT COUNT(*) FROM usuario_favoritos WHERE usuario_id = ?");
-$total_favoritos->execute([$usuario_id]);
-$num_favoritos = (int)$total_favoritos->fetchColumn();
+$favoritos_q = $pdo->prepare("
+    SELECT p.id, p.nombre, p.precio, p.imagen, p.icono, p.descripcion
+    FROM usuario_favoritos uf
+    JOIN productos p ON p.id = uf.producto_id
+    WHERE uf.usuario_id = ?
+    ORDER BY uf.id DESC
+");
+$favoritos_q->execute([$usuario_id]);
+$favoritos_list = $favoritos_q->fetchAll();
 
 $total_pedidos = $pdo->prepare("SELECT COUNT(*) FROM pedidos WHERE firebase_uid = ?");
 $total_pedidos->execute([$firebase_uid]);
 $num_pedidos = (int)$total_pedidos->fetchColumn();
+
+$num_favoritos = count($favoritos_list);
 
 $puntos       = (int)$usuario['puntos'];
 $nivel_actual = $puntos >= 1000 ? 'Oro' : ($puntos >= 500 ? 'Plata' : 'Espresso');
@@ -159,13 +161,13 @@ $tipos_icono = [
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background: #f4ede4; min-height: 100vh; }
 
-    /* ── Layout ── */
+    /* ══ LAYOUT ══ */
     .dashboard { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
 
-    /* ── Sidebar ── */
+    /* ══ SIDEBAR ══ */
     .sidebar { background: var(--espresso); display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; }
     .sidebar-logo { padding: 20px 18px 16px; border-bottom: 0.5px solid rgba(252,246,219,0.08); }
-    .sidebar-logo-sub  { font-size: 11px; color: rgba(252,246,219,0.35); margin-top: 2px; }
+    .sidebar-logo-sub { font-size: 11px; color: rgba(252,246,219,0.35); margin-top: 2px; }
 
     .btn-volver { display: flex; align-items: center; gap: 8px; padding: 10px 18px; color: rgba(252,246,219,0.4); font-size: 12px; text-decoration: none; border-bottom: 0.5px solid rgba(252,246,219,0.08); transition: all 0.15s; }
     .btn-volver:hover { color: var(--crema); background: rgba(252,246,219,0.05); }
@@ -187,43 +189,37 @@ $tipos_icono = [
     .nav-logout .nav-item { color: rgba(220,80,80,0.65); border-radius: 8px; border-left: none; padding: 8px 12px; }
     .nav-logout .nav-item:hover { color: #e57373; background: rgba(220,80,80,0.08); }
 
-    /* ── Main ── */
+    /* ══ MAIN ══ */
     .main-content { overflow-y: auto; }
 
-    /* ── Hero ── */
     .hero { background: var(--espresso); padding: 22px 28px; position: relative; overflow: hidden; }
     .hero::before { content: ''; position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; border-radius: 50%; background: rgba(74,11,21,0.35); }
     .hero::after  { content: ''; position: absolute; bottom: -70px; right: 80px; width: 140px; height: 140px; border-radius: 50%; background: rgba(107,58,42,0.18); }
-    .hero-inner { display: flex; align-items: center; gap: 18px; position: relative; z-index: 1; }
+    .hero-inner { display: flex; align-items: center; gap: 18px; position: relative; z-index: 1; flex-wrap: wrap; }
     .avatar-lg { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 600; color: var(--crema); border: 2.5px solid rgba(252,246,219,0.2); flex-shrink: 0; overflow: hidden; background: var(--vino2); }
     .avatar-lg img { width: 100%; height: 100%; object-fit: cover; }
-    .hero-info { flex: 1; }
-    .hero-name  { font-size: 22px; font-weight: 600; color: var(--crema); }
-    .hero-email { font-size: 13px; color: rgba(252,246,219,0.45); margin-top: 3px; }
+    .hero-info { flex: 1; min-width: 0; }
+    .hero-name  { font-size: 22px; font-weight: 600; color: var(--crema); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hero-email { font-size: 13px; color: rgba(252,246,219,0.45); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .hero-since { font-size: 11px; color: rgba(252,246,219,0.3); margin-top: 5px; display: flex; align-items: center; gap: 5px; }
     .badge-nivel { background: rgba(196,149,106,0.18); border: 0.5px solid rgba(196,149,106,0.35); color: var(--latte); font-size: 11px; padding: 4px 12px; border-radius: 20px; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
 
-    /* ── Contenido ── */
     .content { padding: 22px 28px; display: flex; flex-direction: column; gap: 22px; }
 
-    /* ── Stats ── */
+    /* ══ STATS ══ */
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
     .stat-card { background: #fff; border: 0.5px solid #e8ddd5; border-radius: 12px; padding: 16px; }
     .stat-icon { font-size: 20px; color: var(--latte); margin-bottom: 8px; }
     .stat-val  { font-size: 24px; font-weight: 600; color: #1a1a1a; }
     .stat-lbl  { font-size: 11px; color: #888; margin-top: 2px; }
 
-    /* ── Sección título ── */
     .sec-title { font-size: 14px; font-weight: 600; color: #1a1a1a; margin-bottom: 12px; display: flex; align-items: center; gap: 7px; }
     .sec-title i { font-size: 16px; color: var(--latte); }
 
-    /* ── Dos columnas ── */
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-
-    /* ── Tarjeta genérica ── */
     .card-box { background: #fff; border: 0.5px solid #e8ddd5; border-radius: 12px; padding: 18px; }
 
-    /* ── Puntos ── */
+    /* ══ PUNTOS ══ */
     .pts-big  { font-size: 34px; font-weight: 600; color: #1a1a1a; }
     .pts-sub  { font-size: 12px; color: #888; margin-top: 2px; }
     .pts-top  { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
@@ -249,13 +245,13 @@ $tipos_icono = [
     .pts-pos   { color: #2e7d32; }
     .pts-neg   { color: #c62828; }
 
-    /* ── Cumpleaños ── */
+    /* ══ CUMPLEAÑOS ══ */
     .bday-top   { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
     .bday-top i { font-size: 22px; color: var(--latte); margin-top: 2px; }
     .bday-title { font-size: 14px; font-weight: 600; color: #1a1a1a; }
     .bday-sub   { font-size: 11px; color: #888; margin-top: 2px; }
-    .bday-form  { display: flex; gap: 8px; align-items: center; }
-    .bday-form input  { flex: 1; height: 36px; border: 0.5px solid #d0c4bc; border-radius: 8px; padding: 0 10px; font-size: 13px; font-family: 'Inter', sans-serif; background: #faf6f0; color: #333; outline: none; }
+    .bday-form  { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .bday-form input  { flex: 1; min-width: 140px; height: 36px; border: 0.5px solid #d0c4bc; border-radius: 8px; padding: 0 10px; font-size: 13px; font-family: 'Inter', sans-serif; background: #faf6f0; color: #333; outline: none; }
     .bday-form input:focus { border-color: var(--latte); }
     .bday-form button { height: 36px; padding: 0 16px; border-radius: 8px; background: var(--espresso); border: none; color: var(--latte); font-size: 12px; font-weight: 500; cursor: pointer; white-space: nowrap; font-family: 'Inter', sans-serif; transition: background 0.15s; }
     .bday-form button:hover { background: var(--vino2); }
@@ -264,7 +260,7 @@ $tipos_icono = [
     .bday-ok    { border-left: 2px solid #2e7d32; background: #f1f8f1; }
     .bday-ok i  { color: #2e7d32; }
 
-    /* ── Acciones ── */
+    /* ══ ACCIONES ══ */
     .actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .action-btn { background: #fff; border: 0.5px solid #e8ddd5; border-radius: 10px; padding: 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.15s; text-decoration: none; }
     .action-btn:hover { border-color: #c4956a55; background: #fdf5ee; }
@@ -272,7 +268,7 @@ $tipos_icono = [
     .action-txt  { font-size: 12px; font-weight: 500; color: #333; }
     .action-sub  { font-size: 11px; color: #aaa; margin-top: 1px; }
 
-    /* ── Pedidos ── */
+    /* ══ PEDIDOS ══ */
     .orders-list { display: flex; flex-direction: column; gap: 8px; }
     .order-row { background: #fff; border: 0.5px solid #e8ddd5; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
     .order-num  { font-size: 13px; font-weight: 600; color: #333; min-width: 60px; }
@@ -287,7 +283,7 @@ $tipos_icono = [
     .empty-state { text-align: center; padding: 30px; color: #aaa; font-size: 13px; }
     .empty-state i { font-size: 30px; display: block; margin-bottom: 8px; color: #ddd; }
 
-    /* ── Direcciones ── */
+    /* ══ DIRECCIONES ══ */
     .addr-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .addr-card { background: #fff; border: 0.5px solid #e8ddd5; border-radius: 10px; padding: 14px; cursor: pointer; transition: border-color 0.15s; }
     .addr-card:hover { border-color: #c4956a55; }
@@ -297,11 +293,165 @@ $tipos_icono = [
     .addr-line { font-size: 12px; color: #333; }
     .addr-city { font-size: 11px; color: #aaa; margin-top: 2px; }
 
-    @media (max-width: 900px) {
-      .dashboard { grid-template-columns: 1fr; }
-      .sidebar { height: auto; position: static; flex-direction: row; flex-wrap: wrap; }
-      .stats-grid { grid-template-columns: repeat(2,1fr); }
+    /* ══ FAVORITOS ══ */
+    .favoritos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+    .fav-card { background: #fff; border: 0.5px solid #e8ddd5; border-radius: 12px; overflow: hidden; transition: border-color 0.15s, box-shadow 0.15s; }
+    .fav-card:hover { border-color: #c4956a55; box-shadow: 0 2px 12px rgba(196,149,106,0.12); }
+    .fav-img { height: 120px; background: #f8f3ec; position: relative; overflow: hidden; }
+    .fav-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    .fav-card:hover .fav-img img { transform: scale(1.05); }
+    .fav-img-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #c4956a; font-size: 28px; }
+    .fav-info   { padding: 10px 12px 12px; }
+    .fav-nombre { font-size: 13px; font-weight: 600; color: #1a1a1a; margin-bottom: 3px; }
+    .fav-desc   { font-size: 11px; color: #888; margin-bottom: 8px; line-height: 1.4; }
+    .fav-footer { display: flex; align-items: center; justify-content: space-between; }
+    .fav-precio { font-size: 13px; font-weight: 600; color: #1a1a1a; }
+    .fav-acciones { display: flex; gap: 6px; }
+    .fav-btn-comprar,
+    .fav-btn-quitar { width: 28px; height: 28px; border-radius: 7px; border: 0.5px solid #e8ddd5; background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: #888; text-decoration: none; transition: all 0.15s; }
+    .fav-btn-comprar:hover { background: #fdf5ee; color: var(--latte); border-color: var(--latte); }
+    .fav-btn-quitar:hover  { background: #fff5f5; color: #e57373; border-color: #e57373; }
+    .fav-card.quitando { opacity: 0.4; pointer-events: none; transition: opacity 0.2s; }
+
+    /* ══ BARRA NAV MÓVIL ══ */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--espresso);
+      border-top: 0.5px solid rgba(252,246,219,0.1);
+      z-index: 100;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .mobile-nav-inner {
+      display: flex;
+      justify-content: space-around;
+      align-items: stretch;
+    }
+    .mobile-nav-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 10px 4px;
+      color: rgba(252,246,219,0.4);
+      font-size: 9px;
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mobile-nav-btn i { font-size: 20px; }
+    .mobile-nav-btn span { font-size: 8px; line-height: 1.2; text-align: center; }
+    .mobile-nav-btn.active { color: var(--latte); }
+    .mobile-nav-btn.logout-mob { color: rgba(220,80,80,0.55); }
+    .mobile-nav-btn.logout-mob:active { color: #e57373; }
+
+    /* ══ TABLET (sidebar mini con sólo iconos) ══ */
+    @media (max-width: 1100px) and (min-width: 769px) {
+      .dashboard { grid-template-columns: 64px 1fr; }
+      .sidebar { height: 100vh; position: sticky; top: 0; overflow: hidden; }
+      .sidebar-logo { padding: 12px 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      .sidebar-logo a { justify-content: center; }
+      .sidebar-logo img { height: 36px; width: 36px; object-fit: cover; border-radius: 8px; }
+      .sidebar-logo-sub { display: none; }
+      .btn-volver { justify-content: center; padding: 10px; }
+      .btn-volver span { display: none; }
+      .sidebar-user { padding: 10px; justify-content: center; }
+      .sidebar-user > div:last-child { display: none; }
+      .nav-section { display: none; }
+      nav.sidebar-nav .nav-item { justify-content: center; padding: 10px; border-left: none; font-size: 0; }
+      nav.sidebar-nav .nav-item i { font-size: 18px; width: auto; margin: 0; }
+      nav.sidebar-nav .nav-item span { display: none; }
+      nav.sidebar-nav .nav-item.active { border-left: none; border-right: 2px solid var(--latte); background: rgba(74,11,21,0.55); }
+      #btn-logout-perfil { justify-content: center; padding: 10px; font-size: 0; }
+      #btn-logout-perfil i { font-size: 18px; }
+      #btn-logout-perfil span { display: none; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .two-col { grid-template-columns: 1fr; }
+      .content { padding: 20px 24px; }
+      .hero { padding: 20px 24px; }
+      .hero-name { font-size: 18px; }
+      .hero-inner { flex-wrap: nowrap; gap: 14px; }
+      .favoritos-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+    }
+
+    /* ══ TOPBAR MÓVIL (logo + volver) ══ */
+    .mobile-topbar {
+      display: none;
+      background: var(--espresso);
+      padding: 10px 16px;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 0.5px solid rgba(252,246,219,0.08);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+    }
+    .mobile-topbar img { height: 32px; width: auto; object-fit: contain; }
+    .mobile-topbar-back {
+      display: flex; align-items: center; gap: 6px;
+      color: rgba(252,246,219,0.5); font-size: 12px;
+      text-decoration: none; transition: color 0.15s;
+    }
+    .mobile-topbar-back:hover { color: var(--crema); }
+    .mobile-topbar-back i { font-size: 15px; }
+
+    /* ══ MOBILE ══ */
+    @media (max-width: 768px) {
+      .dashboard { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .mobile-nav { display: block; }
+      .mobile-topbar { display: flex; }
+      .main-content { padding-bottom: 70px; overflow-y: visible; }
+      .hero { padding: 14px 16px; margin-top: 0; }
+      body { padding-top: 54px; background: var(--espresso); }
+      .dashboard { min-height: calc(100vh - 54px); background: #f4ede4; }
+      .hero::before, .hero::after { display: none; }
+      .avatar-lg { width: 52px; height: 52px; font-size: 20px; }
+      .hero-name  { font-size: 17px; }
+      .hero-email { font-size: 11px; }
+      .badge-nivel { font-size: 10px; padding: 3px 9px; }
+
+      .content { padding: 14px; gap: 16px; }
+
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .stat-card  { padding: 12px; }
+      .stat-val   { font-size: 20px; }
+      .stat-lbl   { font-size: 10px; }
+
+      .two-col { grid-template-columns: 1fr; gap: 16px; }
+
+      .card-box { padding: 14px; }
+      .pts-big  { font-size: 28px; }
+      .sec-title { font-size: 13px; }
+
+      .order-prod  { max-width: 160px; }
+      .order-price { min-width: 60px; font-size: 12px; }
+
+      .addr-grid { grid-template-columns: 1fr; }
+
+      .favoritos-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+      .fav-img { height: 100px; }
+
+      .actions-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .action-btn { padding: 10px; gap: 8px; }
+      .action-txt { font-size: 11px; }
+      .action-sub { font-size: 10px; }
+
+      #resumen, #pedidos, #puntos, #direcciones, #favoritos { scroll-margin-top: 16px; }
+    }
+
+    @media (max-width: 380px) {
+      .favoritos-grid { grid-template-columns: 1fr 1fr; }
+      .hero-name { font-size: 15px; }
     }
   </style>
 </head>
@@ -309,7 +459,7 @@ $tipos_icono = [
 
 <div class="dashboard">
 
-  <!-- ══════════════════════════════════ SIDEBAR ══════════════════════════════════ -->
+  <!-- ══ SIDEBAR ══ -->
   <aside class="sidebar">
     <div class="sidebar-logo">
       <a href="/cafe/index.php" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
@@ -318,7 +468,7 @@ $tipos_icono = [
       <div class="sidebar-logo-sub" style="margin-top:6px;">Mi cuenta</div>
     </div>
     <a href="/cafe/index.php" class="btn-volver">
-      <i class="ti ti-arrow-left"></i> Volver al inicio
+      <i class="ti ti-arrow-left"></i> <span>Volver al inicio</span>
     </a>
     <div class="sidebar-user">
       <div class="avatar-sm">
@@ -335,24 +485,31 @@ $tipos_icono = [
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section">Principal</div>
-      <a href="#resumen"    class="nav-item active"><i class="ti ti-layout-dashboard"></i> Resumen</a>
-      <a href="#pedidos"    class="nav-item"><i class="ti ti-shopping-bag"></i> Mis pedidos</a>
-      <a href="#puntos"     class="nav-item"><i class="ti ti-award"></i> Mis puntos</a>
+      <a href="#resumen"    class="nav-item active"><i class="ti ti-layout-dashboard"></i> <span>Resumen</span></a>
+      <a href="#pedidos"    class="nav-item"><i class="ti ti-shopping-bag"></i> <span>Mis pedidos</span></a>
+      <a href="#puntos"     class="nav-item"><i class="ti ti-award"></i> <span>Mis puntos</span></a>
       <div class="nav-section">Cuenta</div>
-      <a href="#direcciones" class="nav-item"><i class="ti ti-map-pin"></i> Direcciones</a>
-      <a href="#favoritos"   class="nav-item"><i class="ti ti-heart"></i> Favoritos</a>
-      <a href="#"            class="nav-item"><i class="ti ti-credit-card"></i> Métodos de pago</a>
-      <a href="#"            class="nav-item"><i class="ti ti-settings"></i> Configuración</a>
+      <a href="#direcciones" class="nav-item"><i class="ti ti-map-pin"></i> <span>Direcciones</span></a>
+      <a href="#favoritos"   class="nav-item"><i class="ti ti-heart"></i> <span>Favoritos</span></a>
+      <a href="#"            class="nav-item"><i class="ti ti-credit-card"></i> <span>Métodos de pago</span></a>
+      <a href="#"            class="nav-item"><i class="ti ti-settings"></i> <span>Configuración</span></a>
     </nav>
-    <div class="nav-logout">
-      <a href="/cafe/includes/cerrar_sesion.php" class="nav-item"><i class="ti ti-logout"></i> Cerrar sesión</a>
-    </div>
+    <button id="btn-logout-perfil" class="nav-item" style="background:none;border:none;width:100%;text-align:left;cursor:pointer;color:rgba(220,80,80,0.65);padding:12px 18px;border-top:0.5px solid rgba(252,246,219,0.08);">
+      <i class="ti ti-logout"></i> <span>Cerrar sesión</span>
+    </button>
   </aside>
 
-  <!-- ══════════════════════════════════ MAIN ══════════════════════════════════ -->
+  <!-- ══ MAIN ══ -->
   <main class="main-content">
 
-    <!-- Hero banner -->
+    <!-- Topbar solo visible en mobile -->
+    <div class="mobile-topbar">
+      <img src="/cafe/assets/imagenes/banner20.png" alt="CoffeeCol">
+      <a href="/cafe/index.php" class="mobile-topbar-back">
+        <i class="ti ti-arrow-left"></i> Volver al inicio
+      </a>
+    </div>
+
     <div class="hero">
       <div class="hero-inner">
         <div class="avatar-lg">
@@ -387,7 +544,7 @@ $tipos_icono = [
         </div>
         <div class="stat-card">
           <div class="stat-icon"><i class="ti ti-heart"></i></div>
-          <div class="stat-val"><?= $num_favoritos ?></div>
+          <div class="stat-val" id="stat-favoritos"><?= $num_favoritos ?></div>
           <div class="stat-lbl">Favoritos</div>
         </div>
         <div class="stat-card">
@@ -400,7 +557,6 @@ $tipos_icono = [
       <!-- Dos columnas: Puntos | Cumpleaños + Acciones -->
       <div class="two-col">
 
-        <!-- Puntos -->
         <div id="puntos">
           <div class="sec-title"><i class="ti ti-award"></i> Puntos y recompensas</div>
           <div class="card-box">
@@ -412,7 +568,10 @@ $tipos_icono = [
               <div class="badge-nivel"><i class="ti ti-flame" style="font-size:12px"></i> <?= $nivel_actual ?></div>
             </div>
             <div class="progress-wrap">
-              <div class="progress-lbl"><span>Progreso al nivel <?= $nivel_actual === 'Espresso' ? 'Plata' : 'Oro' ?></span><span><?= $puntos ?> / <?= $pts_siguiente ?></span></div>
+              <div class="progress-lbl">
+                <span>Progreso al nivel <?= $nivel_actual === 'Espresso' ? 'Plata' : 'Oro' ?></span>
+                <span><?= $puntos ?> / <?= $pts_siguiente ?></span>
+              </div>
               <div class="progress-bar"><div class="progress-fill" style="width:<?= $progreso_pct ?>%"></div></div>
             </div>
             <?php if ($pts_faltan > 0): ?>
@@ -458,10 +617,7 @@ $tipos_icono = [
           </div>
         </div>
 
-        <!-- Derecha: Cumpleaños + Acciones -->
         <div style="display:flex;flex-direction:column;gap:16px">
-
-          <!-- Cumpleaños -->
           <div>
             <div class="sec-title"><i class="ti ti-cake"></i> Regalo de cumpleaños</div>
             <div class="card-box">
@@ -494,7 +650,6 @@ $tipos_icono = [
             </div>
           </div>
 
-          <!-- Acciones rápidas -->
           <div>
             <div class="sec-title"><i class="ti ti-bolt"></i> Acciones rápidas</div>
             <div class="actions-grid">
@@ -516,7 +671,6 @@ $tipos_icono = [
               </a>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -566,17 +720,176 @@ $tipos_icono = [
         </div>
       </div>
 
+      <!-- Favoritos -->
+      <div id="favoritos">
+        <div class="sec-title"><i class="ti ti-heart"></i> Mis favoritos</div>
+        <?php if ($favoritos_list): ?>
+        <div class="favoritos-grid">
+          <?php foreach ($favoritos_list as $fav):
+            $precio_fmt = '$' . number_format($fav['precio'], 0, ',', '.');
+            $imagen_src = $fav['imagen'] ? '/cafe/' . htmlspecialchars($fav['imagen']) : '';
+            $icono_fav  = htmlspecialchars($fav['icono'] ?: 'fa-mug-hot');
+            $nombre_fav = htmlspecialchars($fav['nombre']);
+            $desc_fav   = htmlspecialchars(mb_strimwidth($fav['descripcion'] ?? '', 0, 60, '…'));
+          ?>
+          <div class="fav-card" data-id="<?= $fav['id'] ?>">
+            <div class="fav-img">
+              <?php if ($imagen_src): ?>
+                <img src="<?= $imagen_src ?>" alt="<?= $nombre_fav ?>"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div class="fav-img-fallback" style="display:none;">
+                  <i class="fas <?= $icono_fav ?>"></i>
+                </div>
+              <?php else: ?>
+                <div class="fav-img-fallback">
+                  <i class="fas <?= $icono_fav ?>"></i>
+                </div>
+              <?php endif; ?>
+            </div>
+            <div class="fav-info">
+              <div class="fav-nombre"><?= $nombre_fav ?></div>
+              <div class="fav-desc"><?= $desc_fav ?></div>
+              <div class="fav-footer">
+                <span class="fav-precio"><?= $precio_fmt ?></span>
+                <div class="fav-acciones">
+                  <a href="/cafe/includes/servicios.php" class="fav-btn-comprar" title="Ver en tienda">
+                    <i class="ti ti-shopping-bag"></i>
+                  </a>
+                  <button class="fav-btn-quitar" data-id="<?= $fav['id'] ?>" title="Quitar de favoritos">
+                    <i class="ti ti-heart-off"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <?php endforeach; ?>
+        </div>
+        <?php else: ?>
+        <div class="empty-state">
+          <i class="ti ti-heart"></i>
+          No tienes productos favoritos aún.<br>
+          <a href="/cafe/includes/servicios.php" style="color:var(--latte);font-size:12px;margin-top:6px;display:inline-block;">
+            Explorar productos →
+          </a>
+        </div>
+        <?php endif; ?>
+      </div>
+
     </div>
   </main>
 </div>
 
+<!-- ══ BARRA NAV MÓVIL ══ -->
+<nav class="mobile-nav">
+  <div class="mobile-nav-inner">
+    <a href="#resumen" class="mobile-nav-btn active">
+      <i class="ti ti-layout-dashboard"></i>
+      <span>Inicio</span>
+    </a>
+    <a href="#pedidos" class="mobile-nav-btn">
+      <i class="ti ti-shopping-bag"></i>
+      <span>Pedidos</span>
+    </a>
+    <a href="#puntos" class="mobile-nav-btn">
+      <i class="ti ti-award"></i>
+      <span>Puntos</span>
+    </a>
+    <a href="#favoritos" class="mobile-nav-btn">
+      <i class="ti ti-heart"></i>
+      <span>Favoritos</span>
+    </a>
+    <button id="btn-logout-mob" class="mobile-nav-btn logout-mob">
+      <i class="ti ti-logout"></i>
+      <span>Cerrar sesión</span>
+    </button>
+  </div>
+</nav>
+
 <script>
+// Navegación sidebar — resaltar ítem activo
 document.querySelectorAll('.sidebar-nav .nav-item').forEach(el => {
   el.addEventListener('click', function() {
     document.querySelectorAll('.sidebar-nav .nav-item').forEach(x => x.classList.remove('active'));
     this.classList.add('active');
   });
 });
+
+// Quitar favorito desde el perfil
+document.querySelectorAll('.fav-btn-quitar').forEach(btn => {
+  btn.addEventListener('click', async function () {
+    const productoId = parseInt(this.dataset.id, 10);
+    const card = document.querySelector(`.fav-card[data-id="${productoId}"]`);
+    if (!card) return;
+    card.classList.add('quitando');
+    try {
+      const res = await fetch('/cafe/api/favoritos.php', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ producto_id: productoId })
+      });
+      const data = await res.json();
+      if (data.success && !data.favorito) {
+        card.style.transition = 'all 0.3s';
+        card.style.transform  = 'scale(0.9)';
+        card.style.opacity    = '0';
+        setTimeout(() => {
+          card.remove();
+          const grid = document.querySelector('.favoritos-grid');
+          if (grid && grid.children.length === 0) {
+            grid.outerHTML = `<div class="empty-state">
+              <i class="ti ti-heart"></i>
+              No tienes productos favoritos aún.<br>
+              <a href="/cafe/includes/servicios.php" style="color:var(--latte);font-size:12px;margin-top:6px;display:inline-block;">
+                Explorar productos →
+              </a>
+            </div>`;
+          }
+          const statVal = document.getElementById('stat-favoritos');
+          if (statVal) statVal.textContent = Math.max(0, parseInt(statVal.textContent) - 1);
+        }, 300);
+      } else {
+        card.classList.remove('quitando');
+      }
+    } catch (_) {
+      card.classList.remove('quitando');
+    }
+  });
+});
+
+// Resaltar nav móvil según sección visible
+const mobileSections = ['resumen','pedidos','puntos','favoritos'];
+const mobileNavBtns  = document.querySelectorAll('.mobile-nav-btn[href]');
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      mobileNavBtns.forEach(b => b.classList.remove('active'));
+      const active = document.querySelector(`.mobile-nav-btn[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+mobileSections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) sectionObserver.observe(el);
+});
+</script>
+
+<script type="module">
+  import { cerrarSesion } from '/cafe/js/auth.js';
+
+  // Logout desktop
+  document.getElementById('btn-logout-perfil').addEventListener('click', async () => {
+    try { await cerrarSesion(); } catch(e) {}
+    await fetch('/cafe/includes/cerrar_sesion.php');
+    window.location.href = '/cafe/includes/loginu.php';
+  });
+
+  // Logout móvil
+  document.getElementById('btn-logout-mob').addEventListener('click', async () => {
+    try { await cerrarSesion(); } catch(e) {}
+    await fetch('/cafe/includes/cerrar_sesion.php');
+    window.location.href = '/cafe/includes/loginu.php';
+  });
 </script>
 
 </body>

@@ -9,16 +9,13 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
-// ── URL base ─────────────────────────────────────
 const BASE = 'http://localhost/cafe';
 
-// ── Configuración Magic Link ─────────────────────
 const actionCodeSettings = {
   url: BASE + '/includes/login.php',
   handleCodeInApp: true
 };
 
-// ── Guardar usuario en sessionStorage ───────────
 function guardarUsuario(user) {
   sessionStorage.setItem('cc_usuario', JSON.stringify({
     nombre: user.displayName || user.email,
@@ -27,7 +24,6 @@ function guardarUsuario(user) {
   }));
 }
 
-// ── Guardar usuario en MySQL ─────────────────────
 async function guardarUsuarioMySQL(token) {
   try {
     await fetch('/cafe/includes/guardar_usuario.php', {
@@ -40,28 +36,19 @@ async function guardarUsuarioMySQL(token) {
   }
 }
 
-// ── Verificar rol y redirigir ────────────────────
 async function verificarRolYRedirigir(user) {
   const token = await user.getIdToken();
-  console.log('Token obtenido:', token ? 'SI' : 'NO');
-
-  // ✅ Guardar/actualizar usuario en MySQL
   await guardarUsuarioMySQL(token);
-
   const res  = await fetch('/cafe/includes/verificar_rol.php', {
     method:  'POST',
     headers: { 'Content-Type': 'application/json' },
     body:    JSON.stringify({ token })
   });
-
   const text = await res.text();
-  console.log('Respuesta PHP:', text);
-
   const data = JSON.parse(text);
   window.location.href = data.redirect;
 }
 
-// ── Login con Google ─────────────────────────────
 export async function loginGoogle() {
   try {
     const result = await signInWithPopup(auth, new GoogleAuthProvider());
@@ -72,7 +59,6 @@ export async function loginGoogle() {
   }
 }
 
-// ── Enviar Magic Link ────────────────────────────
 export async function enviarMagicLink(email) {
   try {
     await sendSignInLinkToEmail(auth, email, actionCodeSettings);
@@ -83,7 +69,6 @@ export async function enviarMagicLink(email) {
   }
 }
 
-// ── Completar Magic Link al regresar ────────────
 export async function completarMagicLink() {
   if (!isSignInWithEmailLink(auth, window.location.href)) return;
   let email = localStorage.getItem('emailForSignIn') || prompt('Confirma tu correo:');
@@ -97,22 +82,59 @@ export async function completarMagicLink() {
   }
 }
 
-// ── Cerrar sesión (botón) ────────────────────────
 export async function cerrarSesion() {
-  await signOut(auth);
+  try {
+    // 1. Cierra la sesión en Firebase (limpia IndexedDB y memoria)
+    await signOut(auth);
+  } catch (e) {
+    console.error('Error signOut Firebase:', e);
+  }
+
+  // 2. Limpia sessionStorage
   sessionStorage.removeItem('cc_usuario');
-  await fetch('/cafe/includes/cerrar_sesion.php', {
-    method:  'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body:    JSON.stringify({ action: 'logout' })
+
+  // 3. Borra la cookie fb_token desde el cliente como respaldo
+  const cookiePaths = ['/', '/cafe', '/cafe/includes'];
+  cookiePaths.forEach(path => {
+    document.cookie = `fb_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path};`;
   });
-  window.location.href = BASE + '/index.php';
+
+  // 4. Llama al backend para destruir la cookie httpOnly y la sesión PHP
+  try {
+    await fetch('/cafe/includes/cerrar_sesion.php', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ action: 'logout' })
+    });
+  } catch (e) {
+    console.error('Error cerrando sesión en backend:', e);
+  }
+
+  // 5. Redirige al login
+  window.location.href = BASE + '/includes/loginu.php';
 }
 
-// ── Observar estado usuario ──────────────────────
 export function observarUsuario(callbackLogueado, callbackNoLogueado) {
+  // Esperamos a que Firebase resuelva el estado real antes de ejecutar callbacks
+  // Esto evita el parpadeo del menú al cargar la página tras el logout
+  let resuelto = false;
+
   onAuthStateChanged(auth, (user) => {
-    if (user) callbackLogueado(user);
-    else callbackNoLogueado();
+    resuelto = true;
+    if (user) {
+      callbackLogueado(user);
+    } else {
+      // Limpieza defensiva: si Firebase dice que no hay sesión, borramos todo
+      sessionStorage.removeItem('cc_usuario');
+      callbackNoLogueado();
+    }
   });
+
+  // Timeout de seguridad: si Firebase tarda más de 3s, forzamos estado sin sesión
+  setTimeout(() => {
+    if (!resuelto) {
+      sessionStorage.removeItem('cc_usuario');
+      callbackNoLogueado();
+    }
+  }, 3000);
 }
