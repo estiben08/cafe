@@ -168,7 +168,7 @@
         .carousel-btn:active { transform: scale(1); }
         .logo-container { display: flex; gap: 30px; transform: translateX(0); will-change: transform; width: max-content; transition: transform 0.2s linear; }
         .izquierdo, .derecho { font-size: 20px; transition: all 0.3s ease; width: 51px; }
-        .logo-image { height: 24px; width: auto; flex-shrink: 0; object-fit: contain; }
+        .logo-image { height: 80px; width: auto; flex-shrink: 0; object-fit: contain; }
         .logo-image:hover { transform: scale(1.05); background-color: rgba(255,255,255,0.2); }
 
         .mobile-bar { display: none; }
@@ -255,7 +255,7 @@
         <div class="video-fondo">
             <div class="video-loading"></div>
             <video autoplay muted loop playsinline preload="metadata">
-                <source src="assets/imagenes/banner3.mp4" type="video/mp4">
+                <source src="assets/imagenes/fvideo.mp4" type="video/mp4">
                 Tu navegador no soporta el video.
             </video>
         </div>
@@ -478,16 +478,16 @@
                         <button class="carousel-btn" aria-label="Anterior"><span class="fas fa-angle-double-left izquierdo"></span></button>
                         <div class="carousel-viewport">
                             <div class="logo-container">
-                                <img src="assets/imagenes/banner18.png" alt="Logo 1" class="logo-image">
-                                <img src="assets/imagenes/banner18.png" alt="Logo 2" class="logo-image">
-                                <img src="assets/imagenes/banner18.png" alt="Logo 3" class="logo-image">
-                                <img src="assets/imagenes/banner18.png" alt="Logo 4" class="logo-image">
-                                <img src="assets/imagenes/banner18.png" alt="Logo 5" class="logo-image">
-                                <img src="assets/imagenes/banner18.png" alt="Logo 1" class="logo-image">
-                                <img src="assets/imagenes/banner18.png" alt="Logo 2" class="logo-image">
-                                <img src="assets/imagenes/banner18.png" alt="Logo 3" class="logo-image">
-                                <img src="assets/imagenes/banner18.png" alt="Logo 4" class="logo-image">
-                                <img src="assets/imagenes/banner18.png" alt="Logo 5" class="logo-image">
+                                <img src="assets/imagenes/logos.png" alt="Logo 1" class="logo-image">
+                                <img src="assets/imagenes/logos.png" alt="Logo 2" class="logo-image">
+                                <img src="assets/imagenes/logos.png" alt="Logo 3" class="logo-image">
+                                <img src="assets/imagenes/logos.png" alt="Logo 4" class="logo-image">
+                                <img src="assets/imagenes/logos.png" alt="Logo 5" class="logo-image">
+                                <img src="assets/imagenes/logos.png" alt="Logo 1" class="logo-image">
+                                <img src="assets/imagenes/logos.png" alt="Logo 2" class="logo-image">
+                                <img src="assets/imagenes/logos.png" alt="Logo 3" class="logo-image">
+                                <img src="assets/imagenes/logos.png" alt="Logo 4" class="logo-image">
+                                <img src="assets/imagenes/logos.png" alt="Logo 5" class="logo-image">
                             </div>
                         </div>
                         <button class="carousel-btn" aria-label="Siguiente"><span class="fas fa-angle-double-right derecho"></span></button>
