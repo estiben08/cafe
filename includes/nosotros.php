@@ -108,7 +108,7 @@
     <div class="footer-wrapper">
         <footer class="footer-coffeecol">
             <div class="footer-content">
-                <img src="../assets/imagenes/banner1.png" alt="Logo de CoffeeCol" class="footer-logo" />
+                <img src="../assets/imagenes/tantico.png" alt="Logo de CoffeeCol" class="footer-logo" />
 
                 <nav class="footer-nav">
                     <a href="../index.php">Inicio</a>

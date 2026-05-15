@@ -2,7 +2,7 @@
 // Incluye este archivo al inicio de CADA página de administrador así:
 // require __DIR__ . '/../includes/proteger_admin.php';
 
-require 'C:/xamppp/htdocs/cafe/vendor/autoload.php';
+require 'C:/xampp/htdocs/cafe/vendor/autoload.php';
 
 $token = $_COOKIE['fb_token'] ?? '';
 
@@ -13,7 +13,7 @@ if (!$token) {
 
 try {
     $firebase = (new Kreait\Firebase\Factory)
-        ->withServiceAccount('C:/xamppp/htdocs/cafetantico-firebase-adminsdk-fbsvc-a449960bbb.json');
+        ->withServiceAccount('C:/xampp/htdocs/cafetantico-firebase-adminsdk-fbsvc-a449960bbb.json');
 
     $auth           = $firebase->createAuth();
     $verified_token = $auth->verifyIdToken($token);

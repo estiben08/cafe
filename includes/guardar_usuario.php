@@ -6,7 +6,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
-require 'C:/xamppp/htdocs/cafe/vendor/autoload.php';
+require 'C:/xampp/htdocs/cafe/vendor/autoload.php';
 
 $body  = json_decode(file_get_contents('php://input'), true);
 $token = $body['token'] ?? '';
@@ -18,7 +18,7 @@ if (!$token) {
 
 try {
     $firebase = (new Kreait\Firebase\Factory)
-        ->withServiceAccount('C:/xamppp/htdocs/cafetantico-firebase-adminsdk-fbsvc-a449960bbb.json');
+        ->withServiceAccount('C:/xampp/htdocs/cafetantico-firebase-adminsdk-fbsvc-a449960bbb.json');
 
     $auth           = $firebase->createAuth();
     $verified_token = $auth->verifyIdToken($token);

@@ -53,7 +53,7 @@
         .navbar-custom .container {
             max-width: 1220px; padding: 0 32px; width: 100%; display: flex; align-items: center;
         }
-        .navbar-brand img { height: 42px; width: 115px; transition: transform 0.3s ease; }
+        .navbar-brand img { height: 70px; width: 140px; transition: transform 0.3s ease; }
         .navbar-collapse { display: flex; align-items: center; justify-content: space-between; flex: 1; }
         .navbar-left  { flex: 1; }
         .navbar-center { flex: 1; display: flex; justify-content: center; }
@@ -266,7 +266,7 @@
                 <!-- ── DESKTOP ── -->
                 <div class="container">
                     <a class="navbar-brand" href="index.php">
-                        <img src="assets/imagenes/banner20.png" alt="Coffee Col Logo">
+                        <img src="assets/imagenes/logos.png" alt="Coffee Col Logo">
                     </a>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav mx-auto">
@@ -308,7 +308,7 @@
                         <span></span><span></span><span></span>
                     </button>
                     <a class="mobile-logo" href="index.php">
-                        <img src="assets/imagenes/banner20.png" alt="Coffee Col Logo">
+                        <img src="assets/imagenes/logos.png" alt="Coffee Col Logo">
                     </a>
                     <div class="mobile-icons-right">
                         <div class="btn-carrito-mobile-wrap">
@@ -415,7 +415,7 @@
         <div class="drawer" id="drawer">
             <div class="drawer-header">
                 <a href="index.php" class="drawer-logo">
-                    <img src="assets/imagenes/banner20.png" alt="Coffee Col Logo"
+                    <img src="assets/imagenes/logos.png" alt="Coffee Col Logo"
                          onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
                     <span class="drawer-logo-text" style="display:none">CoffeeCol</span>
                 </a>

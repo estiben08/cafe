@@ -9,7 +9,7 @@ header('Access-Control-Allow-Headers: Content-Type');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
 
-require 'C:/xamppp/htdocs/cafe/vendor/autoload.php';
+require 'C:/xampp/htdocs/cafe/vendor/autoload.php';
 
 $token = $_COOKIE['fb_token'] ?? '';
 if (!$token) {
@@ -20,7 +20,7 @@ if (!$token) {
 
 try {
     $firebase = (new Kreait\Firebase\Factory)
-        ->withServiceAccount('C:/xamppp/htdocs/cafetantico-firebase-adminsdk-fbsvc-a449960bbb.json');
+        ->withServiceAccount('C:/xampp/htdocs/cafetantico-firebase-adminsdk-fbsvc-a449960bbb.json');
     $fbAuth       = $firebase->createAuth();
     $verified     = $fbAuth->verifyIdToken($token);
     $firebase_uid = $verified->claims()->get('sub');

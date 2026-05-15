@@ -2,7 +2,7 @@
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 ini_set('display_errors', 0);
 
-require 'C:/xamppp/htdocs/cafe/vendor/autoload.php';
+require 'C:/xampp/htdocs/cafe/vendor/autoload.php';
 
 header('Content-Type: application/json');
 
@@ -16,7 +16,7 @@ if (!$token) {
 
 try {
     $firebase = (new Kreait\Firebase\Factory)
-        ->withServiceAccount('C:/xamppp/htdocs/cafetantico-firebase-adminsdk-fbsvc-a449960bbb.json');
+        ->withServiceAccount('C:/xampp/htdocs/cafetantico-firebase-adminsdk-fbsvc-a449960bbb.json');
 
     $auth           = $firebase->createAuth();
     $verified_token = $auth->verifyIdToken($token);
