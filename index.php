@@ -4,6 +4,21 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script>
+  /* ── Redirección a intro — va en el <head>, lo antes posible ─────────────
+   * Si el usuario no tiene la clave de sesión (no pasó por la intro),
+   * lo mandamos ahí ANTES de que el navegador pinte nada.
+   * Cuando intro.php termina, guarda 'tn_session_active' y redirige aquí.
+   * Al volver, esta guardia no se activa y la página carga normal.
+   * El modal (anuuncio.php) tiene su propia clave 'tn_modal_visto'
+   * y solo se muestra si 'tn_session_active' existe Y 'tn_modal_visto' no.
+   * ─────────────────────────────────────────────────────────────────────── */
+  if (!sessionStorage.getItem('tn_session_active')) {
+    window.location.replace('includes/intro.php');
+  }
+</script>
+
     <title>Coffe</title>
 
     <!-- Bootstrap CSS -->
@@ -28,7 +43,9 @@
 </head>
 
 <body>
-    <?php include 'includes/header.php'; ?>
+<?php include 'includes/anuuncio.php'; ?>
+<?php include 'includes/header.php'; ?>
+
     <br>
 
     <!-- ================================================ -->
@@ -238,7 +255,7 @@
             <div class="row purpose-content align-items-center mt-5 g-5">
                 <!-- Imagen -->
                 <div class="col-md-6 purpose-image-wrapper">
-                    <img src="assets/imagenes/banner9.jpg" alt="Cápsulas de café" class="purpose-image img-fluid">
+                    <img src="assets/imagenes/tantiii.png" alt="Cápsulas de café" class="purpose-image img-fluid">
 
                 </div>
 
