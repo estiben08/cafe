@@ -196,181 +196,193 @@
     <div id="mh-tooltip"></div>
 
     <section class="benefits-purpose-section position-relative">
-        <div class="container">
+    <div class="container">
 
-            <!-- FILA BENEFICIOS -->
-            <div class="row justify-content-center">
-                <div
-                    class="col-12 col-lg-10 benefits-box d-flex flex-column flex-md-row justify-content-between align-items-center text-white">
+        <!-- FILA BENEFICIOS -->
+        <div class="row justify-content-center">
+            <div
+                class="col-12 col-lg-10 benefits-box d-flex flex-column flex-md-row justify-content-between align-items-center text-white">
 
-                    <!-- Beneficio 1 -->
-                    <div class="benefit-item text-center">
-                        <div class="benefit-icon mb-3">
-                            <img src="assets/imagenes/banner1000.png" alt="Mapa de Colombia" class="icon-img img-1">
-                        </div>
-                        <h5>100% Producción del Departamento</h5>
-                        <p>
-                            Todo el proceso de encapsulado y empaque se realiza en Colombia, con proveedores locales y
-                            control de calidad directo.
-                        </p>
+                <!-- Beneficio 1 -->
+                <div class="benefit-item text-center">
+                    <div class="benefit-icon mb-3">
+                        <img src="assets/imagenes/banner1000.png" alt="Mapa de Colombia" class="icon-img img-1">
                     </div>
-
-                    <div class="white-line"></div>
-
-                    <!-- Beneficio 2 -->
-                    <div class="benefit-item text-center">
-                        <div class="benefit-icon mb-3">
-                            <img src="assets/imagenes/banner6.png" alt="Compatibilidad Nespresso"
-                                class="icon-img img-2">
-                        </div>
-                        <h5>Compatibilidad con sistemas Nespresso</h5>
-                        <p>
-                            Nuestras cápsulas están diseñadas para integrarse perfectamente con los principales sistemas
-                            del mercado.
-                        </p>
-                    </div>
-
-                    <div class="white-line"></div>
-
-                    <!-- Beneficio 3 -->
-                    <div class="benefit-item text-center">
-                        <div class="benefit-icon mb-3">
-                            <img src="assets/imagenes/banner5.png" alt="Producción flexible" class="icon-img img-3">
-                        </div>
-                        <h5>Producción flexible desde 500 unidades</h5>
-                        <p>
-                            Acompañamos marcas emergentes con volúmenes iniciales competitivos y escalables según su
-                            crecimiento.
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-
-
-
-
-
-            <!-- FILA PROPÓSITO -->
-            <div class="row purpose-content align-items-center mt-5 g-5">
-                <!-- Imagen -->
-                <div class="col-md-6 purpose-image-wrapper">
-                    <img src="assets/imagenes/tantiii.png" alt="Cápsulas de café" class="purpose-image img-fluid">
-
-                </div>
-
-                <!-- Texto -->
-                <div class="col-md-6 purpose-text">
-                    <small class="purpose-subtitle">Sobre nosotros</small>
-                    <h2 class="purpose-title">Encapsulamos<br>propósito, no solo café</h2>
-                    <p class="purpose-paragraph">
-                        En CoffeeCol creemos que el buen café no solo se produce, se honra.
+                    <h5>100% Café Huilense</h5>
+                    <p>
+                        Trabajamos con café cultivado en las montañas del Huila, reconocido por su calidad,
+                        aroma y sabor excepcional.
                     </p>
-                    <p class="purpose-paragraph">
-                        Somos una empresa colombiana nacida con el objetivo de transformar el café de origen en cápsulas
-                        premium que respetan su esencia y elevan su presentación al más alto nivel.
+                </div>
+
+                <div class="white-line"></div>
+
+                <!-- Beneficio 2 -->
+                <div class="benefit-item text-center">
+                    <div class="benefit-icon mb-3">
+                        <img src="assets/imagenes/banner6.png" alt="Compatibilidad Nespresso"
+                            class="icon-img img-2">
+                    </div>
+                    <h5>Tradición que inspira</h5>
+                    <p>
+                        Cada taza refleja el esfuerzo de nuestros caficultores y la riqueza cultural
+                        que hace único al departamento del Huila.
                     </p>
-                    <p class="purpose-paragraph">
-                        Más que maquilar, acompañamos a marcas, fincas y emprendedores en el proceso de profesionalizar
-                        su propuesta y conquistar nuevos mercados. Nuestro compromiso es con el detalle, con la esencia
-                        singular, y con una experiencia de consumo moderna, sin perder la conexión con el origen.
+                </div>
+
+                <div class="white-line"></div>
+
+                <!-- Beneficio 3 -->
+                <div class="benefit-item text-center">
+                    <div class="benefit-icon mb-3">
+                        <img src="assets/imagenes/banner5.png" alt="Producción flexible" class="icon-img img-3">
+                    </div>
+                    <h5>Experiencias para compartir</h5>
+                    <p>
+                        Creamos un espacio donde el buen café, la conversación y los momentos especiales
+                        se encuentran.
                     </p>
-                    <a href="#" class="btn-maroon">Cotiza tu cápsula</a>
                 </div>
+
             </div>
-
-            <div class="horizontal-line"></div>
-
-            <div class="why-coffeecol">
-                <div class="container">
-                    <div class="row g-5">
-                        <!-- Columna izquierda -->
-                        <div class="col-md-5 bajar-columna">
-                            <div class="why-text">
-                                <h2 class="why-title">¿Por qué maquilar con <strong>CoffeeCol?</strong></h2>
-                                <p class="why-desc">Porque no solo encapsulamos café,<br>
-                                    diseñamos experiencias listas para<br>
-                                    competir en el mercado.
-                                </p>
-                                <p class="why-desc">Trabajamos cada proyecto como si fuera<br>
-                                    nuestra propia marca.
-                                </p>
-                                <a href="#" class="btn-contact">Contáctanos</a>
-                            </div>
-                        </div>
-
-                        <!-- Columna derecha -->
-                        <div class="col-md-7 ">
-                            <div class="row g-3">
-                                <div class="col-md-6 feature-item">
-                                    <h6 class="feature-title">Maquila especializada en cápsulas</h6>
-                                    <p class="feature-text">Nos enfocamos exclusivamente en cápsulas de café. Este
-                                        enfoque nos permite dominar el proceso con precisión y adaptarnos a lo que el
-                                        mercado exige.</p>
-                                </div>
-                                <div class="col-md-6 feature-item">
-                                    <h6 class="feature-title">Compatibilidad y calidad garantizada</h6>
-                                    <p class="feature-text">Nuestras cápsulas son compatibles con sistemas Nespresso® y
-                                        cumplen con estándares de sellado y conservación que aseguran una experiencia de
-                                        alto nivel.</p>
-                                </div>
-                                <div class="col-md-6 feature-item">
-                                    <h6 class="feature-title">Diseño que eleva tu marca</h6>
-                                    <p class="feature-text">Cada cliente recibe acompañamiento visual para construir un
-                                        empaque sobrio, profesional y memorable. La elegancia también se bebe.</p>
-                                </div>
-                                <div class="col-md-6 feature-item">
-                                    <h6 class="feature-title">Producción flexible desde 500 unidades</h6>
-                                    <p class="feature-text">Sabemos que cada marca tiene un ritmo. Por eso ofrecemos
-                                        escalabilidad sin exigir grandes volúmenes desde el inicio.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gallery-section">
-                <div class="container">
-                    <h2 class="gallery-title">
-                        Galería CoffeeCol:Lo que hacemos se nota
-                    </h2>
-
-                    <div class="tab-container">
-                        <button class="tab-btn active" data-set="1">Lorem</button>
-                        <button class="tab-btn" data-set="2">Lorem</button>
-                        <button class="tab-btn" data-set="3">Lorem</button>
-                    </div>
-
-                    <div class="custom-grid" id="gallery-grid">
-                        <!-- Las imágenes se insertan aquí por JavaScript -->
-                    </div>
-                </div>
-            </div>
-
-            <div class="coffee-hero">
-                <div class="coffee-hero__container">
-                    <div class="coffee-hero__content">
-                        <div class="coffee-hero__title">La calidad no termina en el grano.</div>
-                        <div class="coffee-hero__textt">Un buen café no solo se cultiva con esmero.</div>
-                        <div class="coffee-hero__text">
-                            Se presenta con elegancia, se protege con tecnología y se sirve con facilidad. En CoffeeCol
-                            transformamos cafés de origen en cápsulas que conservan el sabor, elevan la presentación y
-                            facilitan su preparación en cualquier momento y lugar.
-                        </div>
-                        <a href="#" class="coffee-hero__btn">Contáctanos</a>
-                    </div>
-                    <div class="coffee-hero__image-wrapper">
-                        <img src="assets/imagenes/banner15.png" alt="Granos de café con cápsulas"
-                            class="coffee-hero__image">
-                        <div class="coffee-hero__image-overlay"></div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
-    </section>
+        <!-- FILA PROPÓSITO -->
+        <div class="row purpose-content align-items-center mt-5 g-5">
+            <!-- Imagen -->
+            <div class="col-md-6 purpose-image-wrapper">
+                <img src="assets/imagenes/tantiii.png" alt="Cápsulas de café" class="purpose-image img-fluid">
+            </div>
+
+            <!-- Texto -->
+            <div class="col-md-6 purpose-text">
+                <small class="purpose-subtitle">Sobre nosotros</small>
+                <h2 class="purpose-title">Compartimos la esencia<br>del Huila en cada taza</h2>
+                <p class="purpose-paragraph">
+                    En Tantico creemos que el buen café no solo se disfruta, también se vive.
+                </p>
+                <p class="purpose-paragraph">
+                    Nacimos en Neiva con el propósito de resaltar la riqueza cafetera de nuestra región,
+                    ofreciendo cafés seleccionados que conservan la autenticidad y calidad que caracterizan al Huila.
+                </p>
+                <p class="purpose-paragraph">
+                    Más que servir café, buscamos crear experiencias memorables, honrando el trabajo de
+                    nuestros productores y compartiendo el orgullo de nuestra tierra.
+                </p>
+                <a href="#" class="btn-maroon">Visítanos</a>
+            </div>
+        </div>
+
+        <div class="horizontal-line"></div>
+
+        <div class="why-coffeecol">
+            <div class="container">
+                <div class="row g-5">
+
+                    <!-- Columna izquierda -->
+                    <div class="col-md-5 bajar-columna">
+                        <div class="why-text">
+                            <h2 class="why-title">¿Por qué visitar <strong>Tantico?</strong></h2>
+                            <p class="why-desc">
+                                Porque cada taza cuenta una historia,<br>
+                                conecta con nuestras raíces y celebra<br>
+                                la tradición cafetera del Huila.
+                            </p>
+                            <p class="why-desc">
+                                Queremos que cada visitante disfrute<br>
+                                una experiencia auténtica y memorable.
+                            </p>
+                            <a href="#" class="btn-contact">Contáctanos</a>
+                        </div>
+                    </div>
+
+                    <!-- Columna derecha -->
+                    <div class="col-md-7 ">
+                        <div class="row g-3">
+                            <div class="col-md-6 feature-item">
+                                <h6 class="feature-title">Café de origen huilense</h6>
+                                <p class="feature-text">
+                                    Seleccionamos cafés producidos en distintas zonas del departamento
+                                    para ofrecer sabores auténticos y una calidad excepcional.
+                                </p>
+                            </div>
+
+                            <div class="col-md-6 feature-item">
+                                <h6 class="feature-title">Preparaciones de calidad</h6>
+                                <p class="feature-text">
+                                    Cada bebida es elaborada cuidadosamente para resaltar las características
+                                    únicas de nuestros granos.
+                                </p>
+                            </div>
+
+                            <div class="col-md-6 feature-item">
+                                <h6 class="feature-title">Un espacio para disfrutar</h6>
+                                <p class="feature-text">
+                                    Diseñamos un ambiente acogedor para compartir, trabajar o disfrutar
+                                    de un excelente café.
+                                </p>
+                            </div>
+
+                            <div class="col-md-6 feature-item">
+                                <h6 class="feature-title">Compromiso con nuestros caficultores</h6>
+                                <p class="feature-text">
+                                    Valoramos el trabajo de los productores huilenses y promovemos el
+                                    reconocimiento de su esfuerzo en cada taza.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="gallery-section">
+            <div class="container">
+                <h2 class="gallery-title">
+                    Galería Tantico: La pasión por el café se vive aquí
+                </h2>
+
+                <div class="tab-container">
+                    <button class="tab-btn active" data-set="1">Lorem</button>
+                    <button class="tab-btn" data-set="2">Lorem</button>
+                    <button class="tab-btn" data-set="3">Lorem</button>
+                </div>
+
+                <div class="custom-grid" id="gallery-grid">
+                    <!-- Las imágenes se insertan aquí por JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <div class="coffee-hero">
+            <div class="coffee-hero__container">
+                <div class="coffee-hero__content">
+                    <div class="coffee-hero__title">La excelencia comienza en el origen.</div>
+
+                    <div class="coffee-hero__textt">
+                        Un gran café nace del esfuerzo de quienes lo cultivan.
+                    </div>
+
+                    <div class="coffee-hero__text">
+                        En Tantico celebramos la riqueza cafetera del Huila ofreciendo experiencias que
+                        resaltan el aroma, el sabor y la tradición de una de las regiones cafeteras más
+                        importantes de Colombia.
+                    </div>
+
+                    <a href="#" class="coffee-hero__btn">Visítanos</a>
+                </div>
+
+                <div class="coffee-hero__image-wrapper">
+                    <img src="assets/imagenes/banner15.png" alt="Granos de café con cápsulas"
+                        class="coffee-hero__image">
+                    <div class="coffee-hero__image-overlay"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
 
     <!-- Granos de café -->
     <div class="image-container coffee-ms">

@@ -97,7 +97,7 @@
             <button class="filtro-btn" data-categoria="origen-especial">Origen Especial</button>
         </div>
     </div>
-
+    
 
     <!-- ══════════════════════════════════════════════════════════
          GRID DE PRODUCTOS
@@ -270,45 +270,6 @@
         </div>
     </div><!-- /modal-checkout-overlay -->
 
-
-
-    <section class="capsulas-servicio">
-
-
-        <div class="capsulas-header">
-            <div class="capsulas-titulos">
-                <h2>Maquila de cápsulas</h2>
-                <h3>Maquilamos tu café en cápsulas listas para competir.</h3>
-                <p>
-                    Procesamos tu café en cápsulas compatibles con los sistemas más reconocidos. Nuestro control
-                    preciso
-                    de
-                    temperatura y humedad asegura que cada cápsula preserve los matices únicos del origen.
-                </p>
-            </div>
-        </div>
-
-        <br><br>
-
-        <!-- Contenedor Asesoría -->
-        <div class="asesoria-box">
-            <div class="asesoria-info">
-                <h3>Asesoría personalizada</h3>
-                <h4 class="asesoria-titulo">
-                    Cada café tiene su historia.<br>
-                    <strong class="texto-fijo">Nosotros te ayudamos a contarla</strong>
-                </h4>
-                <p>
-                    Desde definir el tueste perfecto, hasta elegir el diseño del empaque y el canal de venta
-                    ideal. Te
-                    acompañamos en cada paso para que tu marca llegue lista y sólida al mercado.
-                </p>
-            </div>
-            <div class="asesoria-img-wrapper">
-                <img src="../assets/imagenes/cam.png" alt="caficultor">
-            </div>
-        </div>
-    </section>
 
     <br>
 

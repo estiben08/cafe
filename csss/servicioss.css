@@ -291,74 +291,131 @@ body {
     letter-spacing: -1.9%;
 }
 
-/* === ASESORÍA PERSONALIZADA === */
+/* === ASESORÍA PERSONALIZADA (PREMIUM) === */
+.capsulas-servicio {
+    /* Ajusta el padding según lo que necesite tu página */
+    padding: 80px 20px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden; /* Evita que la imagen rompa el ancho en pantallas más pequeñas */
+}
+
 .asesoria-box {
     position: relative;
-    width: 772px;
-    height: 343px;
-    margin: 0 auto;
-    border: 1px solid #47060E;
-    border-radius: 42px;
-    padding: 40px;
+    width: 100%;
+    max-width: 880px;
+    min-height: 340px;
+    margin: 40px auto;
+    
+    /* Fondo con gradiente sutil y bordes suaves */
+    background: linear-gradient(145deg, #ffffff 0%, #FFF9F5 100%);
+    border: 1px solid rgba(71, 6, 14, 0.15);
+    border-radius: 36px;
+    padding: 50px 60px;
+    
     display: flex;
     align-items: center;
-    justify-content: space-between;
     z-index: 1;
+    
+    /* Sombra elegante para dar profundidad (Efecto Card 3D) */
+    box-shadow: 0 25px 50px rgba(71, 6, 14, 0.05), 0 4px 10px rgba(0, 0, 0, 0.03);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Efecto al pasar el mouse sobre la caja */
+.asesoria-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 60px rgba(71, 6, 14, 0.08), 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .asesoria-info {
-    flex: 1;
+    flex: 0 0 60%;
+    max-width: 60%;
     z-index: 2;
+    padding-right: 30px; /* Da espacio de respiro entre el texto y la imagen */
 }
 
 .asesoria-info h3 {
-    font-size: 44px;
-    color: #47060E;
-    font-weight: 700;
+    font-size: 46px;
+    color: #47060E; /* Tu color oscuro original */
+    font-weight: 800;
     margin-bottom: 12px;
-    margin-left: 40px;
+    letter-spacing: -0.02em;
 }
 
-.asesoria-titulo {
-    font-size: 35px;
-    font-weight: 400;
-    color: #28040A;
-    margin-bottom: 20px;
-    line-height: 40px;
-    letter-spacing: -0.019em;
-    text-align: center;
-    width: 583px;
-}
-
-.asesoria-titulo strong {
-    font-weight: 700;
+.asesoria-subtitulo {
     display: block;
-    text-align: left;
-    margin-left: 0px;
+    font-size: 20px;
+    color: #A94A32; /* Tono cálido cafetero para destacar el subtítulo */
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.asesoria-subtitulo strong {
+    font-weight: 700;
 }
 
 .asesoria-info p {
-    font-size: 18px;
-    color: #1E1E1E;
-    line-height: 1.9;
+    font-size: 17px;
+    color: #4A403E; /* Gris oscuro cálido, mejor para la lectura que el negro puro */
+    line-height: 1.8;
     font-weight: 400;
-    max-width: 542px;
-    text-align: center;
+    margin: 0;
 }
 
 /* Imagen del caficultor */
 .asesoria-img-wrapper {
     position: absolute;
-    top: -94px;
-    right: -200px;
+    /* Anclamos perfectamente la imagen al borde inferior de la tarjeta */
+    bottom: -1px; 
+    right: -60px; /* Sobresale hacia la derecha con estilo */
     z-index: 3;
+    pointer-events: none; /* Permite seleccionar el texto aunque la imagen esté encima */
 }
 
 .asesoria-img-wrapper img {
-    width: 441px;
-    height: 437px;
+    width: 480px;
+    height: auto;
     object-fit: contain;
-    border-radius: 0;
+    /* Le damos sombra solo a la silueta de la imagen para separarla del fondo */
+    filter: drop-shadow(-15px 15px 25px rgba(0, 0, 0, 0.25));
+    transition: transform 0.5s ease;
+    transform-origin: bottom center;
+}
+
+/* Micro-animación: El caficultor se mueve levemente al hacer hover */
+.asesoria-box:hover .asesoria-img-wrapper img {
+    transform: scale(1.03) rotate(-1deg);
+}
+
+/* === RESPONSIVIDAD (Móviles y Tablets) === */
+@media (max-width: 900px) {
+    .asesoria-box {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 30px;
+        margin-top: 80px;
+        border-radius: 28px;
+    }
+
+    .asesoria-info {
+        flex: 1 1 auto;
+        max-width: 100%;
+        padding-right: 0;
+        margin-bottom: 20px;
+    }
+    
+    .asesoria-img-wrapper {
+        position: relative;
+        right: 0;
+        bottom: 0;
+        margin-top: 20px;
+    }
+
+    .asesoria-img-wrapper img {
+        width: 100%;
+        max-width: 380px;
+    }
 }
 
 /* === SECCIÓN FAQ === */

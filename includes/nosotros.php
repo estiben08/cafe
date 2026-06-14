@@ -52,58 +52,53 @@
     <section class="quienes-somos">
         <div class="contenido">
             <h1>Quiénes somos</h1>
-            <h2>Somos más que una maquina.</h2>
-            <h3>Somos tu socio para llevar el café colombiano al mundo.</h3>
-            <p>En CoffeeCol creemos que el buen café no solo se produce, se honra.</p>
-            <p>Somos una empresa colombiana nacida con el objetivo de transformar el café de origen en cápsulas premium
-                que respetan su esencia y elevan su presentación al más alto nivel.</p>
-            <p>Más que maquilar, acompañamos a marcas, fincas y emprendedores en el proceso de profesionalizar su
-                propuesta y conquistar nuevos mercados. Nuestro compromiso es con el detalle, con la elegancia sobria, y
-                con una experiencia de consumo moderna, sin perder la conexión con el origen.</p>
+            <h2>Más que una cafetería, una experiencia que nace en el corazón del Huila.</h2>
+            <h3>Orgullosamente huilenses, apasionadamente cafeteros.</h3>
+            <p>En Tantico rendimos homenaje a la tierra que produce algunos de los cafés más reconocidos de Colombia y del mundo.</p>
+            <p>Desde Neiva, trabajamos con café de origen huilense cuidadosamente seleccionado para ofrecer sabores auténticos, aromas inolvidables y una experiencia que refleja la riqueza de nuestra región.</p>
+            <p>Creemos que cada taza debe contar una historia. Por eso unimos tradición, calidad y hospitalidad para compartir con nuestros visitantes la esencia del Huila en cada sorbo.</p>
         </div>
         <div class="decoracion-cafe"></div>
     </section>
 
     <section class="coffee-section">
-        <h1 class="main-title">Nuestro propósito</h1>
+    <h1 class="main-title">Nuestro propósito</h1>
 
-        <!-- Sección 1: imagen a la derecha -->
-        <div class="content-section">
-            <div class="text-content">
-                <h2 class="section-subtitle">
-                    Redefinimos el café premium:<br>
-                    <span class="highlight-text">auténtico, sofisticado, sin excesos.</span>
-                </h2>
-                <p class="section-text">
-                    Queremos que el café colombiano se disfrute con la misma pasión con que se cultiva.
-                    Que el productor sea protagonista, con una cápsula que hable de su historia y de la calidad
-                    incomparable del origen.
-                </p>
-            </div>
-            <div class="image-container-1">
-                <img src="../assets/imagenes/banner29.png" alt="Taza de café roja">
-            </div>
+    <!-- Sección 1: imagen a la derecha -->
+    <div class="content-section">
+        <div class="text-content">
+            <h2 class="section-subtitle">
+                Celebramos el café huilense:<br>
+                <span class="highlight-text">auténtico, memorable y lleno de tradición.</span>
+            </h2>
+            <p class="section-text">
+                Queremos que cada taza se disfrute con la misma pasión y dedicación con la que es cultivada.
+                Que nuestros caficultores sean protagonistas, compartiendo la historia, el esfuerzo y la calidad
+                excepcional que hacen del café del Huila un referente mundial.
+            </p>
         </div>
-
-        <!-- Sección 2: imagen a la izquierda -->
-        <div class="content-section reverse">
-            <div class="image-container-2">
-                <img src="../assets/imagenes/banner28.jpg" alt="Cápsulas de café coloridas">
-            </div>
-            <div class="text-content">
-                <h2 class="tech-title ">Equipo & Tecnología</h2>
-                <span class="tech-highlight">Cada café de origen del país <br><strong>tenga la oportunidad de
-                        brillar.</strong></span>
-                <p class="section-text anchos">
-                    Trabajamos durante meses buscando la maquinaria adecuada para brindar la posibilidad y la
-                    oportunidad a cada buen café de origen del país. Nuestro equipo combina baristas, ingenieros de
-                    procesos y diseñadores industriales, operando con tecnología europea de última generación que
-                    garantiza sellos herméticos y perfiles consistentes, manteniendo la personalidad única de cada lote.
-                </p>
-            </div>
+        <div class="image-container-1">
+            <img src="../assets/imagenes/hui1.png" alt="Taza de café roja">
         </div>
-    </section>
+    </div>
 
+    <!-- Sección 2: imagen a la izquierda -->
+    <div class="content-section reverse">
+        <div class="image-container-2">
+            <img src="../assets/imagenes/hui2.png" alt="Café huilense">
+        </div>
+        <div class="text-content">
+            <h2 class="tech-title">Compartimos el orgullo del Huila</h2>
+            <span class="tech-highlight">tradición, calidad y<br><strong>origen.</strong></span>
+            <p class="section-text anchos">
+                Seleccionamos cuidadosamente cafés provenientes de distintas zonas del departamento para ofrecer
+                una experiencia auténtica en cada preparación. Nuestro equipo trabaja con pasión y compromiso para
+                resaltar los aromas, sabores y características únicas que distinguen al café huilense y lo convierten
+                en un símbolo de nuestra región.
+            </p>
+        </div>
+    </div>
+</section>
 
     <div class="footer-wrapper">
         <footer class="footer-coffeecol">

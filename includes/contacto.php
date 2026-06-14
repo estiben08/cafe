@@ -49,86 +49,87 @@
 
   <section class="contacto-cafe-section container my-5">
     <div class="text-center mb-4">
-      <h2 class="contact-header">¿Quieres que tu café llegue más lejos?</h2>
-      <p class="contact-subtext">
-        Estamos listos para ayudarte. Escríbenos y uno de nuestros asesores resolverá todas tus dudas y te mostrará cómo
-        podemos transformar tu café en cápsulas premium.
-      </p>
-      <button class="custom-btn-top">Habla con nosotros</button>
+        <h2 class="contact-header">¿Tienes un café que merece ser descubierto?</h2>
+        <p class="contact-subtext">
+            Queremos conocer productores, fincas y marcas locales que compartan nuestra pasión por la calidad.
+            Escríbenos y descubre cómo podemos llevar tu café a más personas a través de Tantico.
+        </p>
+        <button class="custom-btn-top">Hablemos de tu café</button>
     </div>
 
     <!-- HTML -->
 
     <div class="row justify-content-center">
-      <div class="col-md-10 col-lg-8">
-        <div class="form-section">
-          <h5>Completa tus datos y nos pondremos en contacto contigo</h5>
+        <div class="col-md-10 col-lg-8">
+            <div class="form-section">
+                <h5>Comparte tus datos y cuéntanos sobre tu café</h5>
 
-          <form action="contactos.php" method="POST">
-            <div class="row mb-3">
-              <div class="col-md-6 mb-3 mb-md-0">
-                <label for="nombre" class="form-label">Nombre completo</label>
-                <input type="text" id="nombre" name="nombre" class="form-control"
-                  placeholder="Ingresa tu nombre completo" required />
-              </div>
-              <div class="col-md-6">
-                <label for="empresa" class="form-label">Empresa</label>
-                <input type="text" id="empresa" name="empresa" class="form-control"
-                  placeholder="Nombre de tu empresa" />
-              </div>
+                <form action="contactos.php" method="POST">
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <label for="nombre" class="form-label">Nombre completo</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control"
+                                placeholder="Ingresa tu nombre completo" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="empresa" class="form-label">Empresa</label>
+                            <input type="text" id="empresa" name="empresa" class="form-control"
+                                placeholder="Nombre de tu finca, marca o emprendimiento" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input type="tel" id="telefono" name="telefono" class="form-control"
+                                placeholder="Ej: 3101234567" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="correo" class="form-label">Correo electrónico</label>
+                            <input type="email" id="correo" name="correo" class="form-control"
+                                placeholder="tucorreo@dominio.com" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="comentarios" class="form-label">Comentarios</label>
+                        <textarea id="comentarios" name="comentarios" class="form-control" rows="4"
+                            placeholder="Cuéntanos sobre tu café, finca o marca"></textarea>
+                    </div>
+
+                    <p class="nota-campos">
+                        * Campos obligatorios. Nos pondremos en contacto contigo lo antes posible.
+                    </p>
+
+                    <button type="submit" class="btn-send">ENVIAR INFORMACIÓN</button>
+                </form>
             </div>
-
-            <div class="row mb-3">
-              <div class="col-md-6 mb-3 mb-md-0">
-                <label for="telefono" class="form-label">Teléfono</label>
-                <input type="tel" id="telefono" name="telefono" class="form-control" placeholder="Ej: 3101234567"
-                  required />
-              </div>
-              <div class="col-md-6">
-                <label for="correo" class="form-label">Correo electrónico</label>
-                <input type="email" id="correo" name="correo" class="form-control" placeholder="tucorreo@dominio.com"
-                  required />
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label for="comentarios" class="form-label">Comentarios</label>
-              <textarea id="comentarios" name="comentarios" class="form-control" rows="4"
-                placeholder="Déjanos tus dudas o comentarios aquí"></textarea>
-            </div>
-
-            <p class="nota-campos">* Campos obligatorios. Respuesta garantizada en menos de 24 horas.</p>
-
-            <button type="submit" class="btn btn-send">ENVIAR</button>
-          </form>
         </div>
-      </div>
     </div>
-
-
 
     <div class="container mt-5">
-      <div class="row align-items-center">
-        <div class="col-md-6 visit-section">
-          <h5>Visítanos o conoce <span>nuestra planta</span></h5>
-          <p><i class="fas fa-map-marker-alt personalizar-1"></i> Calle 123 #45-67, Zona Industrial, Palermo</p>
-          <p><i class="fas fa-envelope personalizar-2"></i> gerencia@coffeecolcompany.com</p>
-          <button class="btn btn-project">Empecemos tu proyecto</button>
-        </div>
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-12 mb-3">
-              <img src="../assets/imagenes/banner25.png" alt="Imagen planta" class="img-fluid rounded ubicacion" />
+        <div class="row align-items-center">
+            <div class="col-md-6 visit-section">
+                <h5>Conoce <span>Tantico</span></h5>
+                <p><i class="fas fa-map-marker-alt personalizar-1"></i> Neiva, Huila, Colombia</p>
+                <p><i class="fas fa-envelope personalizar-2"></i> contacto@tantico.com</p>
+                <button class="btn btn-project">Quiero presentar mi café</button>
             </div>
-            <div class="col-12">
-              <img src="../assets/imagenes/banner26.png" alt="Mapa ubicación" class="img-fluid rounded ubicacion" />
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-12 mb-3">
+                        <img src="../assets/imagenes/banner25.png" alt="Imagen planta"
+                            class="img-fluid rounded ubicacion" />
+                    </div>
+                    <div class="col-12">
+                        <img src="../assets/imagenes/banner26.png" alt="Mapa ubicación"
+                            class="img-fluid rounded ubicacion" />
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </section>
-
+</section>
 
   <br><br><br><br>
 

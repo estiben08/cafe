@@ -280,9 +280,8 @@ body {
     opacity: 1;
 }
 
-.btn-send {
-    background-color: white;
-    color: #4b1d0c;
+.btn btn-send {
+    color: #ffffff !important;
     font-weight: bold;
     border: none;
     width: 100%;

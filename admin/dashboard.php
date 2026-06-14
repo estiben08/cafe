@@ -1,8 +1,5 @@
 <?php
-// Verificar sesión admin
 session_start();
-// Si usas JWT token (como en el original), la verificación la hace el JS
-// Aquí solo servimos el HTML
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -240,10 +237,196 @@ textarea { resize: vertical; min-height: 68px; }
 
 .loading-row td { padding: 32px; text-align: center; color: var(--text-soft); font-size: 13px; }
 
-/* ── FILTROS CLIENTES ── */
+/* ── FILTROS ── */
 .filtros-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .filtro-btn { background: var(--cafe-50); border: 1px solid rgba(92,52,32,0.15); color: var(--text-soft); padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
 .filtro-btn:hover, .filtro-btn.activo { background: var(--cafe-700); color: var(--cafe-100); border-color: var(--cafe-700); }
+
+/* ══════════════════════════════════════
+   PEDIDOS — estilos propios
+══════════════════════════════════════ */
+
+/* Stats 4 columnas para pedidos */
+.stats-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+/* Badge de estado del pedido */
+.badge-pendiente  { background: #fff8e1; color: #f57f17; }
+.badge-procesando { background: #e3f2fd; color: #1565c0; }
+.badge-enviado    { background: #e8f5e9; color: #2e7d32; }
+.badge-entregado  { background: #ede7f6; color: #4527a0; }
+.badge-cancelado  { background: #fce4ec; color: #c62828; }
+
+/* Select de estado dentro de la tabla */
+.select-estado {
+    padding: 4px 8px;
+    border: 1px solid rgba(92,52,32,0.2);
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-dark);
+    background: var(--cafe-50);
+    cursor: pointer;
+    outline: none;
+    transition: border 0.2s;
+    width: auto;
+}
+.select-estado:focus { border-color: var(--cafe-400); }
+
+/* Número de pedido destacado */
+.pedido-id {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--cafe-700);
+    font-weight: 500;
+}
+.pedido-fecha {
+    font-size: 11px;
+    color: var(--text-soft);
+    margin-top: 2px;
+}
+
+/* Cliente en tabla pedidos */
+.pedido-cliente-nombre { font-weight: 500; font-size: 13px; color: var(--cafe-800); }
+.pedido-cliente-email  { font-size: 11px; color: var(--text-soft); margin-top: 1px; }
+
+/* Total */
+.pedido-total { font-weight: 600; color: var(--cafe-700); font-size: 14px; }
+
+/* Modal pedido */
+.modal-pedido-box {
+    max-width: 600px;
+}
+
+.pedido-detalle-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 12px;
+}
+.pedido-detalle-id {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--cafe-800);
+}
+.pedido-detalle-fecha {
+    font-size: 12px;
+    color: var(--text-soft);
+    margin-top: 2px;
+}
+
+.pedido-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.pedido-info-cell {
+    background: var(--cafe-50);
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+.pedido-info-cell-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-soft);
+    margin-bottom: 4px;
+}
+.pedido-info-cell-val {
+    font-size: 13px;
+    color: var(--cafe-800);
+    font-weight: 500;
+}
+
+/* Tabla de items dentro del modal */
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+}
+.items-table th {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-soft);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(92,52,32,0.1);
+    text-align: left;
+}
+.items-table td {
+    padding: 10px 0;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(92,52,32,0.05);
+}
+.items-table tr:last-child td { border-bottom: none; }
+
+.pedido-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    background: var(--cafe-900);
+    border-radius: 10px;
+    margin-top: 4px;
+}
+.pedido-total-label {
+    font-size: 13px;
+    color: var(--cafe-300);
+}
+.pedido-total-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--cafe-100);
+}
+
+/* Estado selector en modal */
+.modal-estado-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(92,52,32,0.08);
+}
+.modal-estado-label {
+    font-size: 12px;
+    color: var(--text-soft);
+    white-space: nowrap;
+}
+.modal-estado-select {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid rgba(92,52,32,0.2);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-dark);
+    background: var(--cafe-50);
+    outline: none;
+    transition: border 0.2s;
+    width: auto;
+}
+.modal-estado-select:focus { border-color: var(--cafe-400); }
+
+.btn-guardar-estado {
+    padding: 8px 16px;
+    background: var(--cafe-700);
+    color: var(--cafe-100);
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+.btn-guardar-estado:hover { background: var(--cafe-600); }
 </style>
 </head>
 <body>
@@ -398,20 +581,70 @@ textarea { resize: vertical; min-height: 68px; }
     <!-- ══════════ SECCIÓN PEDIDOS ══════════ -->
     <div id="sec-pedidos" class="seccion">
         <div class="content">
-            <div class="empty-state" style="padding:80px;">
-                <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto 16px;display:block;opacity:0.3;">
-                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                </svg>
-                <p>Sección de pedidos — integra aquí tu módulo existente</p>
+
+            <!-- Stats pedidos -->
+            <div class="stats-grid-4">
+                <div class="stat-card">
+                    <div class="stat-label">Total pedidos</div>
+                    <div class="stat-value" id="stat-ped-total">—</div>
+                    <div class="stat-sub">registrados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Pendientes</div>
+                    <div class="stat-value" id="stat-ped-pendientes" style="color:#f57f17">—</div>
+                    <div class="stat-sub">por procesar</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Enviados</div>
+                    <div class="stat-value" id="stat-ped-enviados" style="color:var(--success)">—</div>
+                    <div class="stat-sub">en camino</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Ingresos totales</div>
+                    <div class="stat-value" id="stat-ped-ingresos" style="font-size:22px">—</div>
+                    <div class="stat-sub">COP</div>
+                </div>
             </div>
+
+            <!-- Tabla pedidos -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Pedidos</span>
+                    <div class="filtros-bar">
+                        <div class="search-box">
+                            <svg class="search-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                            <input type="text" id="buscador-ped" placeholder="Buscar por cliente…" oninput="filtrarPedidos()">
+                        </div>
+                        <button class="filtro-btn activo" onclick="setFiltroPedido('todos', this)">Todos</button>
+                        <button class="filtro-btn" onclick="setFiltroPedido('pendiente', this)">Pendientes</button>
+                        <button class="filtro-btn" onclick="setFiltroPedido('procesando', this)">Procesando</button>
+                        <button class="filtro-btn" onclick="setFiltroPedido('enviado', this)">Enviados</button>
+                        <button class="filtro-btn" onclick="setFiltroPedido('entregado', this)">Entregados</button>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pedido</th>
+                            <th>Cliente</th>
+                            <th>Ciudad</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-pedidos">
+                        <tr class="loading-row"><td colspan="6">Cargando pedidos…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 
     <!-- ══════════ SECCIÓN CLIENTES ══════════ -->
     <div id="sec-clientes" class="seccion">
         <div class="content">
-
-            <!-- Stats clientes -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-label">Total clientes</div>
@@ -429,8 +662,6 @@ textarea { resize: vertical; min-height: 68px; }
                     <div class="stat-sub">en total</div>
                 </div>
             </div>
-
-            <!-- Tabla clientes -->
             <div class="card">
                 <div class="card-header">
                     <span class="card-title">Clientes</span>
@@ -474,22 +705,31 @@ textarea { resize: vertical; min-height: 68px; }
             <span class="modal-title">Detalle del cliente</span>
             <button class="modal-close" onclick="cerrarModal()">✕</button>
         </div>
-        <div class="modal-body" id="modal-body">
-            <!-- Se rellena por JS -->
+        <div class="modal-body" id="modal-body"></div>
+    </div>
+</div>
+
+<!-- ══════════ MODAL DETALLE PEDIDO ══════════ -->
+<div class="modal-overlay" id="modal-pedido">
+    <div class="modal-box modal-pedido-box">
+        <div class="modal-header">
+            <span class="modal-title">Detalle del pedido</span>
+            <button class="modal-close" onclick="cerrarModalPedido()">✕</button>
         </div>
+        <div class="modal-body" id="modal-pedido-body"></div>
     </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const API    = '../api/products.php';
-const token  = localStorage.getItem('token');
+const API     = '../api/products.php';
 const API_CLI = '../api/clientes.php';
+const API_PED = '../api/orders.php';   // endpoint que crearemos
+const token   = localStorage.getItem('token');
 
 if (!token) location.href = 'login.php';
 
-// Usuario en topbar
 try {
     const payload = JSON.parse(atob(token.split('.')[1]));
     const u = payload.sub || 'Admin';
@@ -497,7 +737,7 @@ try {
     document.getElementById('usuario-avatar').textContent = u[0].toUpperCase();
 } catch (e) {}
 
-// ── Navegación secciones ──
+// ── Navegación ──
 const titulos = { productos: 'Gestión de Productos', pedidos: 'Gestión de Pedidos', clientes: 'Base de Clientes' };
 
 function mostrarSeccion(nombre, el) {
@@ -508,6 +748,7 @@ function mostrarSeccion(nombre, el) {
     document.getElementById('topbar-titulo').textContent = titulos[nombre];
     if (nombre === 'clientes') cargarClientes();
     if (nombre === 'productos') cargar();
+    if (nombre === 'pedidos')   cargarPedidos();
     return false;
 }
 
@@ -519,11 +760,15 @@ function mostrarToast(msg, tipo = 'success') {
     setTimeout(() => t.className = 'toast', 3000);
 }
 
-// ── Badge helpers ──
+// ── Helpers ──
 const BADGE_CLASS = { nuevo:'badge-nuevo', oferta:'badge-oferta', popular:'badge-popular', especial:'badge-especial' };
 function getBadgeClass(tipo) { return BADGE_CLASS[tipo] || 'badge-default'; }
 function formatPrecio(n) { return Math.round(n).toLocaleString('es-CO'); }
-function formatFecha(f) { if (!f) return '—'; const d = new Date(f); return d.toLocaleDateString('es-CO', { day:'2-digit', month:'short', year:'numeric' }); }
+function formatFecha(f) {
+    if (!f) return '—';
+    const d = new Date(f);
+    return d.toLocaleDateString('es-CO', { day:'2-digit', month:'short', year:'numeric' });
+}
 
 // ── Badge preview ──
 function actualizarBadgePreview() {
@@ -537,9 +782,7 @@ function actualizarBadgePreview() {
     el.className   = 'badge ' + (tipo ? getBadgeClass(tipo) : 'badge-default');
 }
 
-// ── CATEGORIAS ──
 const CATEGORIAS = { 'tueste-claro':'Tueste Claro','tueste-medio':'Tueste Medio','tueste-oscuro':'Tueste Oscuro','capsulas':'Cápsulas','origen-especial':'Origen Especial' };
-
 let todosLosProductos = [];
 
 function renderTabla(productos) {
@@ -633,6 +876,224 @@ function limpiarFormulario() {
 }
 
 // ══════════════════════════════════
+// ── PEDIDOS ──
+// ══════════════════════════════════
+let todosLosPedidos = [];
+let filtroPedidoActivo = 'todos';
+
+const ESTADO_BADGE = {
+    pendiente:  'badge-pendiente',
+    procesando: 'badge-procesando',
+    enviado:    'badge-enviado',
+    entregado:  'badge-entregado',
+    cancelado:  'badge-cancelado'
+};
+
+const ESTADOS = ['pendiente', 'procesando', 'enviado', 'entregado', 'cancelado'];
+
+function estadoBadge(estado) {
+    const cls = ESTADO_BADGE[estado] || 'badge-default';
+    const label = estado ? estado.charAt(0).toUpperCase() + estado.slice(1) : '—';
+    return `<span class="badge ${cls}">${label}</span>`;
+}
+
+function cargarPedidos() {
+    document.getElementById('tabla-pedidos').innerHTML = '<tr class="loading-row"><td colspan="6">Cargando pedidos…</td></tr>';
+    fetch(API_PED, { headers: { 'Authorization': 'Bearer ' + token } })
+        .then(r => r.json())
+        .then(d => {
+            if (d.success) {
+                todosLosPedidos = d.pedidos;
+                actualizarStatsPedidos(d.pedidos);
+                renderPedidos(d.pedidos);
+            } else {
+                mostrarToast('Error al cargar pedidos', 'error');
+                document.getElementById('tabla-pedidos').innerHTML = '<tr class="loading-row"><td colspan="6">No se pudieron cargar los pedidos.</td></tr>';
+            }
+        })
+        .catch(() => {
+            mostrarToast('Error de conexión', 'error');
+            document.getElementById('tabla-pedidos').innerHTML = '<tr class="loading-row"><td colspan="6">Error de conexión.</td></tr>';
+        });
+}
+
+function actualizarStatsPedidos(pedidos) {
+    const pendientes = pedidos.filter(p => p.estado === 'pendiente').length;
+    const enviados   = pedidos.filter(p => p.estado === 'enviado').length;
+    const ingresos   = pedidos
+        .filter(p => p.estado !== 'cancelado')
+        .reduce((s, p) => s + parseFloat(p.total || 0), 0);
+
+    document.getElementById('stat-ped-total').textContent     = pedidos.length;
+    document.getElementById('stat-ped-pendientes').textContent = pendientes;
+    document.getElementById('stat-ped-enviados').textContent   = enviados;
+    document.getElementById('stat-ped-ingresos').textContent   = '$' + formatPrecio(ingresos);
+}
+
+function renderPedidos(pedidos) {
+    const tbody = document.getElementById('tabla-pedidos');
+    if (!pedidos.length) {
+        tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><p>No hay pedidos aún</p></div></td></tr>`;
+        return;
+    }
+    tbody.innerHTML = pedidos.map(p => {
+        const nombre = [p.nombre, p.apellido].filter(Boolean).join(' ') || '—';
+        return `<tr>
+            <td>
+                <div class="pedido-id">#${p.id}</div>
+                <div class="pedido-fecha">${formatFecha(p.fecha)}</div>
+            </td>
+            <td>
+                <div class="pedido-cliente-nombre">${nombre}</div>
+                <div class="pedido-cliente-email">${p.email || '—'}</div>
+            </td>
+            <td>${p.ciudad || '—'}</td>
+            <td><span class="pedido-total">$${formatPrecio(p.total)}</span></td>
+            <td>${estadoBadge(p.estado)}</td>
+            <td><button class="btn-ver" onclick="verPedido(${p.id})">Ver</button></td>
+        </tr>`;
+    }).join('');
+}
+
+function filtrarPedidos() {
+    const q = document.getElementById('buscador-ped').value.toLowerCase();
+    let lista = todosLosPedidos.filter(p => {
+        const nombre = [p.nombre, p.apellido].filter(Boolean).join(' ').toLowerCase();
+        return nombre.includes(q) || (p.email||'').toLowerCase().includes(q);
+    });
+    if (filtroPedidoActivo !== 'todos') lista = lista.filter(p => p.estado === filtroPedidoActivo);
+    renderPedidos(lista);
+}
+
+function setFiltroPedido(filtro, el) {
+    filtroPedidoActivo = filtro;
+    document.querySelectorAll('#sec-pedidos .filtro-btn').forEach(b => b.classList.remove('activo'));
+    el.classList.add('activo');
+    filtrarPedidos();
+}
+
+function verPedido(id) {
+    const p = todosLosPedidos.find(x => x.id == id);
+    if (!p) return;
+    const modal = document.getElementById('modal-pedido');
+    const body  = document.getElementById('modal-pedido-body');
+
+    const nombre = [p.nombre, p.apellido].filter(Boolean).join(' ') || '—';
+
+    // Items del pedido
+    let itemsHTML = '<p style="font-size:12px;color:var(--text-soft)">Sin detalle de productos</p>';
+    if (p.items && p.items.length) {
+        itemsHTML = `
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th style="text-align:center">Cant.</th>
+                        <th style="text-align:right">Precio u.</th>
+                        <th style="text-align:right">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${p.items.map(it => `
+                        <tr>
+                            <td>${it.nombre || 'Producto #' + it.producto_id}</td>
+                            <td style="text-align:center">${it.cantidad}</td>
+                            <td style="text-align:right">$${formatPrecio(it.precio_unitario)}</td>
+                            <td style="text-align:right">$${formatPrecio(it.cantidad * it.precio_unitario)}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>`;
+    }
+
+    // Opciones del select de estado
+    const opcionesEstado = ESTADOS.map(e =>
+        `<option value="${e}" ${p.estado === e ? 'selected' : ''}>${e.charAt(0).toUpperCase() + e.slice(1)}</option>`
+    ).join('');
+
+    body.innerHTML = `
+        <div class="pedido-detalle-header">
+            <div>
+                <div class="pedido-detalle-id">Pedido #${p.id}</div>
+                <div class="pedido-detalle-fecha">${formatFecha(p.fecha)}</div>
+            </div>
+            ${estadoBadge(p.estado)}
+        </div>
+
+        <div class="pedido-info-grid">
+            <div class="pedido-info-cell">
+                <div class="pedido-info-cell-label">Cliente</div>
+                <div class="pedido-info-cell-val">${nombre}</div>
+            </div>
+            <div class="pedido-info-cell">
+                <div class="pedido-info-cell-label">Correo</div>
+                <div class="pedido-info-cell-val" style="font-size:12px;word-break:break-all">${p.email || '—'}</div>
+            </div>
+            <div class="pedido-info-cell">
+                <div class="pedido-info-cell-label">Teléfono</div>
+                <div class="pedido-info-cell-val">${p.telefono || '—'}</div>
+            </div>
+            <div class="pedido-info-cell">
+                <div class="pedido-info-cell-label">Ciudad</div>
+                <div class="pedido-info-cell-val">${p.ciudad || '—'}</div>
+            </div>
+            <div class="pedido-info-cell" style="grid-column:1/-1">
+                <div class="pedido-info-cell-label">Dirección</div>
+                <div class="pedido-info-cell-val">${p.direccion || '—'}</div>
+            </div>
+        </div>
+
+        <div class="modal-section-title" style="padding-top:0;border-top:none;margin-bottom:12px;">Productos</div>
+        ${itemsHTML}
+
+        <div class="pedido-total-row">
+            <span class="pedido-total-label">Total del pedido</span>
+            <span class="pedido-total-val">$${formatPrecio(p.total)}</span>
+        </div>
+
+        <div class="modal-estado-row">
+            <span class="modal-estado-label">Cambiar estado:</span>
+            <select class="modal-estado-select" id="modal-estado-select">${opcionesEstado}</select>
+            <button class="btn-guardar-estado" onclick="guardarEstado(${p.id})">Guardar</button>
+        </div>
+    `;
+
+    modal.classList.add('open');
+}
+
+function guardarEstado(pedidoId) {
+    const nuevoEstado = document.getElementById('modal-estado-select').value;
+    fetch(API_PED, {
+        method: 'PATCH',
+        headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: pedidoId, estado: nuevoEstado })
+    })
+    .then(r => r.json())
+    .then(d => {
+        if (d.success) {
+            // Actualizar en memoria
+            const idx = todosLosPedidos.findIndex(p => p.id == pedidoId);
+            if (idx !== -1) todosLosPedidos[idx].estado = nuevoEstado;
+            mostrarToast('Estado actualizado ✓');
+            cerrarModalPedido();
+            filtrarPedidos();
+            actualizarStatsPedidos(todosLosPedidos);
+        } else {
+            mostrarToast(d.error || 'Error al actualizar', 'error');
+        }
+    })
+    .catch(() => mostrarToast('Error de conexión', 'error'));
+}
+
+function cerrarModalPedido() {
+    document.getElementById('modal-pedido').classList.remove('open');
+}
+
+document.getElementById('modal-pedido').addEventListener('click', function(e) {
+    if (e.target === this) cerrarModalPedido();
+});
+
+// ══════════════════════════════════
 // ── CLIENTES ──
 // ══════════════════════════════════
 let todosLosClientes = [];
@@ -670,16 +1131,12 @@ function renderClientes(clientes) {
         tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><p>No hay clientes aún</p></div></td></tr>`;
         return;
     }
-
     const hoyMD = new Date().toLocaleDateString('es-CO', {month:'2-digit', day:'2-digit'});
-
     tbody.innerHTML = clientes.map(c => {
         const iniciales = (c.nombre||c.email||'?')[0].toUpperCase();
         const avatar = c.foto
             ? `<div class="cliente-avatar"><img src="${c.foto}" alt="foto"></div>`
             : `<div class="cliente-avatar">${iniciales}</div>`;
-
-        // Cumpleaños hoy
         let cumpleCell = '—';
         if (c.fecha_nacimiento) {
             const fn = new Date(c.fecha_nacimiento + 'T00:00:00');
@@ -688,33 +1145,20 @@ function renderClientes(clientes) {
                 ? `<span class="badge badge-cumple">🎂 Hoy</span>`
                 : fn.toLocaleDateString('es-CO', {day:'2-digit', month:'short'});
         }
-
-        // Último acceso Firebase (viene del API)
         const ultimoAcceso = formatFecha(c.ultimo_acceso);
-
-        // Estado: activo si accedió en los últimos 30 días
         const hace30 = new Date(Date.now() - 30*24*60*60*1000);
         const activo = c.ultimo_acceso && new Date(c.ultimo_acceso) >= hace30;
-        const estadoBadge = activo
+        const estadoBadgeHTML = activo
             ? `<span class="badge badge-activo">Activo</span>`
             : `<span class="badge badge-inactivo">Inactivo</span>`;
-
         return `<tr>
-            <td>
-                <div class="cliente-info">
-                    ${avatar}
-                    <div>
-                        <div class="cliente-nombre">${c.nombre || '—'}</div>
-                        <div class="cliente-email">${c.email}</div>
-                    </div>
-                </div>
-            </td>
+            <td><div class="cliente-info">${avatar}<div><div class="cliente-nombre">${c.nombre || '—'}</div><div class="cliente-email">${c.email}</div></div></div></td>
             <td>${formatFecha(c.fecha_registro)}</td>
             <td>${ultimoAcceso}</td>
             <td><span class="pts-chip">⭐ ${parseInt(c.puntos)||0}</span></td>
             <td>${parseInt(c.total_pedidos)||0}</td>
             <td>${cumpleCell}</td>
-            <td>${estadoBadge}</td>
+            <td>${estadoBadgeHTML}</td>
             <td><button class="btn-ver" onclick='verCliente(${JSON.stringify(c)})'>Ver</button></td>
         </tr>`;
     }).join('');
@@ -724,21 +1168,17 @@ function filtrarClientes() {
     const q = document.getElementById('buscador-cli').value.toLowerCase();
     const ahora = new Date();
     const hace30 = new Date(ahora - 30*24*60*60*1000);
-
     let lista = todosLosClientes.filter(c =>
-        (c.nombre||'').toLowerCase().includes(q) ||
-        (c.email||'').toLowerCase().includes(q)
+        (c.nombre||'').toLowerCase().includes(q) || (c.email||'').toLowerCase().includes(q)
     );
-
     if (filtroActivo === 'con-puntos') lista = lista.filter(c => (parseInt(c.puntos)||0) > 0);
     if (filtroActivo === 'nuevos')     lista = lista.filter(c => new Date(c.fecha_registro) >= hace30);
-
     renderClientes(lista);
 }
 
 function setFiltroCliente(filtro, el) {
     filtroActivo = filtro;
-    document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('activo'));
+    document.querySelectorAll('#sec-clientes .filtro-btn').forEach(b => b.classList.remove('activo'));
     el.classList.add('activo');
     filtrarClientes();
 }
@@ -750,9 +1190,7 @@ function verCliente(c) {
     const avatar = c.foto
         ? `<div class="modal-avatar"><img src="${c.foto}" alt="foto"></div>`
         : `<div class="modal-avatar">${iniciales}</div>`;
-
     const fn = c.fecha_nacimiento ? (() => { const d = new Date(c.fecha_nacimiento+'T00:00:00'); return d.toLocaleDateString('es-CO',{day:'2-digit',month:'long'}); })() : '—';
-
     let historialHTML = '<p style="font-size:12px;color:var(--text-soft)">Sin movimientos</p>';
     if (c.historial && c.historial.length) {
         historialHTML = c.historial.map(h => `
@@ -765,7 +1203,6 @@ function verCliente(c) {
             </div>
         `).join('');
     }
-
     body.innerHTML = `
         <div class="modal-user-top">
             ${avatar}
@@ -794,7 +1231,6 @@ document.getElementById('modal-cliente').addEventListener('click', function(e) {
     if (e.target === this) cerrarModal();
 });
 
-// ── Cerrar sesión ──
 function cerrarSesion() { localStorage.removeItem('token'); location.href = 'login.php'; }
 
 cargar();
