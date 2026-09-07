@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <title>Coffee Col</title>
+        <title>Tantico - Café de Especialidad &amp; Cafetería</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -266,7 +266,7 @@
                     <div class="container">
                         <a class="navbar-brand" href="../index.php">
                             <div class="coffee-logo">
-                                <img src="../assets/imagenes/logos.png" alt="Coffee Col Logo">
+                                <img src="../assets/imagenes/logos.png" alt="Tantico Logo">
                             </div>
                         </a>
 
@@ -297,7 +297,7 @@
                                         </div>
                                         <div>
                                             <p id="nombre-usuario" class="menu-usuario-nombre"></p>
-                                            <span class="menu-usuario-tag">CoffeeCol</span>
+                                            <span class="menu-usuario-tag">Tantico</span>
                                         </div>
                                     </div>
                                     <button onclick="window.location.href='perfilu.php'" class="menu-usuario-item">
@@ -318,7 +318,7 @@
                         </button>
 
                         <a class="mobile-logo" href="../index.php">
-                            <img src="../assets/imagenes/logos.png" alt="Coffee Col Logo">
+                            <img src="../assets/imagenes/logos.png" alt="Tantico Logo">
                         </a>
 
                         <div class="mobile-icons-right">
@@ -414,9 +414,9 @@
             <div class="drawer" id="drawer">
                 <div class="drawer-header">
                     <a href="../index.php" class="drawer-logo">
-                        <img src="../assets/imagenes/logos.png" alt="Coffee Col Logo"
+                        <img src="../assets/imagenes/logos.png" alt="Tantico Logo"
                              onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                        <span class="drawer-logo-text" style="display:none">CoffeeCol</span>
+                        <span class="drawer-logo-text" style="display:none">Tantico</span>
                     </a>
                     <button class="btn-cerrar" id="btnCerrar" aria-label="Cerrar menú">
                         <i class="fa-solid fa-xmark"></i>
@@ -439,7 +439,7 @@
                         <div class="drawer-user-avatar" id="drawer-avatar"><i class="fa-solid fa-user"></i></div>
                         <div class="drawer-user-text">
                             <p id="drawer-nombre" class="drawer-user-nombre"></p>
-                            <span class="drawer-user-tag">CoffeeCol</span>
+                            <span class="drawer-user-tag">Tantico</span>
                         </div>
                     </div>
                     <div class="drawer-user-actions">

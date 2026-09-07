@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Coffee Col</title>
+    <title>Tantico - Café de Especialidad &amp; Cafetería</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -266,7 +266,7 @@
                 <!-- ── DESKTOP ── -->
                 <div class="container">
                     <a class="navbar-brand" href="index.php">
-                        <img src="assets/imagenes/logos.png" alt="Coffee Col Logo">
+                        <img src="assets/imagenes/logos.png" alt="Tantico Logo">
                     </a>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav mx-auto">
@@ -288,7 +288,7 @@
                                     <div class="menu-usuario-avatar" id="menu-avatar"><i class="fa-solid fa-user"></i></div>
                                     <div>
                                         <p id="nombre-usuario" class="menu-usuario-nombre"></p>
-                                        <span class="menu-usuario-tag">CoffeeCol</span>
+                                        <span class="menu-usuario-tag">Tantico</span>
                                     </div>
                                 </div>
                                 <button onclick="window.location.href='includes/perfilu.php'" class="menu-usuario-item">
@@ -308,7 +308,7 @@
                         <span></span><span></span><span></span>
                     </button>
                     <a class="mobile-logo" href="index.php">
-                        <img src="assets/imagenes/logos.png" alt="Coffee Col Logo">
+                        <img src="assets/imagenes/logos.png" alt="Tantico Logo">
                     </a>
                     <div class="mobile-icons-right">
                         <div class="btn-carrito-mobile-wrap">
@@ -415,9 +415,9 @@
         <div class="drawer" id="drawer">
             <div class="drawer-header">
                 <a href="index.php" class="drawer-logo">
-                    <img src="assets/imagenes/logos.png" alt="Coffee Col Logo"
+                    <img src="assets/imagenes/logos.png" alt="Tantico Logo"
                          onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                    <span class="drawer-logo-text" style="display:none">CoffeeCol</span>
+                    <span class="drawer-logo-text" style="display:none">Tantico</span>
                 </a>
                 <button class="btn-cerrar" id="btnCerrar" aria-label="Cerrar menú">
                     <i class="fa-solid fa-xmark"></i>
@@ -440,7 +440,7 @@
                     <div class="drawer-user-avatar" id="drawer-avatar"><i class="fa-solid fa-user"></i></div>
                     <div class="drawer-user-text">
                         <p id="drawer-nombre" class="drawer-user-nombre"></p>
-                        <span class="drawer-user-tag">CoffeeCol</span>
+                        <span class="drawer-user-tag">Tantico</span>
                     </div>
                 </div>
                 <div class="drawer-user-actions">
@@ -461,9 +461,9 @@
         <section class="hero-section">
             <div class="container">
                 <div class="hero-content">
-                    <h1 class="bold">Máquila de Cápsulas de Café<br><span class="medium">con Sello Colombiano</span></h1>
-                    <p>En CoffeeCol convertimos tu café en cápsulas listas para conquistar<br>el mercado. Una marca sobria, profesional y 100% colombiana.</p>
-                    <a href="#" class="btn-asesor">Solicitar asesoría</a>
+                    <h1 class="bold">Cafetería &amp; Café de Especialidad<br><span class="medium">El auténtico sabor del Huila</span></h1>
+                    <p>En Tantico seleccionamos y preparamos los mejores cafés de origen.<br>Disfruta de diferentes variedades, métodos de filtrado artesanal y momentos únicos.</p>
+                    <a href="includes/servicios.php" class="btn-asesor">Explorar nuestra carta</a>
                 </div>
             </div>
         </section>
@@ -471,9 +471,9 @@
         <!-- Partners Section -->
         <section class="partners-section">
             <div class="partners-content">
-                <div class="partners-text"><strong>Alianzas que dan<br>origen al mejor café</strong></div>
+                <div class="partners-text"><strong>Orígenes y Variedades<br>de Café Huilense</strong></div>
                 <div class="partners-carousel">
-                    <div class="arriba">Marcas que confían en nosotros</div>
+                    <div class="arriba">Perfiles de taza y variedades que servimos</div>
                     <div class="carousel-controls">
                         <button class="carousel-btn" aria-label="Anterior"><span class="fas fa-angle-double-left izquierdo"></span></button>
                         <div class="carousel-viewport">

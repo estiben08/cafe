@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ingresar - CoffeeCol</title>
+  <title>Ingresar - Tantico</title>
 
   <!-- Content Security Policy -->
   <meta http-equiv="Content-Security-Policy" content="
@@ -32,10 +32,10 @@
   <div class="login-box">
 
     <div class="login-logo-wrap">
-      <img src="/cafe/assets/imagenes/banner20.png" alt="CoffeeCol" class="login-logo">
+      <img src="/cafe/assets/imagenes/banner20.png" alt="Tantico" class="login-logo">
     </div>
 
-    <h2>Bienvenidos a CoffeeCol</h2>
+    <h2>Bienvenidos a Tantico</h2>
     <p class="login-sub">Ingresa o crea tu cuenta</p>
 
     <!-- Mensaje de error desde URL (ej: magic link fallido) -->

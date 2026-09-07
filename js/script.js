@@ -580,14 +580,20 @@ loadGallery(1);
     /* ---------- Abrir modal ---------- */
     function abrirModal(info) {
         document.getElementById('mh-muni-nombre').textContent = info.nombre;
-        document.getElementById('mh-muni-tipo').textContent = info.tipo + ' · Departamento del Huila';
-        document.getElementById('mh-muni-poblacion').textContent = info.poblacion;
-        document.getElementById('mh-muni-area').textContent = info.area;
-        document.getElementById('mh-muni-altitud').textContent = info.altitud;
-        document.getElementById('mh-muni-fundacion').textContent = info.fundacion;
+        document.getElementById('mh-muni-tipo').textContent = 'ORIGEN · DEPARTAMENTO DEL HUILA';
+        document.getElementById('mh-muni-altitud').textContent = info.altitud || '1.600 m.s.n.m.';
+        
+        // Asignamos datos de café (usando datos existentes o por defecto si no existen)
+        document.getElementById('mh-muni-cultivo').textContent = info.cultivo || 'Bajo Sombra Parcial';
+        document.getElementById('mh-muni-perfil').textContent = info.perfil || 'Dulce y Balanceado';
+        document.getElementById('mh-muni-tradicion').textContent = info.fundacion ? 'Desde ' + info.fundacion : 'Larga tradición';
+        
         document.getElementById('mh-muni-desc').textContent = info.desc;
         document.getElementById('mh-muni-tags').innerHTML =
             info.tags.map(t => `<span class="mh-tag">${t}</span>`).join('');
+            
+        // Actualizar el nombre del producto recomendado
+        document.getElementById('mh-muni-nombre-prod').textContent = info.nombre;
 
         overlay.classList.add('mh-visible');
         document.body.style.overflow = 'hidden';

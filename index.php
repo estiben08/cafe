@@ -19,7 +19,7 @@
   }
 </script>
 
-    <title>Coffe</title>
+    <title>Tantico - Café de Especialidad &amp; Cafetería</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -152,42 +152,69 @@
     </section>
 
     <!-- MODAL del municipio (fuera del section para evitar z-index issues) -->
-    <div class="mh-modal-overlay" id="mh-modal-overlay" role="dialog" aria-modal="true"
-        aria-labelledby="mh-muni-nombre">
-        <div class="mh-modal" id="mh-modal">
-            <div class="mh-modal-header">
-                <div class="mh-modal-header-text">
-                    <div class="mh-municipio-nombre" id="mh-muni-nombre">—</div>
-                    <div class="mh-municipio-tipo" id="mh-muni-tipo">Municipio · Departamento del Huila</div>
-                </div>
-                <button class="mh-btn-cerrar" id="mh-btn-cerrar" aria-label="Cerrar">✕</button>
+    <div class="mh-modal-overlay" id="mh-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="mh-muni-nombre">
+        <div class="mh-modal premium-modal" id="mh-modal">
+            
+            <button class="mh-btn-cerrar" id="mh-btn-cerrar" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="mh-modal-hero">
+                <div class="mh-modal-hero-overlay"></div>
             </div>
+
             <div class="mh-modal-body">
-                <div class="mh-stat-grid">
-                    <div class="mh-stat-card">
-                        <span class="mh-stat-label">Población</span>
-                        <div class="mh-stat-value" id="mh-muni-poblacion">—</div>
+                <div class="mh-modal-header-text text-center">
+                    <div class="mh-municipio-tipo" id="mh-muni-tipo">MUNICIPIO</div>
+                    <div class="mh-municipio-nombre" id="mh-muni-nombre">—</div>
+                </div>
+                
+                <p class="mh-desc-text text-center mt-3" id="mh-muni-desc">—</p>
+                
+                <div class="mh-metrics-line mt-4">
+                    <div class="mh-metric">
+                        <span class="mh-metric-icon">☕</span>
+                        <div class="mh-metric-text">
+                            <span class="mh-metric-label">Altitud</span>
+                            <span class="mh-metric-value" id="mh-muni-altitud">—</span>
+                        </div>
                     </div>
-                    <div class="mh-stat-card">
-                        <span class="mh-stat-label">Área</span>
-                        <div class="mh-stat-value" id="mh-muni-area">—</div>
+                    <div class="mh-metric">
+                        <span class="mh-metric-icon">☕</span>
+                        <div class="mh-metric-text">
+                            <span class="mh-metric-label">Tipo de cultivo</span>
+                            <span class="mh-metric-value" id="mh-muni-cultivo">—</span>
+                        </div>
                     </div>
-                    <div class="mh-stat-card">
-                        <span class="mh-stat-label">Altitud</span>
-                        <div class="mh-stat-value" id="mh-muni-altitud">—</div>
+                    <div class="mh-metric">
+                        <span class="mh-metric-icon">☕</span>
+                        <div class="mh-metric-text">
+                            <span class="mh-metric-label">Perfil de taza</span>
+                            <span class="mh-metric-value" id="mh-muni-perfil">—</span>
+                        </div>
                     </div>
-                    <div class="mh-stat-card">
-                        <span class="mh-stat-label">Fundación</span>
-                        <div class="mh-stat-value" id="mh-muni-fundacion">—</div>
+                    <div class="mh-metric">
+                        <span class="mh-metric-icon">☕</span>
+                        <div class="mh-metric-text">
+                            <span class="mh-metric-label">Tradición</span>
+                            <span class="mh-metric-value" id="mh-muni-tradicion">—</span>
+                        </div>
                     </div>
                 </div>
-                <div class="mh-desc-section">
-                    <div class="mh-desc-title">Descripción</div>
-                    <p class="mh-desc-text" id="mh-muni-desc">—</p>
+
+                <div class="mh-notes-section text-center mt-4">
+                    <h4 class="mh-section-title">Notas de sabor</h4>
+                    <div class="mh-tags premium-tags" id="mh-muni-tags"></div>
                 </div>
-                <div class="mh-desc-section">
-                    <div class="mh-desc-title">Destacados</div>
-                    <div class="mh-tags" id="mh-muni-tags"></div>
+                
+                <div class="mh-recommended-section mt-5">
+                    <h4 class="mh-section-title text-center">Café recomendado de esta región</h4>
+                    <div class="mh-product-card">
+                        <img src="assets/imagenes/banner15.png" alt="Café Recomendado" class="mh-product-img">
+                        <div class="mh-product-info">
+                            <h5 class="mh-product-name">Origen <span id="mh-muni-nombre-prod">—</span></h5>
+                            <p class="mh-product-price">$45.000 COP</p>
+                            <a href="#" class="mh-discover-btn">Descubrir este café</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -251,7 +278,7 @@
         <div class="row purpose-content align-items-center mt-5 g-5">
             <!-- Imagen -->
             <div class="col-md-6 purpose-image-wrapper">
-                <img src="assets/imagenes/tantiii.png" alt="Cápsulas de café" class="purpose-image img-fluid">
+                <img src="assets/imagenes/tantiii.png" alt="Café de Especialidad Tantico" class="purpose-image img-fluid">
             </div>
 
             <!-- Texto -->
@@ -269,7 +296,7 @@
                     Más que servir café, buscamos crear experiencias memorables, honrando el trabajo de
                     nuestros productores y compartiendo el orgullo de nuestra tierra.
                 </p>
-                <a href="#" class="btn-maroon">Visítanos</a>
+                <a href="includes/nosotros.php" class="btn-maroon">Conoce más</a>
             </div>
         </div>
 
@@ -292,7 +319,7 @@
                                 Queremos que cada visitante disfrute<br>
                                 una experiencia auténtica y memorable.
                             </p>
-                            <a href="#" class="btn-contact">Contáctanos</a>
+                            <a href="includes/contacto.php" class="btn-contact">Contáctanos</a>
                         </div>
                     </div>
 
@@ -344,9 +371,9 @@
                 </h2>
 
                 <div class="tab-container">
-                    <button class="tab-btn active" data-set="1">Lorem</button>
-                    <button class="tab-btn" data-set="2">Lorem</button>
-                    <button class="tab-btn" data-set="3">Lorem</button>
+                    <button class="tab-btn active" data-set="1">Métodos de Filtrado</button>
+                    <button class="tab-btn" data-set="2">Barra de Espresso</button>
+                    <button class="tab-btn" data-set="3">Nuestra Cafetería</button>
                 </div>
 
                 <div class="custom-grid" id="gallery-grid">
@@ -370,11 +397,11 @@
                         importantes de Colombia.
                     </div>
 
-                    <a href="#" class="coffee-hero__btn">Visítanos</a>
+                    <a href="includes/servicios.php" class="coffee-hero__btn">Explorar carta</a>
                 </div>
 
                 <div class="coffee-hero__image-wrapper">
-                    <img src="assets/imagenes/banner15.png" alt="Granos de café con cápsulas"
+                    <img src="assets/imagenes/banner15.png" alt="Café de Especialidad en Grano y Taza"
                         class="coffee-hero__image">
                     <div class="coffee-hero__image-overlay"></div>
                 </div>

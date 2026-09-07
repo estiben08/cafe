@@ -50,7 +50,11 @@ INSERT INTO `admin` (`id`, `usuario`, `password`) VALUES
 CREATE TABLE `pedidos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(100) DEFAULT NULL,
+  `apellido` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
+  `ciudad` varchar(100) DEFAULT NULL,
+  `direccion` varchar(255) DEFAULT NULL,
   `total` decimal(10,2) DEFAULT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
   `estado` varchar(20) DEFAULT 'pendiente',
@@ -68,7 +72,8 @@ CREATE TABLE `pedido_items` (
   `id` int(11) NOT NULL,
   `pedido_id` int(11) DEFAULT NULL,
   `producto_id` int(11) DEFAULT NULL,
-  `cantidad` int(11) DEFAULT NULL
+  `cantidad` int(11) DEFAULT NULL,
+  `precio_unitario` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

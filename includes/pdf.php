@@ -3,7 +3,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Dompdf\Dompdf;
 
 $html = "
-<h1>Factura CoffeeCol</h1>
+<h1>Factura Tantico</h1>
 <p>Gracias por tu compra</p>
 ";
 

@@ -57,6 +57,14 @@ function verificarAdmin(): void {
     $vendorJWT = __DIR__ . '/../vendor/autoload.php';
     if (file_exists($vendorJWT)) {
         require_once $vendorJWT;
+
+        // Cargar .env para obtener JWT_SECRET
+        $envFile = __DIR__ . '/..';
+        if (class_exists('Dotenv\\Dotenv') && file_exists($envFile . '/.env')) {
+            $dotenv = \Dotenv\Dotenv::createImmutable($envFile);
+            $dotenv->safeLoad();
+        }
+
         try {
             $secret = $_ENV['JWT_SECRET'] ?? getenv('JWT_SECRET') ?? '';
             if ($secret) {
@@ -276,7 +284,11 @@ if ($method === 'POST') {
         $pdo->rollBack();
         error_log('[CoffeeCol] Error SQL: ' . $e->getMessage());
         http_response_code(500);
-        echo json_encode(['success' => false, 'error' => 'Error al guardar el pedido en la base de datos.']);
+        echo json_encode([
+            'success' => false,
+            'error'   => 'Error al guardar el pedido.',
+            'debug'   => $e->getMessage()   // ← TEMPORAL: quitar en producción
+        ]);
     } catch (RuntimeException $e) {
         $pdo->rollBack();
         error_log('[CoffeeCol] Error lógico: ' . $e->getMessage());

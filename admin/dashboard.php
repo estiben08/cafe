@@ -8,6 +8,7 @@ session_start();
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Panel Admin — CaféCol</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -427,6 +428,251 @@ textarea { resize: vertical; min-height: 68px; }
     white-space: nowrap;
 }
 .btn-guardar-estado:hover { background: var(--cafe-600); }
+
+/* ══════════════════════════════════════
+   REPORTES — estilos
+══════════════════════════════════════ */
+
+/* KPIs 5 columnas */
+.rpt-kpis {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.rpt-kpi-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 20px;
+    border: 1px solid rgba(92,52,32,0.08);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.rpt-kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,14,8,0.08);
+}
+.rpt-kpi-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+}
+.rpt-kpi-icon.ventas   { background: #e8f5e9; color: #2e7d32; }
+.rpt-kpi-icon.mes      { background: #e3f2fd; color: #1565c0; }
+.rpt-kpi-icon.pedidos  { background: #fff3e0; color: #e65100; }
+.rpt-kpi-icon.ticket   { background: #fce4ec; color: #c62828; }
+.rpt-kpi-icon.producto { background: var(--cafe-100); color: var(--cafe-600); }
+.rpt-kpi-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-soft);
+    margin-bottom: 6px;
+}
+.rpt-kpi-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--cafe-800);
+    line-height: 1.1;
+}
+.rpt-kpi-sub {
+    font-size: 11px;
+    color: var(--text-soft);
+    margin-top: 4px;
+}
+
+/* Filtros */
+.rpt-filtros {
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid rgba(92,52,32,0.08);
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.rpt-filtros-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-mid);
+    margin-right: 4px;
+}
+.rpt-fecha-input {
+    padding: 6px 10px;
+    border: 1px solid rgba(92,52,32,0.18);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-dark);
+    background: var(--cafe-50);
+    outline: none;
+    transition: border 0.2s;
+    width: 145px;
+}
+.rpt-fecha-input:focus { border-color: var(--cafe-400); }
+.rpt-sep { color: var(--text-soft); font-size: 13px; }
+.rpt-btn-aplicar {
+    padding: 6px 14px;
+    background: var(--cafe-700);
+    color: var(--cafe-100);
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.rpt-btn-aplicar:hover { background: var(--cafe-600); }
+
+/* Gráficos grid */
+.rpt-charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+.rpt-chart-card {
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid rgba(92,52,32,0.08);
+    padding: 20px;
+}
+.rpt-chart-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--cafe-800);
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+.rpt-chart-wrap {
+    position: relative;
+    height: 260px;
+}
+.rpt-chart-wrap canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Exportación */
+.rpt-export-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    justify-content: flex-end;
+}
+.rpt-btn-export {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border: 1px solid rgba(92,52,32,0.2);
+    border-radius: 8px;
+    background: white;
+    color: var(--cafe-600);
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.rpt-btn-export:hover {
+    background: var(--cafe-700);
+    color: white;
+    border-color: var(--cafe-700);
+}
+.rpt-btn-export svg { width: 14px; height: 14px; }
+
+/* Tabla reportes */
+.rpt-table-card {
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid rgba(92,52,32,0.08);
+    overflow: hidden;
+}
+.rpt-table-header {
+    padding: 18px 24px;
+    border-bottom: 1px solid rgba(92,52,32,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.rpt-total-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--cafe-100);
+    color: var(--cafe-700);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+.rpt-estado-mini {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 3px;
+}
+.rpt-estado-mini.pendiente  { background: #f57f17; }
+.rpt-estado-mini.procesando { background: #1565c0; }
+.rpt-estado-mini.enviado    { background: #2e7d32; }
+.rpt-estado-mini.entregado  { background: #4527a0; }
+.rpt-estado-mini.cancelado  { background: #c62828; }
+
+/* Loading skeleton */
+.rpt-loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-soft);
+    font-size: 14px;
+}
+.rpt-loading-spinner {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--cafe-100);
+    border-top-color: var(--cafe-500);
+    border-radius: 50%;
+    animation: rptSpin 0.8s linear infinite;
+    margin-bottom: 12px;
+}
+@keyframes rptSpin { to { transform: rotate(360deg); } }
+
+/* Print styles */
+@media print {
+    .sidebar, .topbar, .rpt-filtros, .rpt-export-bar, .btn-logout,
+    .nav-item, .modal-overlay, .toast { display: none !important; }
+    .main { margin-left: 0 !important; }
+    .seccion { display: block !important; }
+    #sec-productos, #sec-pedidos, #sec-clientes { display: none !important; }
+    .rpt-kpis { grid-template-columns: repeat(5, 1fr); }
+    .rpt-charts-grid { grid-template-columns: 1fr 1fr; }
+    .rpt-chart-card { break-inside: avoid; page-break-inside: avoid; }
+    body { background: white; }
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .rpt-kpis { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+    .rpt-kpis { grid-template-columns: repeat(2, 1fr); }
+    .rpt-charts-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+    .rpt-kpis { grid-template-columns: 1fr; }
+    .rpt-filtros { flex-direction: column; align-items: stretch; }
+    .rpt-fecha-input { width: 100%; }
+}
 </style>
 </head>
 <body>
@@ -434,7 +680,7 @@ textarea { resize: vertical; min-height: 68px; }
 <!-- ═══════════════════ SIDEBAR ═══════════════════ -->
 <aside class="sidebar">
     <div class="sidebar-logo">
-        <img src="/cafe/assets/imagenes/banner20.png" alt="CoffeeCol"
+        <img src="/cafe/assets/imagenes/banner20.png" alt="Tantico"
              onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block'">
         <span id="logo-fallback" style="display:none;font-family:'Playfair Display',serif;font-size:18px;color:#ddb896;letter-spacing:0.5px;">CAFE TANTICO</span>
         <span>Panel Admin</span>
@@ -459,6 +705,12 @@ textarea { resize: vertical; min-height: 68px; }
                 <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
             </svg>
             Clientes
+        </a>
+        <a class="nav-item" href="#" onclick="mostrarSeccion('reportes', this)">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path d="M3 3v18h18"/><path d="M7 16l4-8 4 4 4-6"/>
+            </svg>
+            Reportes
         </a>
     </nav>
     <div class="sidebar-footer">
@@ -696,6 +948,130 @@ textarea { resize: vertical; min-height: 68px; }
         </div>
     </div>
 
+    <!-- ══════════ SECCIÓN REPORTES ══════════ -->
+    <div id="sec-reportes" class="seccion">
+        <div class="content">
+
+            <!-- KPIs -->
+            <div class="rpt-kpis" id="rpt-kpis">
+                <div class="rpt-kpi-card">
+                    <div class="rpt-kpi-icon ventas">💰</div>
+                    <div>
+                        <div class="rpt-kpi-label">Ventas hoy</div>
+                        <div class="rpt-kpi-value" id="rpt-ventas-hoy">—</div>
+                        <div class="rpt-kpi-sub">COP</div>
+                    </div>
+                </div>
+                <div class="rpt-kpi-card">
+                    <div class="rpt-kpi-icon mes">📊</div>
+                    <div>
+                        <div class="rpt-kpi-label">Ventas del mes</div>
+                        <div class="rpt-kpi-value" id="rpt-ventas-mes">—</div>
+                        <div class="rpt-kpi-sub">COP</div>
+                    </div>
+                </div>
+                <div class="rpt-kpi-card">
+                    <div class="rpt-kpi-icon pedidos">📦</div>
+                    <div>
+                        <div class="rpt-kpi-label">Pedidos hoy</div>
+                        <div class="rpt-kpi-value" id="rpt-pedidos-hoy">—</div>
+                        <div class="rpt-kpi-sub">registrados</div>
+                    </div>
+                </div>
+                <div class="rpt-kpi-card">
+                    <div class="rpt-kpi-icon ticket">🎫</div>
+                    <div>
+                        <div class="rpt-kpi-label">Ticket promedio</div>
+                        <div class="rpt-kpi-value" id="rpt-ticket">—</div>
+                        <div class="rpt-kpi-sub">COP</div>
+                    </div>
+                </div>
+                <div class="rpt-kpi-card">
+                    <div class="rpt-kpi-icon producto">☕</div>
+                    <div>
+                        <div class="rpt-kpi-label">Más vendido</div>
+                        <div class="rpt-kpi-value" id="rpt-top-producto" style="font-size:16px">—</div>
+                        <div class="rpt-kpi-sub" id="rpt-top-qty"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtros -->
+            <div class="rpt-filtros">
+                <span class="rpt-filtros-label">Período:</span>
+                <button class="filtro-btn" onclick="rptFiltroRapido('hoy', this)">Hoy</button>
+                <button class="filtro-btn" onclick="rptFiltroRapido('7dias', this)">7 días</button>
+                <button class="filtro-btn activo" onclick="rptFiltroRapido('30dias', this)">30 días</button>
+                <button class="filtro-btn" onclick="rptFiltroRapido('mes', this)">Este mes</button>
+                <button class="filtro-btn" onclick="rptFiltroRapido('anio', this)">Este año</button>
+                <span class="rpt-sep">|</span>
+                <input type="date" class="rpt-fecha-input" id="rpt-desde">
+                <span class="rpt-sep">a</span>
+                <input type="date" class="rpt-fecha-input" id="rpt-hasta">
+                <button class="rpt-btn-aplicar" onclick="rptAplicarFechas()">Aplicar</button>
+            </div>
+
+            <!-- Gráficos -->
+            <div class="rpt-charts-grid">
+                <div class="rpt-chart-card">
+                    <div class="rpt-chart-title">Ventas por día</div>
+                    <div class="rpt-chart-wrap"><canvas id="chartVentasDiarias"></canvas></div>
+                </div>
+                <div class="rpt-chart-card">
+                    <div class="rpt-chart-title">Productos más vendidos</div>
+                    <div class="rpt-chart-wrap"><canvas id="chartProductosTop"></canvas></div>
+                </div>
+                <div class="rpt-chart-card">
+                    <div class="rpt-chart-title">Ventas por categoría</div>
+                    <div class="rpt-chart-wrap"><canvas id="chartCategorias"></canvas></div>
+                </div>
+                <div class="rpt-chart-card">
+                    <div class="rpt-chart-title">Tendencia mensual</div>
+                    <div class="rpt-chart-wrap"><canvas id="chartTendencia"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Exportación -->
+            <div class="rpt-export-bar">
+                <button class="rpt-btn-export" onclick="rptExportarExcel()">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8M8 9h2"/></svg>
+                    Exportar Excel
+                </button>
+                <button class="rpt-btn-export" onclick="rptExportarPDF()">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+                    Exportar PDF
+                </button>
+                <button class="rpt-btn-export" onclick="window.print()">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    Imprimir
+                </button>
+            </div>
+
+            <!-- Tabla detalle -->
+            <div class="rpt-table-card">
+                <div class="rpt-table-header">
+                    <span class="card-title">Detalle por fecha</span>
+                    <span class="rpt-total-badge" id="rpt-total-badge">—</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Pedidos</th>
+                            <th>Ingresos</th>
+                            <th>Ticket prom.</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rpt-tabla-body">
+                        <tr class="loading-row"><td colspan="5">Seleccione un período para ver el reporte.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
 </main>
 
 <!-- ══════════ MODAL DETALLE CLIENTE ══════════ -->
@@ -725,20 +1101,29 @@ textarea { resize: vertical; min-height: 68px; }
 <script>
 const API     = '../api/products.php';
 const API_CLI = '../api/clientes.php';
-const API_PED = '../api/orders.php';   // endpoint que crearemos
+const API_PED = '../api/orders.php';
+const API_RPT = '../api/reports.php';
 const token   = localStorage.getItem('token');
 
 if (!token) location.href = 'login.php';
 
+// Verificar expiración del token al cargar la página
 try {
     const payload = JSON.parse(atob(token.split('.')[1]));
+    if (payload.exp && payload.exp < Math.floor(Date.now() / 1000)) {
+        localStorage.removeItem('token');
+        location.href = 'login.php';
+    }
     const u = payload.sub || 'Admin';
     document.getElementById('usuario-label').textContent = u;
     document.getElementById('usuario-avatar').textContent = u[0].toUpperCase();
-} catch (e) {}
+} catch (e) {
+    localStorage.removeItem('token');
+    location.href = 'login.php';
+}
 
 // ── Navegación ──
-const titulos = { productos: 'Gestión de Productos', pedidos: 'Gestión de Pedidos', clientes: 'Base de Clientes' };
+const titulos = { productos: 'Gestión de Productos', pedidos: 'Gestión de Pedidos', clientes: 'Base de Clientes', reportes: 'Reportes y Analítica' };
 
 function mostrarSeccion(nombre, el) {
     document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activa'));
@@ -749,6 +1134,7 @@ function mostrarSeccion(nombre, el) {
     if (nombre === 'clientes') cargarClientes();
     if (nombre === 'productos') cargar();
     if (nombre === 'pedidos')   cargarPedidos();
+    if (nombre === 'reportes')  rptFiltroRapido('30dias');
     return false;
 }
 
@@ -900,7 +1286,14 @@ function estadoBadge(estado) {
 function cargarPedidos() {
     document.getElementById('tabla-pedidos').innerHTML = '<tr class="loading-row"><td colspan="6">Cargando pedidos…</td></tr>';
     fetch(API_PED, { headers: { 'Authorization': 'Bearer ' + token } })
-        .then(r => r.json())
+        .then(r => {
+            if (r.status === 401) {
+                localStorage.removeItem('token');
+                location.href = 'login.php';
+                throw new Error('Token expirado');
+            }
+            return r.json();
+        })
         .then(d => {
             if (d.success) {
                 todosLosPedidos = d.pedidos;
@@ -1234,6 +1627,273 @@ document.getElementById('modal-cliente').addEventListener('click', function(e) {
 function cerrarSesion() { localStorage.removeItem('token'); location.href = 'login.php'; }
 
 cargar();
+
+// ══════════════════════════════════
+// ── REPORTES ──
+// ══════════════════════════════════
+
+const CAFE_COLORS = ['#7a4a2e','#c4895f','#ddb896','#3d2314','#a0623c','#f0dece','#5c3420','#2d1a0e','#c0392b','#27704a'];
+const CAFE_CATEGORIAS = {
+    'tueste-claro':'Tueste Claro','tueste-medio':'Tueste Medio','tueste-oscuro':'Tueste Oscuro',
+    'capsulas':'Cápsulas','origen-especial':'Origen Especial','sin-categoria':'Sin categoría'
+};
+
+let rptCharts = {};
+let rptDatosActuales = null;
+
+function formatCOP(n) {
+    return '$' + Math.round(n).toLocaleString('es-CO');
+}
+
+function rptFechaISO(date) {
+    return date.toISOString().split('T')[0];
+}
+
+/* ── Filtros rápidos ── */
+function rptFiltroRapido(tipo, btn) {
+    const hoy = new Date();
+    let desde, hasta = rptFechaISO(hoy);
+    switch (tipo) {
+        case 'hoy':    desde = hasta; break;
+        case '7dias':  desde = rptFechaISO(new Date(hoy - 7*86400000)); break;
+        case '30dias': desde = rptFechaISO(new Date(hoy - 30*86400000)); break;
+        case 'mes':    desde = hoy.getFullYear() + '-' + String(hoy.getMonth()+1).padStart(2,'0') + '-01'; break;
+        case 'anio':   desde = hoy.getFullYear() + '-01-01'; break;
+        default:       desde = rptFechaISO(new Date(hoy - 30*86400000));
+    }
+    document.getElementById('rpt-desde').value = desde;
+    document.getElementById('rpt-hasta').value = hasta;
+    // Actualizar botón activo
+    if (btn) {
+        document.querySelectorAll('#sec-reportes .rpt-filtros .filtro-btn').forEach(b => b.classList.remove('activo'));
+        btn.classList.add('activo');
+    }
+    cargarReportes(desde, hasta);
+}
+
+function rptAplicarFechas() {
+    const desde = document.getElementById('rpt-desde').value;
+    const hasta = document.getElementById('rpt-hasta').value;
+    if (!desde || !hasta) { mostrarToast('Selecciona ambas fechas', 'error'); return; }
+    document.querySelectorAll('#sec-reportes .rpt-filtros .filtro-btn').forEach(b => b.classList.remove('activo'));
+    cargarReportes(desde, hasta);
+}
+
+/* ── Cargar datos del API ── */
+function cargarReportes(desde, hasta) {
+    document.getElementById('rpt-tabla-body').innerHTML = '<tr class="loading-row"><td colspan="5"><div class="rpt-loading"><div class="rpt-loading-spinner"></div><br>Cargando reportes…</div></td></tr>';
+
+    fetch(API_RPT + '?desde=' + desde + '&hasta=' + hasta, {
+        headers: { 'Authorization': 'Bearer ' + token }
+    })
+    .then(r => {
+        if (r.status === 401) { localStorage.removeItem('token'); location.href = 'login.php'; throw new Error('Auth'); }
+        return r.json();
+    })
+    .then(d => {
+        if (!d.success) { mostrarToast(d.error || 'Error al cargar reportes', 'error'); return; }
+        rptDatosActuales = d;
+        rptRenderKPIs(d.kpis);
+        rptRenderCharts(d);
+        rptRenderTabla(d.tabla_detalle, d.totales_rango);
+    })
+    .catch(e => {
+        if (e.message !== 'Auth') mostrarToast('Error de conexión', 'error');
+    });
+}
+
+/* ── Render KPIs ── */
+function rptRenderKPIs(k) {
+    document.getElementById('rpt-ventas-hoy').textContent   = formatCOP(k.ventas_hoy);
+    document.getElementById('rpt-ventas-mes').textContent   = formatCOP(k.ventas_mes);
+    document.getElementById('rpt-pedidos-hoy').textContent  = k.pedidos_hoy;
+    document.getElementById('rpt-ticket').textContent       = formatCOP(k.ticket_promedio);
+    document.getElementById('rpt-top-producto').textContent = k.producto_top;
+    document.getElementById('rpt-top-qty').textContent      = k.producto_top_qty ? k.producto_top_qty + ' unidades' : '';
+}
+
+/* ── Render Charts ── */
+function rptRenderCharts(d) {
+    // Destruir charts anteriores
+    Object.values(rptCharts).forEach(c => c.destroy());
+    rptCharts = {};
+
+    const baseOpts = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { labels: { font: { family: 'DM Sans', size: 11 }, color: '#9a7460' } } },
+        scales: {
+            x: { ticks: { font: { family: 'DM Sans', size: 10 }, color: '#9a7460' }, grid: { color: 'rgba(92,52,32,0.06)' } },
+            y: { ticks: { font: { family: 'DM Sans', size: 10 }, color: '#9a7460', callback: v => formatCOP(v) }, grid: { color: 'rgba(92,52,32,0.06)' } }
+        }
+    };
+
+    // 1. Ventas diarias (línea)
+    rptCharts.diarias = new Chart(document.getElementById('chartVentasDiarias'), {
+        type: 'line',
+        data: {
+            labels: d.ventas_diarias.map(v => {
+                const dt = new Date(v.dia + 'T00:00:00');
+                return dt.toLocaleDateString('es-CO', { day: '2-digit', month: 'short' });
+            }),
+            datasets: [{
+                label: 'Ingresos',
+                data: d.ventas_diarias.map(v => v.ingresos),
+                borderColor: '#7a4a2e',
+                backgroundColor: 'rgba(122,74,46,0.1)',
+                fill: true,
+                tension: 0.4,
+                pointRadius: 4,
+                pointBackgroundColor: '#7a4a2e'
+            }]
+        },
+        options: { ...baseOpts, plugins: { ...baseOpts.plugins, legend: { display: false } } }
+    });
+
+    // 2. Productos top (barras)
+    rptCharts.productos = new Chart(document.getElementById('chartProductosTop'), {
+        type: 'bar',
+        data: {
+            labels: d.productos_top.map(p => p.nombre.length > 18 ? p.nombre.substring(0,18)+'…' : p.nombre),
+            datasets: [{
+                label: 'Unidades vendidas',
+                data: d.productos_top.map(p => p.vendidos),
+                backgroundColor: CAFE_COLORS.slice(0, d.productos_top.length),
+                borderRadius: 6
+            }]
+        },
+        options: {
+            ...baseOpts,
+            indexAxis: 'y',
+            plugins: { ...baseOpts.plugins, legend: { display: false } },
+            scales: {
+                ...baseOpts.scales,
+                x: { ...baseOpts.scales.x, ticks: { ...baseOpts.scales.x.ticks, callback: v => v } },
+                y: { ...baseOpts.scales.y, ticks: { ...baseOpts.scales.y.ticks, callback: function(v) { return this.getLabelForValue(v); } } }
+            }
+        }
+    });
+
+    // 3. Categorías (circular)
+    rptCharts.categorias = new Chart(document.getElementById('chartCategorias'), {
+        type: 'doughnut',
+        data: {
+            labels: d.ventas_categoria.map(c => CAFE_CATEGORIAS[c.categoria] || c.categoria),
+            datasets: [{
+                data: d.ventas_categoria.map(c => c.total),
+                backgroundColor: CAFE_COLORS.slice(0, d.ventas_categoria.length),
+                borderWidth: 2,
+                borderColor: 'white'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { font: { family: 'DM Sans', size: 11 }, color: '#9a7460', padding: 12, usePointStyle: true } },
+                tooltip: { callbacks: { label: ctx => ctx.label + ': ' + formatCOP(ctx.parsed) } }
+            }
+        }
+    });
+
+    // 4. Tendencia mensual (barras + línea)
+    const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    rptCharts.tendencia = new Chart(document.getElementById('chartTendencia'), {
+        type: 'bar',
+        data: {
+            labels: d.tendencia_mensual.map(t => {
+                const [y, m] = t.mes.split('-');
+                return meses[parseInt(m)-1] + ' ' + y.slice(2);
+            }),
+            datasets: [
+                {
+                    label: 'Ingresos',
+                    data: d.tendencia_mensual.map(t => t.ingresos),
+                    backgroundColor: 'rgba(122,74,46,0.3)',
+                    borderColor: '#7a4a2e',
+                    borderWidth: 1,
+                    borderRadius: 6,
+                    order: 2
+                },
+                {
+                    label: 'Pedidos',
+                    type: 'line',
+                    data: d.tendencia_mensual.map(t => t.pedidos),
+                    borderColor: '#c4895f',
+                    backgroundColor: 'transparent',
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#c4895f',
+                    yAxisID: 'y1',
+                    order: 1
+                }
+            ]
+        },
+        options: {
+            ...baseOpts,
+            scales: {
+                ...baseOpts.scales,
+                y1: { position: 'right', ticks: { font: { family: 'DM Sans', size: 10 }, color: '#c4895f' }, grid: { display: false } }
+            }
+        }
+    });
+}
+
+/* ── Render Tabla ── */
+function rptRenderTabla(rows, totales) {
+    const tbody = document.getElementById('rpt-tabla-body');
+    document.getElementById('rpt-total-badge').textContent = totales.pedidos + ' pedidos · ' + formatCOP(totales.ingresos);
+
+    if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><p>No hay datos para este período.</p></div></td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = rows.map(r => {
+        const dt = new Date(r.fecha + 'T00:00:00');
+        const fechaStr = dt.toLocaleDateString('es-CO', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' });
+        // Mini badges de estado
+        let estados = '';
+        if (r.pendientes)  estados += `<span class="rpt-estado-mini pendiente"></span>${r.pendientes} `;
+        if (r.procesando)  estados += `<span class="rpt-estado-mini procesando"></span>${r.procesando} `;
+        if (r.enviados)    estados += `<span class="rpt-estado-mini enviado"></span>${r.enviados} `;
+        if (r.entregados)  estados += `<span class="rpt-estado-mini entregado"></span>${r.entregados} `;
+        if (r.cancelados)  estados += `<span class="rpt-estado-mini cancelado"></span>${r.cancelados} `;
+        return `<tr>
+            <td>${fechaStr}</td>
+            <td><strong>${r.pedidos}</strong></td>
+            <td class="precio">${formatCOP(r.ingresos)}</td>
+            <td>${formatCOP(r.ticket_promedio)}</td>
+            <td style="font-size:11px">${estados || '—'}</td>
+        </tr>`;
+    }).join('');
+}
+
+/* ── Exportar Excel (CSV) ── */
+function rptExportarExcel() {
+    if (!rptDatosActuales || !rptDatosActuales.tabla_detalle.length) {
+        mostrarToast('No hay datos para exportar', 'error'); return;
+    }
+    const BOM = '\uFEFF';
+    let csv = BOM + 'Fecha,Pedidos,Ingresos,Ticket Promedio,Pendientes,Procesando,Enviados,Entregados,Cancelados\n';
+    rptDatosActuales.tabla_detalle.forEach(r => {
+        csv += `${r.fecha},${r.pedidos},${r.ingresos},${r.ticket_promedio},${r.pendientes},${r.procesando},${r.enviados},${r.entregados},${r.cancelados}\n`;
+    });
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `reporte_tantico_${rptDatosActuales.rango.desde}_${rptDatosActuales.rango.hasta}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    mostrarToast('Reporte exportado ✓');
+}
+
+/* ── Exportar PDF (print) ── */
+function rptExportarPDF() {
+    window.print();
+}
+
 </script>
 </body>
 </html>

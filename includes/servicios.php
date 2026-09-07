@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Coffe</title>
+    <title>Tantico - Cafés de Especialidad &amp; Productos</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -269,7 +269,7 @@
                 <p class="success-msg">
                     Hemos recibido tu pedido con éxito. Pronto te contactaremos al correo
                     registrado para confirmar los detalles del envío.
-                    <br><br><strong>¡Gracias por elegir CoffeeCol!</strong>
+                    <br><br><strong>¡Gracias por elegir Tantico!</strong>
                 </p>
                 <button class="btn-cerrar-success" onclick="cerrarTodo()">Continuar comprando</button>
             </div>
@@ -287,7 +287,7 @@
     <div class="footer-wrapper">
         <footer class="footer-coffeecol">
             <div class="footer-content">
-                 <img src="../assets/imagenes/tantico.png" alt="Logo de CoffeeCol" class="footer-logo" />
+                 <img src="../assets/imagenes/tantico.png" alt="Logo de Tantico" class="footer-logo" />
 
                 <nav class="footer-nav">
                     <a href="../index.php">Inicio</a>

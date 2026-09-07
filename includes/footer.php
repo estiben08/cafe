@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Footer CoffeeCol</title>
+    <title>Tantico - Pie de Página</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         * {
@@ -162,7 +162,7 @@
     <div class="footer-wrapper">
         <footer class="footer-coffeecol">
             <div class="footer-content">
-                <img src="assets/imagenes/tantico.png" alt="Logo de CoffeeCol" class="footer-logo" />
+                <img src="assets/imagenes/tantico.png" alt="Logo de Tantico" class="footer-logo" />
 
                 <nav class="footer-nav">
                     <a href="../index.php">Inicio</a>

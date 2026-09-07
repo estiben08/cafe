@@ -143,7 +143,7 @@ $tipos_icono = [
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi perfil — CoffeeCol</title>
+  <title>Mi perfil — Tantico</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
@@ -463,7 +463,7 @@ $tipos_icono = [
   <aside class="sidebar">
     <div class="sidebar-logo">
       <a href="/cafe/index.php" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-        <img src="/cafe/assets/imagenes/banner20.png" alt="CoffeeCol" style="height:36px;width:auto;object-fit:contain;">
+        <img src="/cafe/assets/imagenes/banner20.png" alt="Tantico" style="height:36px;width:auto;object-fit:contain;">
       </a>
       <div class="sidebar-logo-sub" style="margin-top:6px;">Mi cuenta</div>
     </div>
@@ -504,7 +504,7 @@ $tipos_icono = [
 
     <!-- Topbar solo visible en mobile -->
     <div class="mobile-topbar">
-      <img src="/cafe/assets/imagenes/banner20.png" alt="CoffeeCol">
+      <img src="/cafe/assets/imagenes/banner20.png" alt="Tantico">
       <a href="/cafe/index.php" class="mobile-topbar-back">
         <i class="ti ti-arrow-left"></i> Volver al inicio
       </a>
