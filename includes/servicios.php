@@ -16,11 +16,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&family=Dancing+Script:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&family=Dancing+Script:wght@400;700&display=swap"
         rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
     <link rel="icon" href="../assets/imagenes/banner1.png" type="image/x-icon">
 
     <!-- CSS personalizado -->
@@ -122,6 +119,16 @@
             <button class="btn-cerrar-carrito" onclick="cerrarCarrito()" aria-label="Cerrar carrito">
                 <i class="fas fa-times"></i>
             </button>
+        </div>
+
+        <!-- Barra de Progreso Envío Gratis VIP -->
+        <div class="carrito-envio-progreso" id="carritoEnvioProgreso">
+            <div class="envio-progreso-texto" id="envioProgresoTexto">
+                <i class="fas fa-truck-fast"></i> <span>Agrega productos para envío gratis</span>
+            </div>
+            <div class="envio-progreso-track">
+                <div class="envio-progreso-bar" id="envioProgresoBar" style="width: 0%;"></div>
+            </div>
         </div>
 
         <!-- Estado vacío -->

@@ -13,7 +13,7 @@ const FAVORITOS_URL = '../api/favoritos.php';
 let PRODUCTOS = {};
 
 /* ============================================================
-   MAPA DE CATEGORÍAS — slug → nombre visible
+   MAPA DE CATEGORÍAS & NOTAS DE CATA — Experiencia Specialty Coffee
 ============================================================ */
 const CATEGORIAS_NOMBRE = {
     'tueste-claro':    'Tueste Claro',
@@ -21,6 +21,14 @@ const CATEGORIAS_NOMBRE = {
     'tueste-oscuro':   'Tueste Oscuro',
     'capsulas':        'Cápsulas',
     'origen-especial': 'Origen Especial',
+};
+
+const NOTAS_CATA_POR_CATEGORIA = {
+    'tueste-claro':    ['Jazmín', 'Panela', 'Cítricos'],
+    'tueste-medio':    ['Chocolate', 'Avellana', 'Caramelo'],
+    'tueste-oscuro':   ['Cacao Amargo', 'Especias', 'Nuez'],
+    'capsulas':        ['Frutos Rojos', 'Vainilla', 'Miel'],
+    'origen-especial': ['Geisha Especial', '1.850 msnm', 'Cítrico'],
 };
 
 /* ============================================================
@@ -214,7 +222,14 @@ function renderizarProductos(productos) {
             : '';
 
         const categoriaNombre = CATEGORIAS_NOMBRE[p.categoria] || p.categoria;
+        const notasCata       = NOTAS_CATA_POR_CATEGORIA[p.categoria] || ['Especial', 'Artesanal'];
         const estrellas       = generarEstrellas(p.rating_valor);
+
+        const tagsHTML = `
+            <div class="producto-tags">
+                <span class="producto-tag origen"><i class="fas fa-location-dot" style="font-size:8.5px;margin-right:3px;"></i>Huila</span>
+                ${notasCata.map(nota => `<span class="producto-tag">${sanitizar(nota)}</span>`).join('')}
+            </div>`;
 
         const mediaHTML = p.imagen
             ? `<img
@@ -243,6 +258,7 @@ function renderizarProductos(productos) {
             <div class="producto-info">
                 <div class="producto-categoria">${sanitizar(categoriaNombre)}</div>
                 <h3 class="producto-nombre">${sanitizar(p.nombre)}</h3>
+                ${tagsHTML}
                 <p class="producto-descripcion">${sanitizar(p.descripcion)}</p>
                 <div class="producto-rating">
                     <span class="estrellas">${estrellas}</span>
@@ -326,6 +342,15 @@ function agregarAlCarrito(productoId) {
     actualizarUI();
     mostrarToast(sanitizar(PRODUCTOS[id].nombre) + ' agregado al carrito', 'fa-bag-shopping');
 
+    // Micro-interacción: Rebote del botón flotante
+    const flotante = document.querySelector('.btn-carrito-flotante');
+    if (flotante) {
+        flotante.classList.remove('bounce');
+        void flotante.offsetWidth; // forzar reflow
+        flotante.classList.add('bounce');
+        setTimeout(() => flotante.classList.remove('bounce'), 500);
+    }
+
     const btn = document.querySelector(`[data-id="${id}"] .btn-agregar`);
     if (btn) {
         btn.classList.add('agregado');
@@ -367,7 +392,8 @@ function actualizarUI() {
     const ids        = Object.keys(carrito);
     const totalItems = ids.reduce((s, id) => s + carrito[id].cantidad, 0);
     const subtotal   = ids.reduce((s, id) => s + carrito[id].precio * carrito[id].cantidad, 0);
-    const envioGratis = subtotal >= 150000;
+    const META_ENVIO = 150000;
+    const envioGratis = subtotal >= META_ENVIO;
     const costoEnvio  = subtotal > 0 ? (envioGratis ? 0 : 12000) : 0;
     const total       = subtotal + costoEnvio;
 
@@ -379,6 +405,27 @@ function actualizarUI() {
 
     const headerCount = document.getElementById('carritoContadorHeader');
     if (headerCount) headerCount.textContent = totalItems === 1 ? '1 artículo' : `${totalItems} artículos`;
+
+    // ── Barra dinámica de progreso para Envío Gratis VIP ──
+    const progresoBar   = document.getElementById('envioProgresoBar');
+    const progresoTexto = document.getElementById('envioProgresoTexto');
+    if (progresoBar && progresoTexto) {
+        if (subtotal === 0) {
+            progresoBar.style.width = '0%';
+            progresoBar.classList.remove('completado');
+            progresoTexto.innerHTML = '<i class="fas fa-truck-fast"></i> <span>Envío gratis VIP a partir de $150.000</span>';
+        } else if (subtotal < META_ENVIO) {
+            const pct = Math.min(100, Math.round((subtotal / META_ENVIO) * 100));
+            const falta = META_ENVIO - subtotal;
+            progresoBar.style.width = pct + '%';
+            progresoBar.classList.remove('completado');
+            progresoTexto.innerHTML = `<i class="fas fa-truck-fast"></i> <span>Te faltan <strong>${formatearPrecio(falta)}</strong> para Envío Gratis VIP</span>`;
+        } else {
+            progresoBar.style.width = '100%';
+            progresoBar.classList.add('completado');
+            progresoTexto.innerHTML = '<i class="fas fa-gift"></i> <span>✨ <strong>¡Felicidades!</strong> Tu pedido califica para Envío Gratis VIP</span>';
+        }
+    }
 
     const elVacio  = document.getElementById('carritoVacio');
     const elLista  = document.getElementById('carritoItemsList');
@@ -400,7 +447,7 @@ function actualizarUI() {
             const item = carrito[id];
             const miniatura = item.imagen
                 ? `<img src="../${sanitizar(item.imagen)}" alt="${sanitizar(item.nombre)}"
-                        style="width:100%;height:100%;object-fit:cover;border-radius:6px;">`
+                        style="width:100%;height:100%;object-fit:cover;border-radius:10px;">`
                 : `<i class="fas ${sanitizar(item.icono || 'fa-mug-hot')}"></i>`;
 
             return `
@@ -636,16 +683,24 @@ function inicializarFiltros() {
 
             const cat = this.dataset.categoria;
             let visibles = 0;
+            let staggerIndex = 0;
 
             document.querySelectorAll('.producto-card').forEach(card => {
                 const coincide = cat === 'todos' || card.dataset.categoria === cat;
-                card.classList.toggle('filtrado', !coincide);
                 if (!coincide) {
+                    card.classList.add('filtrado');
+                    card.classList.remove('visible');
                     card.style.position   = 'absolute';
                     card.style.visibility = 'hidden';
                 } else {
+                    card.classList.remove('filtrado');
                     card.style.position   = '';
                     card.style.visibility = '';
+                    card.classList.remove('visible');
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, staggerIndex * 50);
+                    staggerIndex++;
                     visibles++;
                 }
             });
