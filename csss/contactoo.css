@@ -223,32 +223,41 @@ body {
 
 /* Caja que contiene el título con fondo blur */
 .titulo-box {
-    padding: 16px 42px;
+    padding: 16px 20px;
+    text-align: center;
 }
 
 /* Texto del título */
 .titulo-contacto {
     color: #ffffff;
-    font-size: 36px;
-    font-weight: 700;
+    font-size: 46px;
+    font-weight: 400;
     margin: 0;
     text-align: center;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Goudy Bookletter 1911', 'Playfair Display', Georgia, serif;
+    line-height: 1.15;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+}
+
+.titulo-contacto em {
+    font-style: italic;
+    background: linear-gradient(135deg, #F0E4CE 0%, #C6A76B 60%, #E8D8B4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 /* seccion contacto y forms */
 .contacto-cafe-section {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, sans-serif;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
 .form-section {
-    background-color: #47060E;
-    border-radius: 12px;
-    padding: 2rem;
+    background: #160A07;
+    border: 1px solid rgba(198, 167, 107, 0.3);
+    border-radius: 20px;
+    padding: 2.5rem;
     color: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 15px 40px rgba(22, 10, 7, 0.25);
     width: 100%;
     max-width: 927px;
     height: auto;
@@ -256,23 +265,36 @@ body {
 }
 
 .form-section h5 {
-    font-weight: 800;
+    font-family: 'Goudy Bookletter 1911', 'Playfair Display', Georgia, serif;
+    font-weight: 400;
     margin-bottom: 1.5rem;
-    font-family: 'Roboto', sans-serif;
-    font-size: 30px;
+    font-size: 28px;
+    color: #FAF6EE;
+    line-height: 1.2;
 }
 
 .form-label {
-    font-size: 14px;
-    margin-bottom: 0.3rem;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
     display: block;
-    color: white;
-    font-family: 'Roboto', sans-serif;
+    color: #E8D8B4;
+    font-family: 'Inter', sans-serif;
 }
 
 .form-control {
-    border-radius: 6px;
-    padding: 10px;
+    border-radius: 8px;
+    padding: 11px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    border: 1px solid rgba(198, 167, 107, 0.3);
+    background: #FAF7F2;
+}
+
+.form-control:focus {
+    border-color: #C6A76B;
+    box-shadow: 0 0 0 3px rgba(198, 167, 107, 0.2);
+    background: #FFFFFF;
 }
 
 .form-control::placeholder {
@@ -280,104 +302,128 @@ body {
     opacity: 1;
 }
 
-.btn btn-send {
-    color: #ffffff !important;
-    font-weight: bold;
+.btn.btn-send,
+.btn-send {
+    color: #160A07 !important;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
     border: none;
     width: 100%;
-    padding: 0.7rem;
-    font-size: 16px;
-    border-radius: 6px;
-    transition: background-color 0.3s;
+    padding: 13px;
+    font-size: 14px;
+    letter-spacing: 0.8px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #C6A76B, #A88748);
+    box-shadow: 0 4px 16px rgba(198, 167, 107, 0.35);
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .btn-send:hover {
-    background-color: #ddd;
+    background: linear-gradient(135deg, #E8D8B4, #C6A76B);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(198, 167, 107, 0.5);
 }
 
 .nota-campos {
     font-size: 12px;
-    margin-bottom: 1rem;
-    color: #fff;
+    margin-bottom: 1.2rem;
+    color: rgba(251, 248, 242, 0.7);
     font-style: italic;
+    font-family: 'Inter', sans-serif;
 }
 
 .contact-header {
-    font-weight: 700;
-    font-size: 44px;
-    color: #28040A;
-    letter-spacing: -1.9%;
-    line-height: 150%;
-    margin-bottom: 30px;
+    font-family: 'Goudy Bookletter 1911', 'Playfair Display', Georgia, serif;
+    font-weight: 400;
+    font-size: 42px;
+    color: #160A07;
+    line-height: 1.2;
+    margin-bottom: 18px;
 }
 
 .contact-subtext {
-    font-size: 18px;
-    color: #1E1E1E;
-    width: 794px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #5C4D46;
+    max-width: 760px;
+    width: 100%;
     font-weight: 400;
-    line-height: 150%;
-    letter-spacing: -1.9%;
-    margin: 0 auto;
-    margin-bottom: 30px;
+    line-height: 1.65;
+    margin: 0 auto 24px;
 }
 
 .custom-btn-top {
-    background-color: #47060E;
-    color: white;
-    padding: 5px 20px;
-    border: none;
-    font-weight: bold;
-    border-radius: 9.58px;
-    margin-bottom: 1rem;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 22.96px;
-    letter-spacing: 0.14px;
+    background: linear-gradient(135deg, #160A07, #2B1B17);
+    color: #E8D8B4;
+    border: 1px solid rgba(198, 167, 107, 0.4);
+    padding: 10px 24px;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+.custom-btn-top:hover {
+    background: linear-gradient(135deg, #C6A76B, #A88748);
+    color: #160A07;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(198, 167, 107, 0.35);
+}
 
 .visit-section h5 {
-    color: #1E1E1E;
-    width: 414px;
-    font-weight: 700;
-    font-size: 44px;
-    line-height: 46px;
-    letter-spacing: -1.9%;
-    margin-bottom: 90px;
+    font-family: 'Goudy Bookletter 1911', 'Playfair Display', Georgia, serif;
+    color: #160A07;
+    width: 100%;
+    max-width: 414px;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 1.15;
+    margin-bottom: 24px;
 }
 
 .visit-section span {
-    color: #47060E;
+    color: #C6A76B;
+    font-style: italic;
 }
 
 .visit-section p {
-    font-size: 18px;
-    margin-bottom: 20px;
-    line-height: 150%;
-    letter-spacing: -1.9%;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #5C4D46;
+    margin-bottom: 14px;
+    line-height: 1.6;
     font-weight: 400;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;600&display=swap');
-
 .btn-project {
-    background-color: #47060E;
-    font-family: 'Onest', sans-serif;
-    color: #FCF6DB;
-    border: none;
-    font-weight: 500;
-    font-size: 16px;
-    border-radius: 10px;
-    padding: 11px 0;
-    width: 413px;
-    height: 39px;
+    background: #160A07;
+    font-family: 'Inter', sans-serif;
+    color: #FAF6EE;
+    border: 1px solid rgba(198, 167, 107, 0.3);
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 8px;
+    padding: 12px 24px;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
     margin-top: 1rem;
     cursor: pointer;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.btn-project:hover {
+    background: linear-gradient(135deg, #C6A76B, #A88748);
+    color: #160A07;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(198, 167, 107, 0.35);
 }
 
 .btn-project:hover {
@@ -1412,8 +1458,6 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
 .form-section {
     background-color: #47060E;
     border-radius: 12px;
@@ -1427,10 +1471,10 @@ body {
 }
 
 .form-section h5 {
-    font-weight: 800;
+    font-weight: 400;
     margin-bottom: 1.5rem;
-    font-family: 'Roboto', sans-serif;
-    font-size: 30px;
+    font-family: 'Goudy Bookletter 1911', 'Playfair Display', Georgia, serif;
+    font-size: 32px;
 }
 
 .form-label {
@@ -1438,7 +1482,7 @@ body {
     margin-bottom: 0.3rem;
     display: block;
     color: white;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 .form-control {
@@ -1475,11 +1519,12 @@ body {
 }
 
 .contact-header {
-    font-weight: 700;
+    font-family: 'Goudy Bookletter 1911', 'Playfair Display', Georgia, serif;
+    font-weight: 400;
     font-size: 44px;
     color: #28040A;
-    letter-spacing: -1.9%;
-    line-height: 150%;
+    letter-spacing: -0.5px;
+    line-height: 120%;
     margin-bottom: 30px;
 }
 
@@ -1508,15 +1553,14 @@ body {
     letter-spacing: 0.14px;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
 .visit-section h5 {
+    font-family: 'Goudy Bookletter 1911', 'Playfair Display', Georgia, serif;
     color: #1E1E1E;
     width: 414px;
-    font-weight: 700;
+    font-weight: 400;
     font-size: 44px;
-    line-height: 46px;
-    letter-spacing: -1.9%;
+    line-height: 48px;
+    letter-spacing: -0.5px;
     margin-bottom: 90px;
 }
 
@@ -1532,11 +1576,9 @@ body {
     font-weight: 400;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;600&display=swap');
-
 .btn-project {
     background-color: #47060E;
-    font-family: 'Onest', sans-serif;
+    font-family: 'Inter', sans-serif;
     color: #FCF6DB;
     border: none;
     font-weight: 500;

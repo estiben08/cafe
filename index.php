@@ -5,20 +5,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script>
-  /* ── Redirección a intro — va en el <head>, lo antes posible ─────────────
-   * Si el usuario no tiene la clave de sesión (no pasó por la intro),
-   * lo mandamos ahí ANTES de que el navegador pinte nada.
-   * Cuando intro.php termina, guarda 'tn_session_active' y redirige aquí.
-   * Al volver, esta guardia no se activa y la página carga normal.
-   * El modal (anuuncio.php) tiene su propia clave 'tn_modal_visto'
-   * y solo se muestra si 'tn_session_active' existe Y 'tn_modal_visto' no.
-   * ─────────────────────────────────────────────────────────────────────── */
-  if (!sessionStorage.getItem('tn_session_active')) {
-    window.location.replace('includes/intro.php');
-  }
-</script>
-
     <title>Tantico - Café de Especialidad &amp; Cafetería</title>
 
     <!-- Bootstrap CSS -->
@@ -30,23 +16,19 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&family=Dancing+Script:wght@400;700&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Dancing+Script:wght@400;700&family=Poppins&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="icon" href="assets/imagenes/banner1.png" type="image/x-icon">
 
     <!-- CSS personalizado -->
+    <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+<?php include 'includes/intro.php'; ?>
 <?php include 'includes/anuuncio.php'; ?>
 <?php include 'includes/header.php'; ?>
-
-    <br>
 
     <!-- ================================================ -->
     <!-- SECCIÓN MAPA DEL HUILA                           -->
@@ -151,70 +133,140 @@
         </div><!-- /.mapa-huila-inner -->
     </section>
 
-    <!-- MODAL del municipio (fuera del section para evitar z-index issues) -->
+    <!-- ======================================================== -->
+    <!-- MODAL DE ORIGEN HUILA (SPLIT PANORÁMICO LUXURY)          -->
+    <!-- ======================================================== -->
     <div class="mh-modal-overlay" id="mh-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="mh-muni-nombre">
-        <div class="mh-modal premium-modal" id="mh-modal">
+        <div class="mh-split-modal" id="mh-modal">
             
-            <button class="mh-btn-cerrar" id="mh-btn-cerrar" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+            <button class="mh-btn-cerrar" id="mh-btn-cerrar" aria-label="Cerrar">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
             
-            <div class="mh-modal-hero">
-                <div class="mh-modal-hero-overlay"></div>
-            </div>
+            <div class="mh-split-layout">
+                <!-- COLUMNA IZQUIERDA: HERO VISUAL + PRODUCTO SELECCIONADO -->
+                <div class="mh-col-visual">
+                    <div class="mh-visual-hero">
+                        <img src="assets/imagenes/banner15.png" alt="Cafetal del Huila" class="mh-visual-bg" id="mh-muni-img">
+                        <div class="mh-visual-gradient"></div>
+                        <div class="mh-visual-badges">
+                            <span class="mh-badge-region"><i class="fa-solid fa-location-dot"></i> <span id="mh-muni-region">Huila, Colombia</span></span>
+                            <span class="mh-badge-score"><i class="fa-solid fa-award"></i> <span id="mh-muni-score">87.5 SCA</span></span>
+                        </div>
+                    </div>
 
-            <div class="mh-modal-body">
-                <div class="mh-modal-header-text text-center">
-                    <div class="mh-municipio-tipo" id="mh-muni-tipo">MUNICIPIO</div>
-                    <div class="mh-municipio-nombre" id="mh-muni-nombre">—</div>
-                </div>
-                
-                <p class="mh-desc-text text-center mt-3" id="mh-muni-desc">—</p>
-                
-                <div class="mh-metrics-line mt-4">
-                    <div class="mh-metric">
-                        <span class="mh-metric-icon">☕</span>
-                        <div class="mh-metric-text">
-                            <span class="mh-metric-label">Altitud</span>
-                            <span class="mh-metric-value" id="mh-muni-altitud">—</span>
+                    <div class="mh-quick-product-card">
+                        <div class="mh-quick-prod-badge">Café de Especialidad</div>
+                        <div class="mh-quick-prod-body">
+                            <div class="mh-quick-prod-thumb">
+                                <img src="assets/imagenes/banner15.png" alt="Bolsa de Café Tantico" class="mh-prod-pack-img">
+                            </div>
+                            <div class="mh-quick-prod-details">
+                                <span class="mh-prod-tagline">Micro-lote de Origen</span>
+                                <h4 class="mh-quick-prod-title">Origen <span id="mh-muni-nombre-prod">Villa Vieja</span></h4>
+                                <div class="mh-quick-prod-price-box">
+                                    <span class="mh-quick-prod-price" id="mh-muni-precio">$45.000 COP</span>
+                                    <span class="mh-quick-prod-weight">250g en Grano / Molido</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mh-metric">
-                        <span class="mh-metric-icon">☕</span>
-                        <div class="mh-metric-text">
-                            <span class="mh-metric-label">Tipo de cultivo</span>
-                            <span class="mh-metric-value" id="mh-muni-cultivo">—</span>
-                        </div>
-                    </div>
-                    <div class="mh-metric">
-                        <span class="mh-metric-icon">☕</span>
-                        <div class="mh-metric-text">
-                            <span class="mh-metric-label">Perfil de taza</span>
-                            <span class="mh-metric-value" id="mh-muni-perfil">—</span>
-                        </div>
-                    </div>
-                    <div class="mh-metric">
-                        <span class="mh-metric-icon">☕</span>
-                        <div class="mh-metric-text">
-                            <span class="mh-metric-label">Tradición</span>
-                            <span class="mh-metric-value" id="mh-muni-tradicion">—</span>
-                        </div>
+                        <a href="includes/servicios.php" class="mh-quick-buy-btn">
+                            <span>Descubrir en la Carta</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
 
-                <div class="mh-notes-section text-center mt-4">
-                    <h4 class="mh-section-title">Notas de sabor</h4>
-                    <div class="mh-tags premium-tags" id="mh-muni-tags"></div>
-                </div>
-                
-                <div class="mh-recommended-section mt-5">
-                    <h4 class="mh-section-title text-center">Café recomendado de esta región</h4>
-                    <div class="mh-product-card">
-                        <img src="assets/imagenes/banner15.png" alt="Café Recomendado" class="mh-product-img">
-                        <div class="mh-product-info">
-                            <h5 class="mh-product-name">Origen <span id="mh-muni-nombre-prod">—</span></h5>
-                            <p class="mh-product-price">$45.000 COP</p>
-                            <a href="#" class="mh-discover-btn">Descubrir este café</a>
+                <!-- COLUMNA DERECHA: FICHA TÉCNICA DE CATACIÓN & NOTAS SENSORIALES -->
+                <div class="mh-col-info">
+                    <div class="mh-info-header">
+                        <div class="mh-pre-title">
+                            <span class="mh-pre-dot"></span>
+                            <span id="mh-muni-tipo">ORIGEN · DEPARTAMENTO DEL HUILA</span>
+                        </div>
+                        <h2 class="mh-title" id="mh-muni-nombre">Villa Vieja</h2>
+                        <p class="mh-desc" id="mh-muni-desc">Municipio con microclima único en el valle del Magdalena, donde los caficultores producen granos con notas acarameladas y balance suave.</p>
+                    </div>
+
+                    <!-- GRID DE ESPECIFICACIONES TÉCNICAS -->
+                    <div class="mh-specs-grid">
+                        <div class="mh-spec-card">
+                            <div class="mh-spec-icon"><i class="fa-solid fa-mountain"></i></div>
+                            <div class="mh-spec-data">
+                                <span class="mh-spec-label">Altitud</span>
+                                <strong class="mh-spec-val" id="mh-muni-altitud">1.550 - 1.850 msnm</strong>
+                            </div>
+                        </div>
+
+                        <div class="mh-spec-card">
+                            <div class="mh-spec-icon"><i class="fa-solid fa-seedling"></i></div>
+                            <div class="mh-spec-data">
+                                <span class="mh-spec-label">Variedad</span>
+                                <strong class="mh-spec-val" id="mh-muni-variedad">Castillo &amp; Colombia</strong>
+                            </div>
+                        </div>
+
+                        <div class="mh-spec-card">
+                            <div class="mh-spec-icon"><i class="fa-solid fa-droplet"></i></div>
+                            <div class="mh-spec-data">
+                                <span class="mh-spec-label">Proceso</span>
+                                <strong class="mh-spec-val" id="mh-muni-proceso">Lavado 36h</strong>
+                            </div>
+                        </div>
+
+                        <div class="mh-spec-card">
+                            <div class="mh-spec-icon"><i class="fa-solid fa-fire-burner"></i></div>
+                            <div class="mh-spec-data">
+                                <span class="mh-spec-label">Tueste</span>
+                                <strong class="mh-spec-val" id="mh-muni-tueste">Medio Artesanal</strong>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- NOTAS SENSORIALES (PALETA AROMÁTICA) -->
+                    <div class="mh-sensory-block">
+                        <div class="mh-sensory-header">
+                            <i class="fa-solid fa-mug-hot"></i>
+                            <span>Notas Sensoriales en Taza</span>
+                        </div>
+                        <div class="mh-sensory-tags" id="mh-muni-tags">
+                            <!-- Inyectadas por JS -->
+                        </div>
+                    </div>
+
+                    <!-- BARRAS DE BALANCE SENSORIAL -->
+                    <div class="mh-balance-block">
+                        <div class="mh-balance-item">
+                            <div class="mh-balance-labels">
+                                <span>Dulzura</span>
+                                <strong id="mh-muni-val-dulzura">8.5 / 10</strong>
+                            </div>
+                            <div class="mh-balance-bar">
+                                <div class="mh-balance-fill mh-fill-dulzura" id="mh-bar-dulzura" style="width: 85%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="mh-balance-item">
+                            <div class="mh-balance-labels">
+                                <span>Acidez</span>
+                                <strong id="mh-muni-val-acidez">7.5 / 10</strong>
+                            </div>
+                            <div class="mh-balance-bar">
+                                <div class="mh-balance-fill mh-fill-acidez" id="mh-bar-acidez" style="width: 75%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="mh-balance-item">
+                            <div class="mh-balance-labels">
+                                <span>Cuerpo</span>
+                                <strong id="mh-muni-val-cuerpo">8.0 / 10</strong>
+                            </div>
+                            <div class="mh-balance-bar">
+                                <div class="mh-balance-fill mh-fill-cuerpo" id="mh-bar-cuerpo" style="width: 80%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -232,13 +284,12 @@
 
                 <!-- Beneficio 1 -->
                 <div class="benefit-item text-center">
-                    <div class="benefit-icon mb-3">
-                        <img src="assets/imagenes/banner1000.png" alt="Mapa de Colombia" class="icon-img img-1">
+                    <div class="benefit-icon mb-2 mb-md-3">
+                        <img src="assets/imagenes/banner1000.png" alt="Café Huilense" class="icon-img img-1">
                     </div>
                     <h5>100% Café Huilense</h5>
                     <p>
-                        Trabajamos con café cultivado en las montañas del Huila, reconocido por su calidad,
-                        aroma y sabor excepcional.
+                        Cultivado en las montañas del Huila, reconocido por su aroma y perfil de taza excepcional.
                     </p>
                 </div>
 
@@ -246,14 +297,12 @@
 
                 <!-- Beneficio 2 -->
                 <div class="benefit-item text-center">
-                    <div class="benefit-icon mb-3">
-                        <img src="assets/imagenes/banner6.png" alt="Compatibilidad Nespresso"
-                            class="icon-img img-2">
+                    <div class="benefit-icon mb-2 mb-md-3">
+                        <img src="assets/imagenes/banner6.png" alt="Tradición Cafetera" class="icon-img img-2">
                     </div>
-                    <h5>Tradición que inspira</h5>
+                    <h5>Tradición que Inspira</h5>
                     <p>
-                        Cada taza refleja el esfuerzo de nuestros caficultores y la riqueza cultural
-                        que hace único al departamento del Huila.
+                        Honramos el esfuerzo de nuestros caficultores y la riqueza cultural de nuestra tierra.
                     </p>
                 </div>
 
@@ -261,13 +310,12 @@
 
                 <!-- Beneficio 3 -->
                 <div class="benefit-item text-center">
-                    <div class="benefit-icon mb-3">
-                        <img src="assets/imagenes/banner5.png" alt="Producción flexible" class="icon-img img-3">
+                    <div class="benefit-icon mb-2 mb-md-3">
+                        <img src="assets/imagenes/banner5.png" alt="Experiencias Únicas" class="icon-img img-3">
                     </div>
-                    <h5>Experiencias para compartir</h5>
+                    <h5>Experiencias Únicas</h5>
                     <p>
-                        Creamos un espacio donde el buen café, la conversación y los momentos especiales
-                        se encuentran.
+                        Un espacio acogedor donde el buen café y los momentos especiales se encuentran.
                     </p>
                 </div>
 
@@ -275,28 +323,23 @@
         </div>
 
         <!-- FILA PROPÓSITO -->
-        <div class="row purpose-content align-items-center mt-5 g-5">
+        <div class="row purpose-content align-items-center mt-4 mt-md-5 g-4 g-md-5">
             <!-- Imagen -->
-            <div class="col-md-6 purpose-image-wrapper">
+            <div class="col-md-6 purpose-image-wrapper text-center">
                 <img src="assets/imagenes/tantiii.png" alt="Café de Especialidad Tantico" class="purpose-image img-fluid">
             </div>
 
             <!-- Texto -->
-            <div class="col-md-6 purpose-text">
+            <div class="col-md-6 purpose-text text-center text-md-start">
                 <small class="purpose-subtitle">Sobre nosotros</small>
                 <h2 class="purpose-title">Compartimos la esencia<br>del Huila en cada taza</h2>
                 <p class="purpose-paragraph">
-                    En Tantico creemos que el buen café no solo se disfruta, también se vive.
+                    En Tantico resaltamos la riqueza cafetera de nuestra región, ofreciendo cafés de especialidad que conservan la autenticidad, calidad y orgullo de nuestros productores huilenses.
                 </p>
-                <p class="purpose-paragraph">
-                    Nacimos en Neiva con el propósito de resaltar la riqueza cafetera de nuestra región,
-                    ofreciendo cafés seleccionados que conservan la autenticidad y calidad que caracterizan al Huila.
+                <p class="purpose-paragraph d-none d-md-block">
+                    Más que servir café, creamos momentos memorables que conectan a cada visitante con las raíces y la pasión de nuestra tierra.
                 </p>
-                <p class="purpose-paragraph">
-                    Más que servir café, buscamos crear experiencias memorables, honrando el trabajo de
-                    nuestros productores y compartiendo el orgullo de nuestra tierra.
-                </p>
-                <a href="includes/nosotros.php" class="btn-maroon">Conoce más</a>
+                <a href="includes/nosotros.php" class="btn-maroon mt-2">Conoce más</a>
             </div>
         </div>
 
@@ -304,57 +347,51 @@
 
         <div class="why-coffeecol">
             <div class="container">
-                <div class="row g-5">
+                <div class="row g-4 g-lg-5 align-items-center">
 
                     <!-- Columna izquierda -->
-                    <div class="col-md-5 bajar-columna">
+                    <div class="col-lg-5 bajar-columna text-center text-lg-start">
                         <div class="why-text">
                             <h2 class="why-title">¿Por qué visitar <strong>Tantico?</strong></h2>
                             <p class="why-desc">
-                                Porque cada taza cuenta una historia,<br>
-                                conecta con nuestras raíces y celebra<br>
-                                la tradición cafetera del Huila.
-                            </p>
-                            <p class="why-desc">
-                                Queremos que cada visitante disfrute<br>
-                                una experiencia auténtica y memorable.
+                                Cada taza cuenta una historia, conecta con nuestras raíces y celebra la mejor tradición cafetera del Huila.
                             </p>
                             <a href="includes/contacto.php" class="btn-contact">Contáctanos</a>
                         </div>
                     </div>
 
                     <!-- Columna derecha -->
-                    <div class="col-md-7 ">
+                    <div class="col-lg-7">
                         <div class="row g-3">
-                            <div class="col-md-6 feature-item">
-                                <h6 class="feature-title">Café de origen huilense</h6>
+                            <div class="col-6 feature-item">
+                                <div class="feature-icon-mini"><i class="fa-solid fa-seedling"></i></div>
+                                <h6 class="feature-title">Origen Huilense</h6>
                                 <p class="feature-text">
-                                    Seleccionamos cafés producidos en distintas zonas del departamento
-                                    para ofrecer sabores auténticos y una calidad excepcional.
+                                    Microlotes selectos con perfiles únicos y notas auténticas.
                                 </p>
                             </div>
 
-                            <div class="col-md-6 feature-item">
-                                <h6 class="feature-title">Preparaciones de calidad</h6>
+                            <div class="col-6 feature-item">
+                                <div class="feature-icon-mini"><i class="fa-solid fa-flask"></i></div>
+                                <h6 class="feature-title">Filtrados de Calidad</h6>
                                 <p class="feature-text">
-                                    Cada bebida es elaborada cuidadosamente para resaltar las características
-                                    únicas de nuestros granos.
+                                    Métodos artesanales calibrados para cada perfil de grano.
                                 </p>
                             </div>
 
-                            <div class="col-md-6 feature-item">
-                                <h6 class="feature-title">Un espacio para disfrutar</h6>
+                            <div class="col-6 feature-item">
+                                <div class="feature-icon-mini"><i class="fa-solid fa-couch"></i></div>
+                                <h6 class="feature-title">Ambiente Cálido</h6>
                                 <p class="feature-text">
-                                    Diseñamos un ambiente acogedor para compartir, trabajar o disfrutar
-                                    de un excelente café.
+                                    Espacio diseñado para disfrutar con calma y buena charla.
                                 </p>
                             </div>
 
-                            <div class="col-md-6 feature-item">
-                                <h6 class="feature-title">Compromiso con nuestros caficultores</h6>
+                            <div class="col-6 feature-item">
+                                <div class="feature-icon-mini"><i class="fa-solid fa-handshake-angle"></i></div>
+                                <h6 class="feature-title">Trato Directo</h6>
                                 <p class="feature-text">
-                                    Valoramos el trabajo de los productores huilenses y promovemos el
-                                    reconocimiento de su esfuerzo en cada taza.
+                                    Valoramos y promovemos el trabajo de los caficultores.
                                 </p>
                             </div>
                         </div>
@@ -364,73 +401,54 @@
             </div>
         </div>
 
+        <!-- =============================================== -->
+        <!-- SECCIÓN GALERÍA BENTO MODERNA                   -->
+        <!-- =============================================== -->
         <div class="gallery-section">
             <div class="container">
-                <h2 class="gallery-title">
-                    Galería Tantico: La pasión por el café se vive aquí
-                </h2>
+                <div class="gallery-header text-center">
+                    <span class="gallery-pre-title">✦ MOMENTOS &amp; EXPERIENCIAS</span>
+                    <h2 class="gallery-title">
+                        Pasión por el Café de Especialidad
+                    </h2>
+                    <p class="gallery-subtitle d-none d-sm-block">
+                        Explora nuestros métodos artesanales de extracción, el arte del espresso y la atmósfera acogedora de nuestra cafetería.
+                    </p>
+                </div>
 
                 <div class="tab-container">
-                    <button class="tab-btn active" data-set="1">Métodos de Filtrado</button>
-                    <button class="tab-btn" data-set="2">Barra de Espresso</button>
-                    <button class="tab-btn" data-set="3">Nuestra Cafetería</button>
+                    <button class="tab-btn active" data-set="1">
+                        <i class="fa-solid fa-flask"></i>
+                        <span>Filtrados</span>
+                    </button>
+                    <button class="tab-btn" data-set="2">
+                        <i class="fa-solid fa-mug-hot"></i>
+                        <span>Espresso</span>
+                    </button>
+                    <button class="tab-btn" data-set="3">
+                        <i class="fa-solid fa-store"></i>
+                        <span>Cafetería</span>
+                    </button>
                 </div>
 
                 <div class="custom-grid" id="gallery-grid">
-                    <!-- Las imágenes se insertan aquí por JavaScript -->
+                    <!-- Las imágenes interactivas se insertan dinámicamente por JavaScript -->
                 </div>
             </div>
         </div>
-
-        <div class="coffee-hero">
-            <div class="coffee-hero__container">
-                <div class="coffee-hero__content">
-                    <div class="coffee-hero__title">La excelencia comienza en el origen.</div>
-
-                    <div class="coffee-hero__textt">
-                        Un gran café nace del esfuerzo de quienes lo cultivan.
-                    </div>
-
-                    <div class="coffee-hero__text">
-                        En Tantico celebramos la riqueza cafetera del Huila ofreciendo experiencias que
-                        resaltan el aroma, el sabor y la tradición de una de las regiones cafeteras más
-                        importantes de Colombia.
-                    </div>
-
-                    <a href="includes/servicios.php" class="coffee-hero__btn">Explorar carta</a>
-                </div>
-
-                <div class="coffee-hero__image-wrapper">
-                    <img src="assets/imagenes/banner15.png" alt="Café de Especialidad en Grano y Taza"
-                        class="coffee-hero__image">
-                    <div class="coffee-hero__image-overlay"></div>
-                </div>
+        <!-- =============================================== -->
+        <!-- TEXTO DECLARACIÓN: SOMOS HUILA, SOMOS CAFÉ       -->
+        <!-- =============================================== -->
+        <div class="brand-manifesto-section">
+            <div class="container text-center">
+                <h2 class="manifesto-minimal-title">
+                    Somos Huila, <span>Somos Café</span>
+                </h2>
             </div>
         </div>
 
     </div>
 </section>
-
-    <!-- Granos de café -->
-    <div class="image-container coffee-ms">
-        <img src="assets/imagenes/pepacafe.png" alt="Granos de café">
-    </div>
-
-    <!-- Objeto 0 -->
-    <div class="image-container object-0">
-        <img src="assets/imagenes/OBJECTS1.png" alt="Objeto 2">
-    </div>
-
-    <!-- Objeto 1 -->
-    <div class="image-container object-1">
-        <img src="assets/imagenes/OBJECTS2.png" alt="Objeto 3">
-    </div>
-
-    <!-- Granos de café (segundo) -->
-    <div class="image-container coffeee-xr">
-        <img src="assets/imagenes/pepacafe.png" alt="Granos de café">
-    </div>
-    <br>
 
     <?php include 'includes/footer.php'; ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

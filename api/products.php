@@ -1,5 +1,5 @@
 <?php
-header("Content-Type: application/json");
+header("Content-Type: application/json; charset=utf-8");
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
@@ -21,6 +21,7 @@ if ($conn->connect_error) {
     echo json_encode(["error" => "Error de conexión"]);
     exit;
 }
+$conn->set_charset("utf8mb4");
 
 function verificarToken() {
     $headers = getallheaders();
@@ -47,21 +48,22 @@ if ($method === 'GET') {
     while ($row = $result->fetch_assoc()) {
         $productos[] = $row;
     }
-    echo json_encode(["success" => true, "productos" => $productos]);
+    echo json_encode(["success" => true, "productos" => $productos], JSON_UNESCAPED_UNICODE);
     exit;
 }
 
 if ($method === 'POST') {
     verificarToken();
 
+    $id           = isset($_POST['id']) && $_POST['id'] !== '' ? intval($_POST['id']) : null;
     $nombre       = trim($_POST['nombre']       ?? '');
     $descripcion  = trim($_POST['descripcion']  ?? '');
     $precio       = floatval($_POST['precio']   ?? 0);
     $precio_antes = isset($_POST['precio_antes']) && $_POST['precio_antes'] !== '' ? floatval($_POST['precio_antes']) : null;
     $categoria    = trim($_POST['categoria']    ?? '');
-    $badge        = isset($_POST['badge'])      && $_POST['badge']      !== '' ? $_POST['badge']      : null;
-    $badge_tipo   = isset($_POST['badge_tipo']) && $_POST['badge_tipo'] !== '' ? $_POST['badge_tipo'] : null;
-    $unidad       = isset($_POST['unidad'])     && $_POST['unidad']     !== '' ? $_POST['unidad']     : null;
+    $badge        = isset($_POST['badge'])      && $_POST['badge']      !== '' ? trim($_POST['badge'])      : null;
+    $badge_tipo   = isset($_POST['badge_tipo']) && $_POST['badge_tipo'] !== '' ? trim($_POST['badge_tipo']) : null;
+    $unidad       = isset($_POST['unidad'])     && $_POST['unidad']     !== '' ? trim($_POST['unidad'])     : null;
 
     if (!$nombre || !$precio || !$categoria) {
         echo json_encode(["success" => false, "error" => "Nombre, precio y categoría son obligatorios"]);
@@ -82,6 +84,25 @@ if ($method === 'POST') {
         }
     }
 
+    // Si viene con ID, actualizamos el producto existente
+    if ($id && $id > 0) {
+        if ($imagen) {
+            $stmt = $conn->prepare("UPDATE productos SET nombre=?, descripcion=?, precio=?, precio_antes=?, categoria=?, badge=?, badge_tipo=?, unidad=?, imagen=? WHERE id=?");
+            $stmt->bind_param("ssddsssssi", $nombre, $descripcion, $precio, $precio_antes, $categoria, $badge, $badge_tipo, $unidad, $imagen, $id);
+        } else {
+            $stmt = $conn->prepare("UPDATE productos SET nombre=?, descripcion=?, precio=?, precio_antes=?, categoria=?, badge=?, badge_tipo=?, unidad=? WHERE id=?");
+            $stmt->bind_param("ssddssssi", $nombre, $descripcion, $precio, $precio_antes, $categoria, $badge, $badge_tipo, $unidad, $id);
+        }
+
+        if ($stmt->execute()) {
+            echo json_encode(["success" => true, "id" => $id, "mensaje" => "Producto actualizado con éxito"]);
+        } else {
+            echo json_encode(["success" => false, "error" => "Error al actualizar: " . $conn->error]);
+        }
+        exit;
+    }
+
+    // De lo contrario, insertamos un nuevo producto
     $stmt = $conn->prepare("INSERT INTO productos (nombre, descripcion, precio, precio_antes, categoria, badge, badge_tipo, unidad, imagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssddsssss", $nombre, $descripcion, $precio, $precio_antes, $categoria, $badge, $badge_tipo, $unidad, $imagen);
 
@@ -106,7 +127,7 @@ if ($method === 'DELETE') {
 
     $result = $conn->query("SELECT imagen FROM productos WHERE id = $id");
     $row = $result->fetch_assoc();
-    if ($row && $row['imagen']) {
+    if ($row && $row['imagen'] && !str_starts_with($row['imagen'], 'http')) {
         $ruta = __DIR__ . '/../' . $row['imagen'];
         if (file_exists($ruta)) unlink($ruta);
     }

@@ -3,33 +3,50 @@
 /* ============================================================
    CONFIGURACIÓN
 ============================================================ */
-const API_URL      = '../api/products.php';
-const ORDERS_URL   = '../api/orders.php';
+const API_URL       = '../api/products.php';
+const ORDERS_URL    = '../api/orders.php';
 const FAVORITOS_URL = '../api/favoritos.php';
 
 /* ============================================================
    CATÁLOGO EN MEMORIA
 ============================================================ */
 let PRODUCTOS = {};
+let CATALOGO_COMPLETO = {};
 
 /* ============================================================
-   MAPA DE CATEGORÍAS & NOTAS DE CATA — Experiencia Specialty Coffee
+   MAPA DE CATEGORÍAS & NOTAS DE CATA — Experiencia Specialty Coffee & Food
 ============================================================ */
 const CATEGORIAS_NOMBRE = {
+    'todos':           'Todos los Productos',
+    'cafes-todos':     'Todos los Cafés',
     'tueste-claro':    'Tueste Claro',
     'tueste-medio':    'Tueste Medio',
     'tueste-oscuro':   'Tueste Oscuro',
-    'capsulas':        'Cápsulas',
+    'capsulas':        'Cápsulas & Drip',
     'origen-especial': 'Origen Especial',
+    'reposteria':      'Tortas & Repostería',
+    'panaderia':       'Panadería Artesanal',
+    'desayunos':       'Desayunos & Brunch',
 };
 
+const CATEGORIAS_CAFES = ['tueste-claro', 'tueste-medio', 'tueste-oscuro', 'capsulas', 'origen-especial'];
+
 const NOTAS_CATA_POR_CATEGORIA = {
-    'tueste-claro':    ['Jazmín', 'Panela', 'Cítricos'],
-    'tueste-medio':    ['Chocolate', 'Avellana', 'Caramelo'],
-    'tueste-oscuro':   ['Cacao Amargo', 'Especias', 'Nuez'],
-    'capsulas':        ['Frutos Rojos', 'Vainilla', 'Miel'],
-    'origen-especial': ['Geisha Especial', '1.850 msnm', 'Cítrico'],
+    'tueste-claro':    ['Jazmín & Cítricos', 'Panela & Miel', 'Cuerpo Sedoso', '1.850 msnm'],
+    'tueste-medio':    ['Chocolate Suave', 'Avellana & Nuez', 'Caramelo Toffee', 'Equilibrado'],
+    'tueste-oscuro':   ['Cacao 85%', 'Notas Ahumadas', 'Especias Dulces', 'Intensidad Alta'],
+    'capsulas':        ['Frutos Rojos', 'Vainilla Bourbon', 'Extracción Perfecta', 'Biodegradable'],
+    'origen-especial': ['Geisha / Bourbon Rosa', 'Proceso Honey/Natural', 'Puntuación 88+ SCA', 'Micro-lote'],
+    'reposteria':      ['Mantequilla 100% Pura', 'Cacao Fino de Aroma', 'Receta de la Casa', 'Fresco del Día'],
+    'panaderia':       ['Masa Madre Natural', 'Fermentación 24-48h', 'Corteza Crujiente', 'Harinas Seleccionadas'],
+    'desayunos':       ['Preparado al Instante', 'Huevos de Campo', 'Ingredientes Huilenses', 'Café Ilimitado'],
 };
+
+/* ============================================================
+   ESTADO VISTA PREVIA (MODAL QUICK VIEW)
+============================================================ */
+let previewProductoActual = null;
+let previewCantidadActual = 1;
 
 /* ============================================================
    ESTADO DEL CARRITO
@@ -58,6 +75,17 @@ function formatearPrecio(n) {
 }
 
 /* ============================================================
+   RESOLVER RUTA DE IMAGEN (HTTP Remota vs Relativa)
+============================================================ */
+function resolverRutaImagen(img) {
+    if (!img || typeof img !== 'string') return '';
+    if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('//') || img.startsWith('data:')) {
+        return img;
+    }
+    return '../' + img.replace(/^\/+/, '');
+}
+
+/* ============================================================
    ESTRELLAS
 ============================================================ */
 function generarEstrellas(valor) {
@@ -73,7 +101,11 @@ function generarEstrellas(valor) {
 const LS_KEY = 'coffeecol_carrito_v2';
 
 function guardarCarritoLocal() {
-    try { localStorage.setItem(LS_KEY, JSON.stringify(carrito)); } catch (_) {}
+    try {
+        localStorage.setItem(LS_KEY, JSON.stringify(carrito));
+        // Disparar evento para que otros scripts (como encabezado.php) se enteren al instante
+        window.dispatchEvent(new Event('storage'));
+    } catch (_) {}
 }
 
 function cargarCarritoLocal() {
@@ -157,15 +189,18 @@ async function cargarProductos() {
         console.log('[CoffeeCol] Productos cargados:', productos.length);
 
         PRODUCTOS = {};
+        CATALOGO_COMPLETO = {};
         productos.forEach(p => {
-            PRODUCTOS[p.id] = { nombre: p.nombre, precio: p.precio, icono: p.icono, imagen: p.imagen };
+            const pId = parseInt(p.id, 10);
+            PRODUCTOS[pId] = { nombre: p.nombre, precio: parseFloat(p.precio) || 0, icono: p.icono, imagen: p.imagen };
+            CATALOGO_COMPLETO[pId] = p;
         });
 
         renderizarProductos(productos);
 
         const contador = document.getElementById('contadorProductos');
         if (contador) {
-            contador.textContent = `${productos.length} producto${productos.length !== 1 ? 's' : ''}`;
+            contador.textContent = `Mostrando ${productos.length} productos y especialidades`;
         }
 
         inicializarFiltros();
@@ -206,13 +241,16 @@ function renderizarProductos(productos) {
 
     if (!productos.length) {
         grid.innerHTML = `
-            <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#888;">
-                No hay productos disponibles en este momento.
+            <div class="catalogo-vacio">
+                <i class="fas fa-mug-hot"></i>
+                <strong>No hay productos disponibles en este momento</strong>
+                <p>Pronto añadiremos nuevas cosechas y delicias.</p>
             </div>`;
         return;
     }
 
     grid.innerHTML = productos.map(p => {
+        const pId = parseInt(p.id, 10);
         const badgeHTML = p.badge && p.badge_tipo
             ? `<div class="producto-badge ${sanitizar(p.badge_tipo)}">${sanitizar(p.badge)}</div>`
             : '';
@@ -224,16 +262,17 @@ function renderizarProductos(productos) {
         const categoriaNombre = CATEGORIAS_NOMBRE[p.categoria] || p.categoria;
         const notasCata       = NOTAS_CATA_POR_CATEGORIA[p.categoria] || ['Especial', 'Artesanal'];
         const estrellas       = generarEstrellas(p.rating_valor);
+        const rutaImagen      = resolverRutaImagen(p.imagen);
 
         const tagsHTML = `
             <div class="producto-tags">
                 <span class="producto-tag origen"><i class="fas fa-location-dot" style="font-size:8.5px;margin-right:3px;"></i>Huila</span>
-                ${notasCata.map(nota => `<span class="producto-tag">${sanitizar(nota)}</span>`).join('')}
+                ${notasCata.slice(0, 3).map(nota => `<span class="producto-tag">${sanitizar(nota)}</span>`).join('')}
             </div>`;
 
-        const mediaHTML = p.imagen
+        const mediaHTML = rutaImagen
             ? `<img
-                    src="../${sanitizar(p.imagen)}"
+                    src="${sanitizar(rutaImagen)}"
                     alt="${sanitizar(p.nombre)}"
                     class="producto-img-real"
                     loading="lazy"
@@ -247,66 +286,252 @@ function renderizarProductos(productos) {
                </div>`;
 
         return `
-        <div class="producto-card" data-categoria="${sanitizar(p.categoria)}" data-id="${p.id}">
+        <div class="producto-card" data-categoria="${sanitizar(p.categoria)}" data-id="${pId}">
             ${badgeHTML}
             <button class="btn-favorito" aria-label="Agregar a favoritos">
                 <i class="far fa-heart"></i>
             </button>
-            <div class="producto-img-wrap">
+            <div class="producto-img-wrap" onclick="abrirVistaPrevia(${pId})" title="Ver detalles y vista previa">
                 ${mediaHTML}
             </div>
             <div class="producto-info">
                 <div class="producto-categoria">${sanitizar(categoriaNombre)}</div>
-                <h3 class="producto-nombre">${sanitizar(p.nombre)}</h3>
+                <h3 class="producto-nombre" onclick="abrirVistaPrevia(${pId})" title="Ver detalles">${sanitizar(p.nombre)}</h3>
                 ${tagsHTML}
-                <p class="producto-descripcion">${sanitizar(p.descripcion)}</p>
+                <p class="producto-descripcion" onclick="abrirVistaPrevia(${pId})" title="Ver detalles">${sanitizar(p.descripcion)}</p>
                 <div class="producto-rating">
                     <span class="estrellas">${estrellas}</span>
-                    <span class="rating-num">${p.rating_valor} (${p.rating_cantidad})</span>
+                    <span class="rating-num">${p.rating_valor || 4.9} (${p.rating_cantidad || 120})</span>
                 </div>
                 <div class="producto-footer">
                     <div class="producto-precio">
                         ${precioAntesHTML}
                         <span class="precio-actual">${formatearPrecio(p.precio)}</span>
-                        <span class="precio-unidad">${sanitizar(p.unidad)}</span>
+                        <span class="precio-unidad">${sanitizar(p.unidad || 'Unidad')}</span>
                     </div>
-                    <button class="btn-agregar" onclick="agregarAlCarrito(${p.id})">
+                    <button class="btn-agregar" onclick="agregarAlCarrito(${pId})">
                         <i class="fas fa-bag-shopping"></i><span>Agregar</span>
                     </button>
                 </div>
             </div>
         </div>`;
     }).join('');
+}
 
-    if (!document.getElementById('producto-img-styles')) {
-        const st = document.createElement('style');
-        st.id = 'producto-img-styles';
-        st.textContent = `
-            .producto-img-real {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: block;
-                border-radius: inherit;
-                transition: transform 0.4s ease;
+/* ============================================================
+   CONTROLADOR DE VISTA PREVIA RÁPIDA (QUICK VIEW MODAL)
+============================================================ */
+function abrirVistaPrevia(productoId) {
+    const id = parseInt(productoId, 10);
+    const p = CATALOGO_COMPLETO[id] || (PRODUCTOS[id] ? { ...PRODUCTOS[id], id } : null);
+    if (!p) return;
+
+    previewProductoActual = p;
+    previewCantidadActual = 1;
+
+    const overlay = document.getElementById('modalPreviewOverlay');
+    if (!overlay) return;
+
+    // Elementos DOM del modal
+    const imgEl        = document.getElementById('previewImg');
+    const imgFallback  = document.getElementById('previewImgFallback');
+    const badgeWrap    = document.getElementById('previewBadgeWrap');
+    const catEl        = document.getElementById('previewCategoria');
+    const nomEl        = document.getElementById('previewNombre');
+    const estEl        = document.getElementById('previewEstrellas');
+    const ratEl        = document.getElementById('previewRatingText');
+    const preAntEl     = document.getElementById('previewPrecioAntes');
+    const preActEl     = document.getElementById('previewPrecioActual');
+    const uniEl        = document.getElementById('previewUnidad');
+    const descEl       = document.getElementById('previewDescripcion');
+    const tagsList     = document.getElementById('previewTagsList');
+    const cantNum      = document.getElementById('previewCantidadNum');
+    const favBtn       = document.getElementById('btnPreviewFav');
+
+    // Poblado de imagen
+    const rutaImagen = resolverRutaImagen(p.imagen);
+    if (imgEl && imgFallback) {
+        if (rutaImagen) {
+            imgEl.src = rutaImagen;
+            imgEl.alt = p.nombre || '';
+            imgEl.style.display = 'block';
+            imgFallback.style.display = 'none';
+        } else {
+            imgEl.style.display = 'none';
+            imgFallback.style.display = 'flex';
+        }
+    }
+
+    // Badge
+    if (badgeWrap) {
+        badgeWrap.innerHTML = p.badge && p.badge_tipo
+            ? `<span class="preview-badge ${sanitizar(p.badge_tipo)}">${sanitizar(p.badge)}</span>`
+            : '';
+    }
+
+    // Textos y precios
+    if (catEl) catEl.textContent = CATEGORIAS_NOMBRE[p.categoria] || p.categoria || 'Especialidad';
+    if (nomEl) nomEl.textContent = p.nombre || '';
+    if (estEl) estEl.textContent = generarEstrellas(p.rating_valor || 5);
+    if (ratEl) ratEl.textContent = `${p.rating_valor || 4.9} (${p.rating_cantidad || 120} valoraciones)`;
+
+    if (preAntEl) {
+        if (p.precio_antes && parseFloat(p.precio_antes) > parseFloat(p.precio)) {
+            preAntEl.textContent = formatearPrecio(p.precio_antes);
+            preAntEl.style.display = 'inline';
+        } else {
+            preAntEl.textContent = '';
+            preAntEl.style.display = 'none';
+        }
+    }
+
+    if (preActEl) preActEl.textContent = formatearPrecio(p.precio);
+    if (uniEl) uniEl.textContent = p.unidad ? `/ ${p.unidad}` : '';
+    if (descEl) descEl.textContent = p.descripcion || 'Producto artesanal de alta calidad elaborado con los mejores estándares.';
+
+    // Tags y notas sensoriales
+    if (tagsList) {
+        const notas = NOTAS_CATA_POR_CATEGORIA[p.categoria] || ['Especialidad de la Casa', 'Ingredientes de Origen', 'Elaboración Artesanal'];
+        tagsList.innerHTML = notas.map(n => `
+            <span class="preview-tag-item">
+                <i class="fas fa-check" style="font-size:9px;margin-right:5px;color:var(--gold-primary);"></i>${sanitizar(n)}
+            </span>
+        `).join('');
+    }
+
+    // Reset de cantidad a 1
+    if (cantNum) cantNum.textContent = '1';
+
+    // Sincronización de botón de favoritos dentro del modal
+    if (favBtn) {
+        const esFavorito = favoritosActivos.has(id);
+        favBtn.classList.toggle('activo', esFavorito);
+        const icon = favBtn.querySelector('i');
+        if (icon) {
+            icon.classList.toggle('far', !esFavorito);
+            icon.classList.toggle('fas', esFavorito);
+        }
+
+        favBtn.onclick = async function (e) {
+            e.stopPropagation();
+            const eraActivo = favBtn.classList.contains('activo');
+            favBtn.classList.toggle('activo', !eraActivo);
+            if (icon) {
+                icon.classList.toggle('far', eraActivo);
+                icon.classList.toggle('fas', !eraActivo);
             }
-            .producto-card:hover .producto-img-real { transform: scale(1.06); }
-            .producto-img-fallback {
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+
+            const res = await toggleFavoritoServidor(id);
+            if (!res) {
+                favBtn.classList.toggle('activo', eraActivo);
+                if (icon) {
+                    icon.classList.toggle('far', !eraActivo);
+                    icon.classList.toggle('fas', eraActivo);
+                }
+                return;
             }
-        `;
-        document.head.appendChild(st);
+
+            if (res.favorito) {
+                favoritosActivos.add(id);
+                mostrarToast('Guardado en favoritos ❤️', 'fa-heart');
+            } else {
+                favoritosActivos.delete(id);
+                mostrarToast('Eliminado de favoritos', 'fa-heart');
+            }
+
+            // Sincronizar tarjeta correspondiente en el grid principal
+            const cardFav = document.querySelector(`[data-id="${id}"] .btn-favorito`);
+            if (cardFav) {
+                cardFav.classList.toggle('activo', favoritosActivos.has(id));
+                const cardIcon = cardFav.querySelector('i');
+                if (cardIcon) {
+                    cardIcon.classList.toggle('far', !favoritosActivos.has(id));
+                    cardIcon.classList.toggle('fas', favoritosActivos.has(id));
+                }
+            }
+        };
+    }
+
+    overlay.classList.add('activo');
+    document.body.style.overflow = 'hidden';
+}
+
+function cerrarVistaPrevia() {
+    const overlay = document.getElementById('modalPreviewOverlay');
+    if (overlay) {
+        overlay.classList.remove('activo');
+    }
+    document.body.style.overflow = '';
+    previewProductoActual = null;
+    previewCantidadActual = 1;
+}
+
+function cambiarCantidadPreview(delta) {
+    previewCantidadActual += delta;
+    if (previewCantidadActual < 1) previewCantidadActual = 1;
+    if (previewCantidadActual > 50) previewCantidadActual = 50;
+
+    const cantNum = document.getElementById('previewCantidadNum');
+    if (cantNum) cantNum.textContent = previewCantidadActual;
+}
+
+function agregarDesdePreview() {
+    if (!previewProductoActual) return;
+    const id = parseInt(previewProductoActual.id, 10);
+    const cantidad = previewCantidadActual;
+
+    if (carrito[id]) {
+        carrito[id].cantidad += cantidad;
+    } else {
+        carrito[id] = {
+            nombre:  previewProductoActual.nombre,
+            precio:  parseFloat(previewProductoActual.precio) || 0,
+            icono:   previewProductoActual.icono,
+            imagen:  previewProductoActual.imagen,
+            cantidad: cantidad
+        };
+    }
+
+    guardarCarritoLocal();
+    actualizarUI();
+    mostrarToast(`${previewProductoActual.nombre} (${cantidad}) agregado al carrito`, 'fa-bag-shopping');
+
+    // Animación rebote del botón flotante
+    const flotante = document.querySelector('.btn-carrito-flotante');
+    if (flotante) {
+        flotante.classList.remove('bounce');
+        void flotante.offsetWidth;
+        flotante.classList.add('bounce');
+        setTimeout(() => flotante.classList.remove('bounce'), 500);
+    }
+
+    // Feedback visual en el botón del modal
+    const btnPreview = document.getElementById('btnPreviewAgregar');
+    if (btnPreview) {
+        const textoOriginal = btnPreview.innerHTML;
+        btnPreview.innerHTML = '<i class="fas fa-check"></i> <span>¡Agregado con éxito!</span>';
+        btnPreview.style.background = '#2E7D32';
+        btnPreview.style.borderColor = '#2E7D32';
+
+        setTimeout(() => {
+            btnPreview.innerHTML = textoOriginal;
+            btnPreview.style.background = '';
+            btnPreview.style.borderColor = '';
+            cerrarVistaPrevia();
+        }, 850);
     }
 }
+
+// Exponer funciones globales para interactividad inline
+window.abrirVistaPrevia       = abrirVistaPrevia;
+window.cerrarVistaPrevia      = cerrarVistaPrevia;
+window.cambiarCantidadPreview = cambiarCantidadPreview;
+window.agregarDesdePreview    = agregarDesdePreview;
 
 /* Esqueletos de carga */
 function generarEsqueletos(n) {
     const card = `
-        <div class="producto-card visible" style="pointer-events:none;">
+        <div class="producto-card" style="pointer-events:none;">
             <div class="producto-img-wrap" style="background:linear-gradient(90deg,#f0ebe0 25%,#e8e3d8 50%,#f0ebe0 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;"></div>
             <div class="producto-info">
                 <div style="height:10px;border-radius:4px;background:#e8e3d8;margin-bottom:10px;width:50%;"></div>
@@ -374,11 +599,12 @@ function eliminarItem(id) {
     delete carrito[id];
     guardarCarritoLocal();
     actualizarUI();
+    mostrarToast('Producto eliminado', 'fa-trash-alt');
 }
 
 function vaciarCarrito() {
     if (!Object.keys(carrito).length) return;
-    if (!confirm('¿Estás seguro de que quieres vaciar el carrito?')) return;
+    if (!confirm('¿Estás seguro de que deseas vaciar tu carrito de compras?')) return;
     carrito = {};
     guardarCarritoLocal();
     actualizarUI();
@@ -386,22 +612,32 @@ function vaciarCarrito() {
 }
 
 /* ============================================================
-   CARRITO — ACTUALIZACIÓN DE LA INTERFAZ
+   CARRITO — ACTUALIZACIÓN DE LA INTERFAZ & SINCRONIZACIÓN
 ============================================================ */
 function actualizarUI() {
     const ids        = Object.keys(carrito);
-    const totalItems = ids.reduce((s, id) => s + carrito[id].cantidad, 0);
-    const subtotal   = ids.reduce((s, id) => s + carrito[id].precio * carrito[id].cantidad, 0);
+    const totalItems = ids.reduce((s, id) => s + (carrito[id].cantidad || 0), 0);
+    const subtotal   = ids.reduce((s, id) => s + (carrito[id].precio * (carrito[id].cantidad || 0)), 0);
     const META_ENVIO = 150000;
     const envioGratis = subtotal >= META_ENVIO;
     const costoEnvio  = subtotal > 0 ? (envioGratis ? 0 : 12000) : 0;
     const total       = subtotal + costoEnvio;
 
-    const badge = document.getElementById('carritoBadge');
-    if (badge) {
-        badge.textContent = totalItems;
-        badge.classList.toggle('oculto', totalItems === 0);
+    // Badges en botón flotante y navbars
+    const badgeFlotante = document.getElementById('carritoBadge');
+    if (badgeFlotante) {
+        badgeFlotante.textContent = totalItems;
+        badgeFlotante.classList.toggle('oculto', totalItems === 0);
     }
+
+    const badgeDesktop = document.getElementById('nav-badge-desktop');
+    const badgeMobile  = document.getElementById('nav-badge-mobile');
+    [badgeDesktop, badgeMobile].forEach(b => {
+        if (b) {
+            b.textContent = totalItems;
+            b.classList.toggle('oculto', totalItems === 0);
+        }
+    });
 
     const headerCount = document.getElementById('carritoContadorHeader');
     if (headerCount) headerCount.textContent = totalItems === 1 ? '1 artículo' : `${totalItems} artículos`;
@@ -439,28 +675,32 @@ function actualizarUI() {
     }
 
     if (elVacio)  elVacio.style.display  = 'none';
-    if (elLista)  elLista.style.display  = 'block';
-    if (elFooter) elFooter.style.display = 'block';
+    if (elLista)  elLista.style.display  = 'flex';
+    if (elFooter) elFooter.style.display = 'flex';
 
     if (elLista) {
         elLista.innerHTML = ids.map(id => {
             const item = carrito[id];
-            const miniatura = item.imagen
-                ? `<img src="../${sanitizar(item.imagen)}" alt="${sanitizar(item.nombre)}"
-                        style="width:100%;height:100%;object-fit:cover;border-radius:10px;">`
+            const rutaImg = resolverRutaImagen(item.imagen);
+            const miniatura = rutaImg
+                ? `<img src="${sanitizar(rutaImg)}" alt="${sanitizar(item.nombre)}"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                   <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;">
+                       <i class="fas ${sanitizar(item.icono || 'fa-mug-hot')}"></i>
+                   </div>`
                 : `<i class="fas ${sanitizar(item.icono || 'fa-mug-hot')}"></i>`;
 
             return `
             <div class="carrito-item" id="ci${id}">
                 <div class="carrito-item-img">${miniatura}</div>
                 <div class="carrito-item-info">
-                    <div class="carrito-item-nombre">${sanitizar(item.nombre)}</div>
+                    <div class="carrito-item-nombre" title="${sanitizar(item.nombre)}">${sanitizar(item.nombre)}</div>
                     <div class="carrito-item-precio">${formatearPrecio(item.precio)}</div>
                     <div class="carrito-item-controles">
                         <button class="btn-cantidad" onclick="cambiarCantidad(${id},-1)" aria-label="Reducir">−</button>
                         <span class="cantidad-num">${item.cantidad}</span>
                         <button class="btn-cantidad" onclick="cambiarCantidad(${id},1)" aria-label="Aumentar">+</button>
-                        <button class="btn-eliminar-item" onclick="eliminarItem(${id})" aria-label="Eliminar">
+                        <button class="btn-eliminar-item" onclick="eliminarItem(${id})" aria-label="Eliminar" title="Eliminar producto">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </div>
@@ -483,32 +723,48 @@ function actualizarUI() {
 function toggleCarrito() {
     const drawer = document.getElementById('carritoDrawer');
     if (!drawer) return;
-    drawer.classList.contains('abierto') ? cerrarCarrito() : abrirCarrito();
+    const estaAbierto = drawer.classList.contains('abierto') || drawer.classList.contains('open');
+    estaAbierto ? cerrarCarrito() : abrirCarrito();
 }
 
 function abrirCarrito() {
-    document.getElementById('carritoDrawer')?.classList.add('abierto');
-    document.getElementById('carritoOverlay')?.classList.add('visible');
+    const drawer  = document.getElementById('carritoDrawer');
+    const overlay = document.getElementById('carritoOverlay');
+    if (drawer) {
+        drawer.classList.add('abierto', 'open');
+    }
+    if (overlay) {
+        overlay.classList.add('visible', 'active');
+    }
     document.body.style.overflow = 'hidden';
 }
 
 function cerrarCarrito() {
-    document.getElementById('carritoDrawer')?.classList.remove('abierto');
-    document.getElementById('carritoOverlay')?.classList.remove('visible');
+    const drawer  = document.getElementById('carritoDrawer');
+    const overlay = document.getElementById('carritoOverlay');
+    if (drawer) {
+        drawer.classList.remove('abierto', 'open');
+    }
+    if (overlay) {
+        overlay.classList.remove('visible', 'active');
+    }
     document.body.style.overflow = '';
 }
 
 /* ============================================================
-   TOAST
+   TOAST NOTIFICACIONES
 ============================================================ */
 function mostrarToast(mensaje, icono = 'fa-check') {
     const contenedor = document.getElementById('toastContainer');
     if (!contenedor) return;
     const toast = document.createElement('div');
     toast.className = 'toast-notif';
-    toast.innerHTML = `<i class="fas ${sanitizar(icono)}"></i> ${sanitizar(mensaje)}`;
+    toast.innerHTML = `<i class="fas ${sanitizar(icono)}"></i> <span>${sanitizar(mensaje)}</span>`;
     contenedor.appendChild(toast);
-    setTimeout(() => { toast.classList.add('saliendo'); setTimeout(() => toast.remove(), 250); }, 2500);
+    setTimeout(() => {
+        toast.classList.add('saliendo');
+        setTimeout(() => toast.remove(), 300);
+    }, 2600);
 }
 
 /* ============================================================
@@ -521,7 +777,7 @@ function abrirCheckout() {
     }
 
     const ids        = Object.keys(carrito);
-    const subtotal   = ids.reduce((s, id) => s + carrito[id].precio * carrito[id].cantidad, 0);
+    const subtotal   = ids.reduce((s, id) => s + (carrito[id].precio * carrito[id].cantidad), 0);
     const envioGratis = subtotal >= 150000;
     const costoEnvio  = envioGratis ? 0 : 12000;
     const total       = subtotal + costoEnvio;
@@ -529,32 +785,50 @@ function abrirCheckout() {
     const modalResumen = document.getElementById('modalResumen');
     if (modalResumen) {
         modalResumen.innerHTML = `
-            <div class="resumen-titulo-modal">Resumen del pedido</div>
+            <div class="resumen-titulo-modal">Resumen de tu pedido</div>
             ${ids.map(id => `
             <div class="resumen-item-modal">
                 <span>${sanitizar(carrito[id].nombre)} × ${carrito[id].cantidad}</span>
                 <span>${formatearPrecio(carrito[id].precio * carrito[id].cantidad)}</span>
             </div>`).join('')}
             <div class="resumen-item-modal">
-                <span>Envío</span>
-                <span>${envioGratis ? 'Gratis' : formatearPrecio(costoEnvio)}</span>
+                <span>Envío ${envioGratis ? 'VIP' : 'Nacional'}</span>
+                <span style="${envioGratis ? 'color:#27ae60;font-weight:700;' : ''}">${envioGratis ? 'Gratis 🎉' : formatearPrecio(costoEnvio)}</span>
             </div>
             <div class="resumen-total-modal">
-                <span>Total</span>
-                <span>${formatearPrecio(total)}</span>
+                <span>Total a pagar</span>
+                <span style="color:#C6A76B;font-size:16px;">${formatearPrecio(total)}</span>
             </div>`;
     }
+
+    // Autocompletar datos del usuario si ha iniciado sesión en Firebase / sessionStorage
+    try {
+        const userSaved = JSON.parse(sessionStorage.getItem('cc_usuario') || 'null');
+        if (userSaved) {
+            const nombreInput   = document.getElementById('co-nombre');
+            const apellidoInput = document.getElementById('co-apellido');
+            const emailInput    = document.getElementById('co-email');
+            if (emailInput && !emailInput.value && userSaved.email) emailInput.value = userSaved.email;
+            if (nombreInput && !nombreInput.value && userSaved.nombre) {
+                const partes = userSaved.nombre.trim().split(' ');
+                nombreInput.value = partes[0] || '';
+                if (apellidoInput && !apellidoInput.value && partes.length > 1) {
+                    apellidoInput.value = partes.slice(1).join(' ');
+                }
+            }
+        }
+    } catch (_) {}
 
     document.getElementById('modalFormContent')?.classList.remove('oculto');
     document.getElementById('modalSuccess')?.classList.remove('visible');
     limpiarErrores();
-    document.getElementById('modalCheckoutOverlay')?.classList.add('visible');
+    document.getElementById('modalCheckoutOverlay')?.classList.add('visible', 'active');
     cerrarCarrito();
     document.body.style.overflow = 'hidden';
 }
 
 function cerrarCheckout() {
-    document.getElementById('modalCheckoutOverlay')?.classList.remove('visible');
+    document.getElementById('modalCheckoutOverlay')?.classList.remove('visible', 'active');
     document.body.style.overflow = '';
 }
 
@@ -570,11 +844,16 @@ function cerrarTodo() {
 ============================================================ */
 function limpiarErrores() {
     document.querySelectorAll('.form-error-msg').forEach(el => el.classList.remove('visible'));
+    document.querySelectorAll('.form-grupo').forEach(el => el.classList.remove('error'));
     document.querySelectorAll('.form-grupo input, .form-grupo select').forEach(el => el.classList.remove('error'));
 }
 
 function marcarError(campoId, errorId) {
-    document.getElementById(campoId)?.classList.add('error');
+    const campo = document.getElementById(campoId);
+    if (campo) {
+        campo.classList.add('error');
+        campo.closest('.form-grupo')?.classList.add('error');
+    }
     document.getElementById(errorId)?.classList.add('visible');
 }
 
@@ -609,7 +888,7 @@ function validarFormulario() {
 ============================================================ */
 async function enviarPedidoAlServidor(datosCliente, btn) {
     const ids        = Object.keys(carrito);
-    const subtotal   = ids.reduce((s, id) => s + carrito[id].precio * carrito[id].cantidad, 0);
+    const subtotal   = ids.reduce((s, id) => s + (carrito[id].precio * carrito[id].cantidad), 0);
     const envioGratis = subtotal >= 150000;
     const costoEnvio  = envioGratis ? 0 : 12000;
     const total       = subtotal + costoEnvio;
@@ -650,7 +929,13 @@ async function enviarPedidoAlServidor(datosCliente, btn) {
         }
 
         console.log('[CoffeeCol] ✅ Pedido guardado correctamente. ID:', data.pedido_id);
-        mostrarExitoCheckout(btn);
+
+        // Vaciar el carrito en memoria y almacenamiento local
+        carrito = {};
+        guardarCarritoLocal();
+        actualizarUI();
+
+        mostrarExitoCheckout(btn, data.pedido_id, data);
 
     } catch (err) {
         console.error('[CoffeeCol] Error al guardar pedido:', err);
@@ -660,52 +945,106 @@ async function enviarPedidoAlServidor(datosCliente, btn) {
     }
 }
 
-function mostrarExitoCheckout(btn) {
+function mostrarExitoCheckout(btn, pedidoId, data = null) {
     document.getElementById('modalFormContent')?.classList.add('oculto');
-    document.getElementById('modalSuccess')?.classList.add('visible');
+    const modalSuccess = document.getElementById('modalSuccess');
+    if (modalSuccess) {
+        modalSuccess.classList.add('visible');
+        const msgEl = modalSuccess.querySelector('.success-msg');
+        const numPed = data?.numero_pedido || `#TC-${pedidoId}`;
+        const ptsHTML = (data && data.puntos_ganados > 0)
+            ? `<div style="margin:14px 0 6px;padding:10px 14px;background:#fdf5ee;border:1px solid rgba(196,149,106,0.4);border-radius:10px;display:flex;align-items:center;justify-content:center;gap:8px;color:#28040A;font-weight:600;font-size:13px;">
+                <i class="fas fa-star" style="color:#c4956a"></i> ¡Has acumulado <strong>+${data.puntos_ganados} puntos Tantico</strong> con este pedido!
+               </div>`
+            : '';
+
+        if (msgEl && pedidoId) {
+            msgEl.innerHTML = `
+                Hemos registrado tu pedido con el código <strong>${sanitizar(numPed)}</strong>. En breve te contactaremos a tu WhatsApp o correo registrado para coordinar los detalles del despacho.
+                ${ptsHTML}
+                <br><strong>¡Gracias por apoyar el café especial del Huila!</strong>
+            `;
+        }
+    }
     btn.disabled = false;
     btn.innerHTML = '<i class="fas fa-check-circle"></i> Confirmar pedido';
 }
 
 /* ============================================================
-   FILTROS DE CATEGORÍA
+   FILTROS DE CATEGORÍA — Transición Ultra Fluida
 ============================================================ */
 function inicializarFiltros() {
     const botones  = document.querySelectorAll('.filtro-btn');
     const contador = document.getElementById('contadorProductos');
+    const grid     = document.getElementById('productosGrid');
+    if (!botones.length) return;
 
-    botones.forEach(btn => btn.replaceWith(btn.cloneNode(true)));
-
-    document.querySelectorAll('.filtro-btn').forEach(btn => {
+    botones.forEach(btn => {
         btn.addEventListener('click', function () {
-            document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+            if (this.classList.contains('active')) return;
+
+            botones.forEach(b => b.classList.remove('active'));
             this.classList.add('active');
 
-            const cat = this.dataset.categoria;
-            let visibles = 0;
-            let staggerIndex = 0;
+            const catSeleccionada = this.dataset.categoria;
+            const todasCards = Array.from(document.querySelectorAll('.producto-card'));
 
-            document.querySelectorAll('.producto-card').forEach(card => {
-                const coincide = cat === 'todos' || card.dataset.categoria === cat;
-                if (!coincide) {
-                    card.classList.add('filtrado');
-                    card.classList.remove('visible');
-                    card.style.position   = 'absolute';
-                    card.style.visibility = 'hidden';
-                } else {
-                    card.classList.remove('filtrado');
-                    card.style.position   = '';
-                    card.style.visibility = '';
-                    card.classList.remove('visible');
-                    setTimeout(() => {
-                        card.classList.add('visible');
-                    }, staggerIndex * 50);
-                    staggerIndex++;
-                    visibles++;
+            // 1. Desvanecer suavemente todas las tarjetas que están visibles
+            todasCards.forEach(card => card.classList.add('anim-salida'));
+
+            setTimeout(() => {
+                let visibles = 0;
+                let staggerIndex = 0;
+
+                todasCards.forEach(card => {
+                    const cardCat = card.dataset.categoria;
+                    const coincide = catSeleccionada === 'todos'
+                        || (catSeleccionada === 'cafes-todos' && CATEGORIAS_CAFES.includes(cardCat))
+                        || cardCat === catSeleccionada;
+
+                    card.classList.remove('anim-salida', 'anim-entrada');
+
+                    if (!coincide) {
+                        card.classList.add('filtrado-oculto');
+                    } else {
+                        card.classList.remove('filtrado-oculto');
+                        card.style.animationDelay = `${staggerIndex * 35}ms`;
+                        card.classList.add('anim-entrada');
+                        staggerIndex++;
+                        visibles++;
+                    }
+                });
+
+                // Manejo de estado vacío en la categoría
+                const emptyExistente = document.getElementById('catalogoEmptyState');
+                if (visibles === 0) {
+                    if (!emptyExistente && grid) {
+                        const emptyDiv = document.createElement('div');
+                        emptyDiv.id = 'catalogoEmptyState';
+                        emptyDiv.className = 'catalogo-vacio anim-entrada';
+                        emptyDiv.innerHTML = `
+                            <i class="fas fa-mug-hot"></i>
+                            <strong>No hay productos en esta categoría actualmente</strong>
+                            <p style="margin:0;font-size:13.5px;color:#888;">Te invitamos a explorar nuestras otras variedades y especialidades.</p>
+                        `;
+                        grid.appendChild(emptyDiv);
+                    }
+                } else if (emptyExistente) {
+                    emptyExistente.remove();
                 }
-            });
 
-            if (contador) contador.textContent = `${visibles} producto${visibles !== 1 ? 's' : ''}`;
+                // Actualizar contador con texto editorial elegante
+                if (contador) {
+                    const nombreCat = CATEGORIAS_NOMBRE[catSeleccionada] || 'especialidad';
+                    if (catSeleccionada === 'todos') {
+                        contador.textContent = `Mostrando ${visibles} productos & especialidades`;
+                    } else if (catSeleccionada === 'cafes-todos') {
+                        contador.textContent = `Mostrando ${visibles} cafés de especialidad`;
+                    } else {
+                        contador.textContent = `Mostrando ${visibles} producto${visibles !== 1 ? 's' : ''} en ${nombreCat}`;
+                    }
+                }
+            }, 160);
         });
     });
 }
@@ -714,8 +1053,6 @@ function inicializarFiltros() {
    FAVORITOS — INICIALIZAR BOTONES EN LAS TARJETAS
 ============================================================ */
 function inicializarFavoritos() {
-    document.querySelectorAll('.btn-favorito').forEach(btn => btn.replaceWith(btn.cloneNode(true)));
-
     document.querySelectorAll('.btn-favorito').forEach(btn => {
         const card       = btn.closest('.producto-card');
         const productoId = card ? parseInt(card.dataset.id, 10) : null;
@@ -730,7 +1067,8 @@ function inicializarFavoritos() {
             }
         }
 
-        btn.addEventListener('click', async function () {
+        btn.addEventListener('click', async function (e) {
+            e.stopPropagation();
             if (!productoId) return;
 
             const icono    = this.querySelector('i');
@@ -767,13 +1105,13 @@ function inicializarFavoritos() {
 }
 
 /* ============================================================
-   ANIMACIÓN DE ENTRADA
+   ANIMACIÓN DE ENTRADA INICIAL
 ============================================================ */
 function inicializarAnimaciones() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry, idx) => {
             if (entry.isIntersecting) {
-                setTimeout(() => entry.target.classList.add('visible'), idx * 75);
+                setTimeout(() => entry.target.classList.add('anim-entrada'), idx * 50);
                 observer.unobserve(entry.target);
             }
         });
@@ -790,6 +1128,7 @@ document.addEventListener('DOMContentLoaded', function () {
     cargarCarritoLocal();
     cargarProductos();
 
+    // Event listener para checkout form
     const formCheckout = document.getElementById('formCheckout');
     if (formCheckout) {
         formCheckout.addEventListener('submit', async function (e) {
@@ -797,8 +1136,10 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!validarFormulario()) return;
 
             const btn = this.querySelector('.btn-confirmar-modal');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando…';
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando pedido…';
+            }
 
             const datosCliente = {
                 nombre:    document.getElementById('co-nombre')?.value.trim(),
@@ -814,17 +1155,31 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Cierre al hacer click en overlays
+    document.getElementById('modalPreviewOverlay')?.addEventListener('click', function (e) {
+        if (e.target === this) cerrarVistaPrevia();
+    });
+
     document.getElementById('modalCheckoutOverlay')?.addEventListener('click', function (e) {
         if (e.target === this) cerrarCheckout();
     });
 
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') { cerrarCheckout(); cerrarCarrito(); }
+    document.getElementById('carritoOverlay')?.addEventListener('click', function (e) {
+        if (e.target === this) cerrarCarrito();
     });
-});
 
-// Al final de document.addEventListener('DOMContentLoaded', function() { ... })
-if (sessionStorage.getItem('abrir_carrito') === '1') {
-    sessionStorage.removeItem('abrir_carrito');
-    setTimeout(() => abrirCarrito(), 600);
-}
+    // Tecla Escape para cerrar modales/drawer
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            cerrarVistaPrevia();
+            cerrarCheckout();
+            cerrarCarrito();
+        }
+    });
+
+    // Abrir carrito si se vino redirigido desde otra página con sessionStorage
+    if (sessionStorage.getItem('abrir_carrito') === '1') {
+        sessionStorage.removeItem('abrir_carrito');
+        setTimeout(() => abrirCarrito(), 500);
+    }
+});

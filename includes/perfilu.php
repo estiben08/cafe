@@ -2,33 +2,20 @@
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 ini_set('display_errors', 0);
 
-require 'C:/xampp/htdocs/cafe/vendor/autoload.php';
+require_once __DIR__ . '/auth_helper.php';
 
-$token = $_COOKIE['fb_token'] ?? '';
-if (!$token) {
-    header('Location: /cafe/includes/loginu.php');
+$user = getAuthenticatedUser();
+if (!$user || empty($user['uid'])) {
+    header('Location: /cafe/includes/loginu.php?error=' . urlencode('Sesión expirada o no iniciada.'));
     exit;
 }
 
-try {
-    $firebase = (new Kreait\Firebase\Factory)
-        ->withServiceAccount('C:/xampp/htdocs/cafetantico-firebase-adminsdk-fbsvc-a449960bbb.json');
-    $fbAuth         = $firebase->createAuth();
-    $verified       = $fbAuth->verifyIdToken($token);
-    $claims         = $verified->claims();
-    $firebase_uid   = $claims->get('sub');
-    $fb_email       = $claims->get('email') ?? '';
-    $fb_nombre      = $claims->get('name')  ?? explode('@', $fb_email)[0];
-    $fb_foto        = $claims->get('picture') ?? '';
-} catch (Exception $e) {
-    header('Location: /cafe/includes/loginu.php?error=' . urlencode('Sesión expirada.'));
-    exit;
-}
+$firebase_uid = $user['uid'];
+$fb_email     = $user['email'] ?? '';
+$fb_nombre    = $user['nombre'] ?? explode('@', $fb_email)[0];
+$fb_foto      = $user['foto'] ?? '';
 
-$pdo = new PDO('mysql:host=127.0.0.1;dbname=coffeecol;charset=utf8mb4', 'root', '', [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-]);
+$pdo = getCafePdo();
 
 $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE firebase_uid = ?");
 $stmt->execute([$firebase_uid]);
@@ -146,7 +133,9 @@ $tipos_icono = [
   <title>Mi perfil — Tantico</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
   <link rel="icon" href="/cafe/assets/imagenes/banner1.png" type="image/x-icon">
   <style>
     :root {
@@ -199,7 +188,7 @@ $tipos_icono = [
     .avatar-lg { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 600; color: var(--crema); border: 2.5px solid rgba(252,246,219,0.2); flex-shrink: 0; overflow: hidden; background: var(--vino2); }
     .avatar-lg img { width: 100%; height: 100%; object-fit: cover; }
     .hero-info { flex: 1; min-width: 0; }
-    .hero-name  { font-size: 22px; font-weight: 600; color: var(--crema); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hero-name  { font-family: 'Goudy Bookletter 1911', 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: 400; color: var(--crema); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.3px; }
     .hero-email { font-size: 13px; color: rgba(252,246,219,0.45); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .hero-since { font-size: 11px; color: rgba(252,246,219,0.3); margin-top: 5px; display: flex; align-items: center; gap: 5px; }
     .badge-nivel { background: rgba(196,149,106,0.18); border: 0.5px solid rgba(196,149,106,0.35); color: var(--latte); font-size: 11px; padding: 4px 12px; border-radius: 20px; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
@@ -210,17 +199,17 @@ $tipos_icono = [
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
     .stat-card { background: #fff; border: 0.5px solid #e8ddd5; border-radius: 12px; padding: 16px; }
     .stat-icon { font-size: 20px; color: var(--latte); margin-bottom: 8px; }
-    .stat-val  { font-size: 24px; font-weight: 600; color: #1a1a1a; }
+    .stat-val  { font-family: 'Goudy Bookletter 1911', 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 400; color: #1a1a1a; }
     .stat-lbl  { font-size: 11px; color: #888; margin-top: 2px; }
 
-    .sec-title { font-size: 14px; font-weight: 600; color: #1a1a1a; margin-bottom: 12px; display: flex; align-items: center; gap: 7px; }
+    .sec-title { font-family: 'Goudy Bookletter 1911', 'Playfair Display', Georgia, serif; font-size: 17px; font-weight: 400; color: #1a1a1a; margin-bottom: 12px; display: flex; align-items: center; gap: 7px; letter-spacing: 0.2px; }
     .sec-title i { font-size: 16px; color: var(--latte); }
 
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .card-box { background: #fff; border: 0.5px solid #e8ddd5; border-radius: 12px; padding: 18px; }
 
     /* ══ PUNTOS ══ */
-    .pts-big  { font-size: 34px; font-weight: 600; color: #1a1a1a; }
+    .pts-big  { font-family: 'Goudy Bookletter 1911', 'Playfair Display', Georgia, serif; font-size: 38px; font-weight: 400; color: #1a1a1a; line-height: 1; }
     .pts-sub  { font-size: 12px; color: #888; margin-top: 2px; }
     .pts-top  { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
     .progress-wrap { margin-bottom: 10px; }

@@ -1,30 +1,25 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tantico - Sobre Nosotros</title>
+    <title>Nosotros — Tantico Café de Especialidad</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Enlace para usar Font Awesome desde CDN -->
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&family=Dancing+Script:wght@400;700&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="icon" href="../assets/imagenes/banner1.png" type="image/x-icon">
 
     <!-- CSS personalizado -->
+    <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../csss/nosotross.css">
 </head>
 
@@ -32,141 +27,262 @@
 
     <?php include 'encabezado.php'; ?>
 
-    <!-- Sección Servicios -->
-    <section id="servicios" class="seccion-servicios">
-        <!-- Imagen de fondo -->
-        <img src="../assets/imagenes/banner14.jpg" alt="Banner Servicios" class="bg-servicios">
-
-        <!-- Capa oscura encima de la imagen -->
-        <div class="overlay-servicios"></div>
-
-        <!-- Contenido centrado -->
-        <div class="contenedor-servicios">
-            <div class="titulo-box">
-                <h2 class="titulo-servicios">Nosotros</h2>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección Quiénes Somos -->
-    <section class="quienes-somos">
-        <div class="contenido">
-            <h1>Quiénes somos</h1>
-            <h2>Más que una cafetería, una experiencia que nace en el corazón del Huila.</h2>
-            <h3>Orgullosamente huilenses, apasionadamente cafeteros.</h3>
-            <p>En Tantico rendimos homenaje a la tierra que produce algunos de los cafés más reconocidos de Colombia y del mundo.</p>
-            <p>Desde Neiva, trabajamos con café de origen huilense cuidadosamente seleccionado para ofrecer sabores auténticos, aromas inolvidables y una experiencia que refleja la riqueza de nuestra región.</p>
-            <p>Creemos que cada taza debe contar una historia. Por eso unimos tradición, calidad y hospitalidad para compartir con nuestros visitantes la esencia del Huila en cada sorbo.</p>
-        </div>
-        <div class="decoracion-cafe"></div>
-    </section>
-
-    <section class="coffee-section">
-    <h1 class="main-title">Nuestro propósito</h1>
-
-    <!-- Sección 1: imagen a la derecha -->
-    <div class="content-section">
-        <div class="text-content">
-            <h2 class="section-subtitle">
-                Celebramos el café huilense:<br>
-                <span class="highlight-text">auténtico, memorable y lleno de tradición.</span>
-            </h2>
-            <p class="section-text">
-                Queremos que cada taza se disfrute con la misma pasión y dedicación con la que es cultivada.
-                Que nuestros caficultores sean protagonistas, compartiendo la historia, el esfuerzo y la calidad
-                excepcional que hacen del café del Huila un referente mundial.
+    <!-- ======================================================= -->
+    <!-- 1. HERO EDITORIAL                                       -->
+    <!-- ======================================================= -->
+    <section class="nosotros-hero">
+        <img src="../assets/imagenes/baner1a.jpg" alt="Cafetales del Huila" class="nosotros-hero-bg">
+        <div class="nosotros-hero-overlay"></div>
+        <div class="nosotros-hero-content">
+            <span class="hero-pill-badge">
+                <i class="fa-solid fa-gem"></i> HISTORIA &amp; FILOSOFÍA · NEIVA, HUILA
+            </span>
+            <h1 class="nosotros-hero-title">
+                El Alma del Huila<br><em>en Cada Taza</em>
+            </h1>
+            <p class="nosotros-hero-lead">
+                Rendimos tributo a la tierra cafetera más premiada de Colombia. Seleccionamos cosechas de altura, tostamos con devoción artesanal y creamos momentos memorables en torno al café de especialidad.
             </p>
-        </div>
-        <div class="image-container-1">
-            <img src="../assets/imagenes/hui1.png" alt="Taza de café roja">
-        </div>
-    </div>
-
-    <!-- Sección 2: imagen a la izquierda -->
-    <div class="content-section reverse">
-        <div class="image-container-2">
-            <img src="../assets/imagenes/hui2.png" alt="Café huilense">
-        </div>
-        <div class="text-content">
-            <h2 class="tech-title">Compartimos el orgullo del Huila</h2>
-            <span class="tech-highlight">tradición, calidad y<br><strong>origen.</strong></span>
-            <p class="section-text anchos">
-                Seleccionamos cuidadosamente cafés provenientes de distintas zonas del departamento para ofrecer
-                una experiencia auténtica en cada preparación. Nuestro equipo trabaja con pasión y compromiso para
-                resaltar los aromas, sabores y características únicas que distinguen al café huilense y lo convierten
-                en un símbolo de nuestra región.
-            </p>
-        </div>
-    </div>
-</section>
-
-    <div class="footer-wrapper">
-        <footer class="footer-coffeecol">
-            <div class="footer-content">
-                <img src="../assets/imagenes/tantico.png" alt="Logo de Tantico" class="footer-logo" />
-
-                <nav class="footer-nav">
-                    <a href="../index.php">Inicio</a>
-                    <a href="nosotros.php">Nosotros</a>
-                    <a href="servicios.php">Productos</a>
-                    <a href="contacto.php">Contáctanos</a>
-                </nav>
-
-                <div class="footer-social">
-                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <div class="hero-specs-row">
+                <div class="hero-spec-item">
+                    <i class="fa-solid fa-mountain"></i> 1.750m Altura Promedio
+                </div>
+                <div class="hero-spec-item">
+                    <i class="fa-solid fa-award"></i> 86.5+ SCA Score
+                </div>
+                <div class="hero-spec-item">
+                    <i class="fa-solid fa-seedling"></i> 100% Origen Huila
                 </div>
             </div>
-        </footer>
-    </div>
+        </div>
+    </section>
 
-<script>
-    let ticking = false;
-    const tieneVideo = document.querySelector('.video-fondo') !== null;
+    <!-- ======================================================= -->
+    <!-- 2. MANIFIESTO & MÉTRICAS SPLIT                          -->
+    <!-- ======================================================= -->
+    <section class="seccion-manifiesto">
+        <div class="manifiesto-grid">
+            <div class="manifiesto-left">
+                <span class="editorial-tag">Nuestra Esencia</span>
+                <h2 class="manifiesto-quote">
+                    "Creemos que cada taza debe ser una celebración de origen, esfuerzo y maestría."
+                </h2>
+                <p class="manifiesto-body">
+                    En el corazón de Neiva, <strong>Tantico</strong> nace con una misión clara: conectar el trabajo silencioso y apasionado de las familias caficultoras del Huila con quienes buscan una experiencia sensorial irrepetible.
+                </p>
+                <p class="manifiesto-body">
+                    No comercializamos solo café; compartimos el fruto de <strong>suelos volcánicos</strong>, microclimas privilegiados del Macizo Colombiano y procesos de fermentación cuidados grano a grano.
+                </p>
+                <div class="firma-wrapper">
+                    <div class="firma-icono">
+                        <i class="fa-solid fa-feather-pointed"></i>
+                    </div>
+                    <div class="firma-info">
+                        <h5>Tantico Café de Especialidad</h5>
+                        <span>Pasión Huilense desde Neiva</span>
+                    </div>
+                </div>
+            </div>
 
-    function updateScrollPosition() {
-        const scrolled = document.body.scrollTop || window.pageYOffset;
-        const header = document.querySelector('.navbar-custom');
-        if (!header) return;
+            <!-- Bento Card de Métricas -->
+            <div class="metrics-card">
+                <div class="metrics-header">
+                    <span class="metrics-header-title">Compromiso en Cifras</span>
+                    <i class="fa-solid fa-certificate metrics-header-icon"></i>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <span class="metric-num">1.750m+</span>
+                        <span class="metric-label">Altitud Promedio</span>
+                        <span class="metric-desc">Pitalito, San Agustín, Garzón y La Plata</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-num">86.5+</span>
+                        <span class="metric-label">Puntaje SCA</span>
+                        <span class="metric-desc">Taza de excelencia y notas complejas</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-num">100%</span>
+                        <span class="metric-label">Trato Directo</span>
+                        <span class="metric-desc">Comercio justo con familias caficultoras</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-num">0</span>
+                        <span class="metric-label">Intermediarios</span>
+                        <span class="metric-desc">De la finca a nuestra tostaduría en Neiva</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        if (scrolled > 50) {
-            header.style.backdropFilter = 'blur(25px)';
-            header.style.background = 'rgba(0, 0, 0, 0.55)';
-            header.style.borderRadius = '11px'; // ✅ siempre 11px
-        } else {
-            header.style.backdropFilter = 'blur(20px)';
-            header.style.background = tieneVideo ? 'transparent' : 'rgba(0, 0, 0, 0.0)';
-            header.style.borderRadius = '11px'; // ✅ siempre 11px
-        }
+    <!-- ======================================================= -->
+    <!-- 3. LOS 4 PILARES DE TANTICO (BENTO GRID)                -->
+    <!-- ======================================================= -->
+    <section class="seccion-pilares">
+        <div class="pilares-container">
+            <div class="seccion-header-center">
+                <span class="editorial-tag" style="justify-content: center;">Filosofía de Origen</span>
+                <h2 class="seccion-title">Los Cuatro Pilares que Definen Nuestra Taza</h2>
+                <p class="seccion-subtext">
+                    Cada paso en nuestra cadena está diseñado para honrar la riqueza botánica del Huila y ofrecer una taza inolvidable.
+                </p>
+            </div>
 
-        // ✅ Quitar fondo del contenedor de íconos para que no se duplique
-        const socialIcons = document.querySelector('.social-icons');
-        if (socialIcons) {
-            socialIcons.style.background = 'transparent';
-            socialIcons.style.backdropFilter = 'none';
-        }
+            <div class="pilares-bento-grid">
+                <!-- Pilar 1 -->
+                <div class="pilar-card">
+                    <div>
+                        <div class="pilar-top">
+                            <div class="pilar-icon-wrap">
+                                <i class="fa-solid fa-mountain-sun"></i>
+                            </div>
+                            <span class="pilar-step-num">01 · TERROIR</span>
+                        </div>
+                        <h3 class="pilar-title">Suelos Volcánicos &amp; Altura</h3>
+                        <p class="pilar-desc">
+                            Nuestros lotes provienen de microclimas únicos en el Macizo Colombiano entre 1.500 y 1.950 msnm, confiriendo una acidez brillante, cuerpo sedoso y notas florales distintivas.
+                        </p>
+                    </div>
+                    <div class="pilar-badge-list">
+                        <span class="pilar-badge">Pitalito</span>
+                        <span class="pilar-badge">San Agustín</span>
+                        <span class="pilar-badge">Garzón</span>
+                        <span class="pilar-badge">La Plata</span>
+                    </div>
+                </div>
 
-        ticking = false;
-    }
+                <!-- Pilar 2 -->
+                <div class="pilar-card">
+                    <div>
+                        <div class="pilar-top">
+                            <div class="pilar-icon-wrap">
+                                <i class="fa-solid fa-handshake-angle"></i>
+                            </div>
+                            <span class="pilar-step-num">02 · COMERCIO DIRECTO</span>
+                        </div>
+                        <h3 class="pilar-title">Comercio Ético &amp; Justo</h3>
+                        <p class="pilar-desc">
+                            Establecemos relaciones de largo plazo con los caficultores locales, pagando precios por encima del mercado internacional para recompensar cosechas selectas y sostenibles.
+                        </p>
+                    </div>
+                    <div class="pilar-badge-list">
+                        <span class="pilar-badge">Trato Directo</span>
+                        <span class="pilar-badge">Trazabilidad Total</span>
+                        <span class="pilar-badge">Impacto Social</span>
+                    </div>
+                </div>
 
-    function requestTick() {
-        if (!ticking) {
-            requestAnimationFrame(updateScrollPosition);
-            ticking = true;
-        }
-    }
+                <!-- Pilar 3 -->
+                <div class="pilar-card">
+                    <div>
+                        <div class="pilar-top">
+                            <div class="pilar-icon-wrap">
+                                <i class="fa-solid fa-fire-burner"></i>
+                            </div>
+                            <span class="pilar-step-num">03 · TOSTIÓN ARTESANAL</span>
+                        </div>
+                        <h3 class="pilar-title">Curvas de Tueste en Neiva</h3>
+                        <p class="pilar-desc">
+                            Tostamos semanalmente en pequeños baches con curvas térmicas personalizadas para resaltar la dulzura de la panela, la caña de azúcar y los matices cítricos y achocolatados.
+                        </p>
+                    </div>
+                    <div class="pilar-badge-list">
+                        <span class="pilar-badge">Tueste Medio</span>
+                        <span class="pilar-badge">Lotes Pequeños</span>
+                        <span class="pilar-badge">Frescura Garantizada</span>
+                    </div>
+                </div>
 
-    document.body.addEventListener('scroll', requestTick);
-    window.addEventListener('scroll', requestTick);
+                <!-- Pilar 4 -->
+                <div class="pilar-card">
+                    <div>
+                        <div class="pilar-top">
+                            <div class="pilar-icon-wrap">
+                                <i class="fa-solid fa-mug-hot"></i>
+                            </div>
+                            <span class="pilar-step-num">04 · BARISMO</span>
+                        </div>
+                        <h3 class="pilar-title">Experiencia Sensorial en Barra</h3>
+                        <p class="pilar-desc">
+                            Nuestros baristas dominan métodos de extracción artesanal (V60, Chemex, Aeropress, Prensa Francesa y Espresso) calibrando molienda, agua y ratio para una taza perfecta.
+                        </p>
+                    </div>
+                    <div class="pilar-badge-list">
+                        <span class="pilar-badge">Métodos Filtrados</span>
+                        <span class="pilar-badge">Espresso Calibrado</span>
+                        <span class="pilar-badge">Catación Guiada</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    // Aplicar estado inicial
-    updateScrollPosition();
-</script>
+    <!-- ======================================================= -->
+    <!-- 4. EL VIAJE DEL CAFÉ (TIMELINE 3 PASOS)                  -->
+    <!-- ======================================================= -->
+    <section class="seccion-viaje">
+        <div class="seccion-header-center">
+            <span class="editorial-tag" style="justify-content: center;">Trazabilidad</span>
+            <h2 class="seccion-title">El Viaje del Grano a tu Taza</h2>
+            <p class="seccion-subtext">
+                El rigor y la paciencia detrás de cada presentación de Tantico.
+            </p>
+        </div>
 
+        <div class="viaje-steps-grid">
+            <div class="viaje-step-card">
+                <span class="viaje-step-number">01</span>
+                <h3 class="viaje-step-title">Cosecha Selectiva en Altura</h3>
+                <p class="viaje-step-text">
+                    Recolección manual únicamente de frutos en estado óptimo de maduración en fincas tradicionales del departamento del Huila.
+                </p>
+            </div>
+            <div class="viaje-step-card">
+                <span class="viaje-step-number">02</span>
+                <h3 class="viaje-step-title">Beneficio &amp; Fermentación</h3>
+                <p class="viaje-step-text">
+                    Procesos Lavado clásico, Honey sedoso y Natural intenso con monitoreo de temperatura y horas de fermentación controlada.
+                </p>
+            </div>
+            <div class="viaje-step-card">
+                <span class="viaje-step-number">03</span>
+                <h3 class="viaje-step-title">Catación SCA &amp; Servicio</h3>
+                <p class="viaje-step-text">
+                    Validación sensorial en mesa de catación y preparación experta en nuestra barra para que vivas el verdadero sabor huilense.
+                </p>
+            </div>
+        </div>
+    </section>
 
+    <!-- ======================================================= -->
+    <!-- 5. LUXURY CTA BANNER                                    -->
+    <!-- ======================================================= -->
+    <section class="seccion-cta-nosotros">
+        <div class="cta-nosotros-card">
+            <span class="cta-tag">Vive la Experiencia Tantico</span>
+            <h2 class="cta-title">El Huila se saborea sorbo a sorbo</h2>
+            <p class="cta-desc">
+                Te invitamos a descubrir nuestras presentaciones de café en grano y molido, o a visitarnos en Neiva para disfrutar de una preparación artesanal única.
+            </p>
+            <div class="cta-actions">
+                <a href="servicios.php" class="btn-cta-gold">
+                    <i class="fa-solid fa-bag-shopping"></i> Explorar Catálogo de Cafés
+                </a>
+                <a href="contacto.php" class="btn-cta-outline">
+                    <i class="fa-solid fa-envelope"></i> Escríbenos
+                </a>
+            </div>
+        </div>
+    </section>
 
+    <!-- ======================================================= -->
+    <!-- ======================================================= -->
+    <!-- 6. FOOTER LUXURY                                        -->
+    <!-- ======================================================= -->
+    <?php include 'footer.php'; ?>
 
-    <!-- Bootstrap JS con Popper (necesario para navbar en móviles) -->
+    <!-- Bootstrap JS con Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

@@ -2,7 +2,7 @@
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 ini_set('display_errors', 0);
 
-require 'C:/xampp/htdocs/cafe/vendor/autoload.php';
+require_once __DIR__ . '/auth_helper.php';
 
 header('Content-Type: application/json');
 
@@ -15,21 +15,23 @@ if (!$token) {
 }
 
 try {
-    $firebase = (new Kreait\Firebase\Factory)
-        ->withServiceAccount('C:/xampp/htdocs/cafetantico-firebase-adminsdk-fbsvc-a449960bbb.json');
-
-    $auth           = $firebase->createAuth();
-    $verified_token = $auth->verifyIdToken($token);
-    $claims         = $verified_token->claims();
-
-        setcookie('fb_token', $token, [
-            'expires'  => 0,               // ← 0 = cookie de sesión, muere al cerrar
-            'path'     => '/cafe',
-            'httponly' => true,
-            'samesite' => 'Strict'
+    $user = verifyFirebaseIdToken($token);
+    if (!$user || empty($user['uid'])) {
+        echo json_encode([
+            'redirect' => '/cafe/includes/loginu.php?error=' . urlencode('Sesión inválida.'),
+            'debug'    => 'Token verification returned null'
         ]);
+        exit;
+    }
 
-    if ($claims->get('admin') === true) {
+    setcookie('fb_token', $token, [
+        'expires'  => 0,               // 0 = cookie de sesión
+        'path'     => '/cafe',
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
+
+    if (!empty($user['admin'])) {
         echo json_encode(['redirect' => '/cafe/admin/login.php']);
     } else {
         echo json_encode(['redirect' => '/cafe/index.php']);

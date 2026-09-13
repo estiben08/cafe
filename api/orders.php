@@ -15,23 +15,10 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
 
-/* ── CONEXIÓN BD ── */
-define('DB_HOST',    '127.0.0.1');
-define('DB_NAME',    'coffeecol');
-define('DB_USER',    'root');
-define('DB_PASS',    '');
-define('DB_CHARSET', 'utf8mb4');
+require_once __DIR__ . '/../includes/auth_helper.php';
 
 try {
-    $pdo = new PDO(
-        sprintf('mysql:host=%s;dbname=%s;charset=%s', DB_HOST, DB_NAME, DB_CHARSET),
-        DB_USER, DB_PASS,
-        [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES   => false,
-        ]
-    );
+    $pdo = getCafePdo();
 } catch (PDOException $e) {
     error_log('[CoffeeCol] Error de conexión BD: ' . $e->getMessage());
     http_response_code(500);
@@ -224,23 +211,28 @@ if ($method === 'POST') {
     $total     = (float) $data['total'];
     $items     = $data['items'];
 
+    // Obtener usuario autenticado si existe en sesión
+    $authUser    = getAuthenticatedUser();
+    $firebaseUid = $authUser['uid'] ?? ($data['firebase_uid'] ?? null);
+
     try {
         $pdo->beginTransaction();
 
         $stmtPedido = $pdo->prepare('
             INSERT INTO `pedidos`
-                (`nombre`, `apellido`, `email`, `telefono`, `ciudad`, `direccion`, `total`, `estado`)
+                (`nombre`, `apellido`, `email`, `telefono`, `ciudad`, `direccion`, `total`, `estado`, `firebase_uid`)
             VALUES
-                (:nombre, :apellido, :email, :telefono, :ciudad, :direccion, :total, "pendiente")
+                (:nombre, :apellido, :email, :telefono, :ciudad, :direccion, :total, "pendiente", :firebase_uid)
         ');
         $stmtPedido->execute([
-            ':nombre'    => $nombre,
-            ':apellido'  => $apellido,
-            ':email'     => $email,
-            ':telefono'  => $telefono,
-            ':ciudad'    => $ciudad,
-            ':direccion' => $direccion,
-            ':total'     => $total,
+            ':nombre'       => $nombre,
+            ':apellido'     => $apellido,
+            ':email'        => $email,
+            ':telefono'     => $telefono,
+            ':ciudad'       => $ciudad,
+            ':direccion'    => $direccion,
+            ':total'        => $total,
+            ':firebase_uid' => $firebaseUid,
         ]);
 
         $pedidoId = (int) $pdo->lastInsertId();
@@ -270,14 +262,22 @@ if ($method === 'POST') {
             ]);
         }
 
+        // Procesar puntos y generar número de pedido oficial
+        $puntosInfo = procesarPuntosPorPedido($pdo, $pedidoId, $email, $firebaseUid, $total);
+
         $pdo->commit();
-        error_log("[CoffeeCol] ✅ Pedido #{$pedidoId} guardado. Cliente: {$email}. Total: {$total}");
+        error_log("[CoffeeCol] ✅ Pedido #{$pedidoId} ({$puntosInfo['numero_pedido']}) guardado. Cliente: {$email}. Total: {$total}. Puntos ganados: {$puntosInfo['puntos_ganados']}");
 
         http_response_code(201);
         echo json_encode([
-            'success'   => true,
-            'pedido_id' => $pedidoId,
-            'mensaje'   => '¡Pedido registrado correctamente!'
+            'success'        => true,
+            'pedido_id'      => $pedidoId,
+            'numero_pedido'  => $puntosInfo['numero_pedido'],
+            'puntos_ganados' => $puntosInfo['puntos_ganados'],
+            'puntos_totales' => $puntosInfo['puntos_totales'],
+            'mensaje'        => $puntosInfo['puntos_ganados'] > 0
+                ? "¡Pedido registrado correctamente! Has acumulado {$puntosInfo['puntos_ganados']} puntos Tantico."
+                : '¡Pedido registrado correctamente!'
         ]);
 
     } catch (PDOException $e) {
@@ -287,7 +287,7 @@ if ($method === 'POST') {
         echo json_encode([
             'success' => false,
             'error'   => 'Error al guardar el pedido.',
-            'debug'   => $e->getMessage()   // ← TEMPORAL: quitar en producción
+            'debug'   => $e->getMessage()
         ]);
     } catch (RuntimeException $e) {
         $pdo->rollBack();

@@ -9,10 +9,12 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
-const BASE = 'http://localhost/cafe';
+const BASE = (typeof window !== 'undefined' && window.location.origin) 
+  ? window.location.origin + '/cafe' 
+  : 'http://localhost/cafe';
 
 const actionCodeSettings = {
-  url: BASE + '/includes/login.php',
+  url: BASE + '/includes/loginu.php',
   handleCodeInApp: true
 };
 
@@ -20,7 +22,8 @@ function guardarUsuario(user) {
   sessionStorage.setItem('cc_usuario', JSON.stringify({
     nombre: user.displayName || user.email,
     email:  user.email,
-    foto:   user.photoURL
+    foto:   user.photoURL,
+    uid:    user.uid
   }));
 }
 
@@ -37,16 +40,24 @@ async function guardarUsuarioMySQL(token) {
 }
 
 async function verificarRolYRedirigir(user) {
-  const token = await user.getIdToken();
-  await guardarUsuarioMySQL(token);
-  const res  = await fetch('/cafe/includes/verificar_rol.php', {
-    method:  'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body:    JSON.stringify({ token })
-  });
-  const text = await res.text();
-  const data = JSON.parse(text);
-  window.location.href = data.redirect;
+  try {
+    const token = await user.getIdToken();
+    await guardarUsuarioMySQL(token);
+    const res  = await fetch('/cafe/includes/verificar_rol.php', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ token })
+    });
+    const data = await res.json();
+    if (data?.redirect) {
+      window.location.href = data.redirect;
+    } else {
+      window.location.href = '/cafe/index.php';
+    }
+  } catch (err) {
+    console.error('Error en verificarRolYRedirigir:', err);
+    window.location.href = '/cafe/index.php';
+  }
 }
 
 export async function loginGoogle() {

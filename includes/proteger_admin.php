@@ -2,35 +2,19 @@
 // Incluye este archivo al inicio de CADA página de administrador así:
 // require __DIR__ . '/../includes/proteger_admin.php';
 
-require 'C:/xampp/htdocs/cafe/vendor/autoload.php';
+require_once __DIR__ . '/auth_helper.php';
 
-$token = $_COOKIE['fb_token'] ?? '';
+$user = getAuthenticatedUser();
 
-if (!$token) {
+if (!$user) {
     header('Location: /cafe/includes/loginu.php');
     exit;
 }
 
-try {
-    $firebase = (new Kreait\Firebase\Factory)
-        ->withServiceAccount('C:/xampp/htdocs/cafetantico-firebase-adminsdk-fbsvc-a449960bbb.json');
-
-    $auth           = $firebase->createAuth();
-    $verified_token = $auth->verifyIdToken($token);
-    $claims         = $verified_token->claims();
-
-    if ($claims->get('admin') !== true) {
-        // Es cliente normal, no tiene acceso
-        header('Location: /cafe/index.php');
-        exit;
-    }
-
-    // Si llegó aquí, es admin ✅
-    // Puedes usar $verified_token->claims()->get('email') para obtener su email
-
-} catch (Exception $e) {
-    // Token inválido o expirado
-    setcookie('fb_token', '', time() - 3600, '/cafe');
-    header('Location: /cafe/includes/loginu.php?error=' . urlencode('Sesión expirada. Inicia sesión de nuevo.'));
+if (empty($user['admin'])) {
+    // Es cliente normal o no tiene claim de admin
+    header('Location: /cafe/index.php');
     exit;
 }
+
+// Si llegó aquí, es admin ✅

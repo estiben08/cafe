@@ -1,0 +1,209 @@
+/* ==========================================================================
+   TANTICO — CANONICAL LUXURY FOOTER STYLES
+   Single source of truth for footer across all pages
+   ========================================================================== */
+
+.tantico-global-footer {
+    background: linear-gradient(180deg, #190907 0%, #120604 100%) !important;
+    border-top: 1px solid rgba(198, 167, 107, 0.22) !important;
+    color: #FBF8F2 !important;
+    padding: 70px 24px 36px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+.tantico-global-footer::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 600px !important;
+    height: 120px !important;
+    background: radial-gradient(circle, rgba(198, 167, 107, 0.12) 0%, transparent 70%) !important;
+    pointer-events: none !important;
+}
+
+.footer-main-container {
+    max-width: 1220px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 32px !important;
+    text-align: center !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+/* ── Brand & Slogan ── */
+.footer-brand-wrap {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+.footer-brand-logo {
+    height: 56px !important;
+    width: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+    transition: transform 0.3s ease !important;
+}
+
+.footer-brand-logo:hover {
+    transform: scale(1.05) !important;
+}
+
+.footer-brand-slogan {
+    font-family: 'Goudy Bookletter 1911', 'Playfair Display', Georgia, serif !important;
+    font-style: italic !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    color: #E8D8B4 !important;
+    letter-spacing: 0.5px !important;
+    margin: 0 !important;
+}
+
+/* ── Navigation Links ── */
+.footer-links-nav {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 32px !important;
+    flex-wrap: wrap !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+}
+
+.footer-links-nav a {
+    color: rgba(251, 248, 242, 0.78) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    letter-spacing: 0.2px !important;
+    padding: 6px 12px !important;
+    border-radius: 6px !important;
+    transition: all 0.25s ease !important;
+}
+
+.footer-links-nav a:hover {
+    color: #E8D8B4 !important;
+    background: rgba(198, 167, 107, 0.12) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* ── Social Pills ── */
+.footer-social-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 14px !important;
+}
+
+.footer-social-btn {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background: rgba(198, 167, 107, 0.08) !important;
+    border: 1px solid rgba(198, 167, 107, 0.22) !important;
+    color: #E8D8B4 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 16px !important;
+    text-decoration: none !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.footer-social-btn:hover {
+    background: linear-gradient(135deg, #C6A76B 0%, #B39152 100%) !important;
+    color: #160A07 !important;
+    border-color: #C6A76B !important;
+    transform: translateY(-3px) scale(1.08) !important;
+    box-shadow: 0 8px 20px rgba(198, 167, 107, 0.4) !important;
+}
+
+/* ── Divider & Bottom Copyright ── */
+.footer-divider-line {
+    width: 100% !important;
+    max-width: 800px !important;
+    height: 1px !important;
+    background: linear-gradient(90deg, transparent, rgba(198, 167, 107, 0.2), transparent) !important;
+    margin: 0 !important;
+}
+
+.footer-bottom-info {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.footer-badges-pill-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 16px !important;
+    flex-wrap: wrap !important;
+}
+
+.footer-badge-item {
+    font-size: 11.5px !important;
+    font-weight: 500 !important;
+    color: rgba(198, 167, 107, 0.8) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
+.footer-badge-item i {
+    font-size: 10px !important;
+    color: #C6A76B !important;
+}
+
+.footer-copyright-text {
+    font-size: 12.5px !important;
+    color: rgba(251, 248, 242, 0.45) !important;
+    margin: 4px 0 0 !important;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .tantico-global-footer {
+        padding: 50px 16px 30px !important;
+    }
+
+    .footer-main-container {
+        gap: 24px !important;
+    }
+
+    .footer-links-nav {
+        gap: 16px !important;
+    }
+
+    .footer-links-nav a {
+        font-size: 13px !important;
+        padding: 4px 8px !important;
+    }
+
+    .footer-brand-logo {
+        height: 48px !important;
+    }
+
+    .footer-brand-slogan {
+        font-size: 12px !important;
+    }
+
+    .footer-badges-pill-row {
+        gap: 10px !important;
+    }
+
+    .footer-badge-item {
+        font-size: 10.5px !important;
+    }
+}

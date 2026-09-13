@@ -151,6 +151,9 @@ tr:hover td { background: var(--cafe-50); }
 .btn-delete { background: none; border: 1px solid rgba(192,57,43,0.2); color: var(--danger); padding: 5px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
 .btn-delete:hover { background: var(--danger); color: white; }
 
+.btn-edit { background: none; border: 1px solid rgba(92,52,32,0.2); color: var(--cafe-600); padding: 5px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; margin-right: 4px; }
+.btn-edit:hover { background: var(--cafe-700); color: white; border-color: var(--cafe-700); }
+
 .btn-ver { background: none; border: 1px solid rgba(92,52,32,0.2); color: var(--cafe-600); padding: 5px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
 .btn-ver:hover { background: var(--cafe-700); color: white; }
 
@@ -673,6 +676,135 @@ textarea { resize: vertical; min-height: 68px; }
     .rpt-filtros { flex-direction: column; align-items: stretch; }
     .rpt-fecha-input { width: 100%; }
 }
+
+/* ══════════════════════════════════════
+   ANUNCIOS & POPUPS — estilos propios
+══════════════════════════════════════ */
+.switch-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+.switch-input {
+    display: none;
+}
+.switch-slider {
+    width: 38px;
+    height: 22px;
+    background: #d8c6ba;
+    border-radius: 20px;
+    position: relative;
+    transition: background 0.25s ease;
+    flex-shrink: 0;
+}
+.switch-slider::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.25s ease;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.switch-input:checked + .switch-slider {
+    background: #27704a;
+}
+.switch-input:checked + .switch-slider::before {
+    transform: translateX(16px);
+}
+.switch-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.anu-thumb {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: var(--cafe-100);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid rgba(92,52,32,0.1);
+}
+.anu-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.anu-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.anu-title {
+    font-weight: 500;
+    font-size: 13.5px;
+    color: var(--cafe-900);
+    line-height: 1.3;
+}
+.anu-eyebrow {
+    font-size: 10.5px;
+    color: var(--cafe-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+.anu-badge-tipo {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--cafe-100);
+    color: var(--cafe-700);
+    text-transform: capitalize;
+}
+.anu-badge-tipo.partido { background: #e3f2fd; color: #1565c0; }
+.anu-badge-tipo.promo   { background: #fff8e1; color: #f57f17; }
+.anu-badge-tipo.evento  { background: #f3e5f5; color: #7b1fa2; }
+.anu-badge-tipo.general { background: #ede7f6; color: #4527a0; }
+
+.btn-preview-popup {
+    background: rgba(196,137,95,0.15);
+    border: 1px solid rgba(196,137,95,0.4);
+    color: var(--cafe-700);
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.btn-preview-popup:hover {
+    background: var(--cafe-700);
+    color: white;
+}
+
+/* Modal Popup Preview en Admin */
+.modal-anu-preview-box {
+    max-width: 680px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+}
+.modal-anu-preview-inner {
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+}
 </style>
 </head>
 <body>
@@ -705,6 +837,13 @@ textarea { resize: vertical; min-height: 68px; }
                 <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
             </svg>
             Clientes
+        </a>
+        <a class="nav-item" href="#" onclick="mostrarSeccion('anuncios', this)">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 8a3 3 0 00-3-3H7a2 2 0 00-2 2v6a2 2 0 002 2h8a3 3 0 003-3V8z"/>
+                <path d="M19 13l2.5 1.5M19 8l3-2M19 10.5h3"/>
+            </svg>
+            Anuncios &amp; Popups
         </a>
         <a class="nav-item" href="#" onclick="mostrarSeccion('reportes', this)">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
@@ -768,8 +907,12 @@ textarea { resize: vertical; min-height: 68px; }
                     </table>
                 </div>
                 <div class="card form-card">
-                    <div class="card-header"><span class="card-title">Agregar producto</span></div>
+                    <div class="card-header">
+                        <span class="card-title" id="form-card-title">Agregar producto</span>
+                        <button type="button" id="btn-cancel-edit" style="display:none;background:none;border:none;color:var(--text-soft);font-size:12px;cursor:pointer;text-decoration:underline;" onclick="cancelarEdicion()">Cancelar edición</button>
+                    </div>
                     <div class="form-body">
+                        <input type="hidden" id="f-id" value="">
                         <div class="form-group">
                             <label>Foto del producto <span class="opt-tag">opcional</span></label>
                             <div class="upload-area" id="uploadArea">
@@ -783,29 +926,36 @@ textarea { resize: vertical; min-height: 68px; }
                             </div>
                         </div>
                         <div class="form-section-title">Información básica</div>
-                        <div class="form-group"><label>Nombre *</label><input type="text" id="f-nombre" placeholder="Ej: Café Tostado Especial" maxlength="100"></div>
-                        <div class="form-group"><label>Descripción <span class="opt-tag">opcional</span></label><textarea id="f-descripcion" placeholder="Describe el producto brevemente…"></textarea></div>
+                        <div class="form-group"><label>Nombre *</label><input type="text" id="f-nombre" placeholder="Ej: Tarta Vasca o Geisha Huila" maxlength="100"></div>
+                        <div class="form-group"><label>Descripción <span class="opt-tag">opcional</span></label><textarea id="f-descripcion" placeholder="Describe el producto, notas de cata o ingredientes…"></textarea></div>
                         <div class="row-2">
                             <div class="form-group"><label>Categoría *</label>
                                 <select id="f-categoria">
                                     <option value="">Seleccionar…</option>
-                                    <option value="tueste-claro">Tueste Claro</option>
-                                    <option value="tueste-medio">Tueste Medio</option>
-                                    <option value="tueste-oscuro">Tueste Oscuro</option>
-                                    <option value="capsulas">Cápsulas</option>
-                                    <option value="origen-especial">Origen Especial</option>
+                                    <optgroup label="☕ Cafés de Especialidad">
+                                        <option value="tueste-claro">Tueste Claro</option>
+                                        <option value="tueste-medio">Tueste Medio</option>
+                                        <option value="tueste-oscuro">Tueste Oscuro</option>
+                                        <option value="capsulas">Cápsulas</option>
+                                        <option value="origen-especial">Origen Especial</option>
+                                    </optgroup>
+                                    <optgroup label="🥐 Alimentos & Repostería">
+                                        <option value="reposteria">Tortas &amp; Repostería</option>
+                                        <option value="panaderia">Panadería Artesanal</option>
+                                        <option value="desayunos">Desayunos &amp; Brunch</option>
+                                    </optgroup>
                                 </select>
                             </div>
-                            <div class="form-group"><label>Unidad <span class="opt-tag">opcional</span></label><input type="text" id="f-unidad" placeholder="Ej: 250 g · 1 kg"></div>
+                            <div class="form-group"><label>Unidad / Porción <span class="opt-tag">opcional</span></label><input type="text" id="f-unidad" placeholder="Ej: 250 g · Porción · Unidad"></div>
                         </div>
-                        <div class="form-section-title">Precios</div>
+                        <div class="form-section-title">Precios (COP)</div>
                         <div class="row-2">
                             <div class="form-group"><label>Precio actual *</label><input type="number" id="f-precio" placeholder="0" step="1" min="0"></div>
                             <div class="form-group"><label>Precio antes <span class="opt-tag">tachado</span></label><input type="number" id="f-precio-antes" placeholder="0" step="1" min="0"></div>
                         </div>
                         <div class="form-section-title">Etiqueta (badge) <span class="opt-tag">opcional</span></div>
                         <div class="row-2">
-                            <div class="form-group"><label>Texto</label><input type="text" id="f-badge" placeholder="Ej: Nuevo · -20%" maxlength="30" oninput="actualizarBadgePreview()"></div>
+                            <div class="form-group"><label>Texto</label><input type="text" id="f-badge" placeholder="Ej: Nuevo · -20% · Especial" maxlength="30" oninput="actualizarBadgePreview()"></div>
                             <div class="form-group"><label>Tipo</label>
                                 <select id="f-badge-tipo" onchange="actualizarBadgePreview()">
                                     <option value="">Sin estilo</option>
@@ -822,7 +972,7 @@ textarea { resize: vertical; min-height: 68px; }
                         </div>
                         <button class="btn-submit" id="btnAgregar" onclick="agregar()">
                             <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-                            Agregar producto
+                            <span id="btnAgregarTexto">Agregar producto</span>
                         </button>
                     </div>
                 </div>
@@ -1072,6 +1222,305 @@ textarea { resize: vertical; min-height: 68px; }
         </div>
     </div>
 
+    <!-- ══════════ SECCIÓN ANUNCIOS & POPUPS ══════════ -->
+    <div id="sec-anuncios" class="seccion">
+        <div class="content">
+
+            <!-- Stats Anuncios -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total anuncios</div>
+                    <div class="stat-value" id="stat-anu-total">—</div>
+                    <div class="stat-sub">configurados en el sistema</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Anuncio popup activo</div>
+                    <div class="stat-value" id="stat-anu-activo" style="font-size:18px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">—</div>
+                    <div class="stat-sub" id="stat-anu-sub">Se muestra automáticamente al entrar</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Estado del Modal Popup</div>
+                    <div class="stat-value" id="stat-anu-estado" style="font-size:22px;">—</div>
+                    <div class="stat-sub">Control global de visualización</div>
+                </div>
+            </div>
+
+            <!-- Layout 2 columnas: Lista a la izquierda, Formulario a la derecha -->
+            <div class="layout-grid">
+
+                <!-- Tabla de Anuncios -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Anuncios en el sistema</span>
+                        <div class="search-box">
+                            <input type="text" id="buscador-anu" placeholder="Buscar anuncios…" oninput="filtrarAnuncios()">
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Anuncio</th>
+                                <th>Tipo</th>
+                                <th>Visible</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-anuncios">
+                            <tr class="loading-row"><td colspan="4">Cargando anuncios…</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Formulario Crear / Editar -->
+                <div class="card form-card" id="form-anu-card">
+                    <div class="card-header">
+                        <span class="card-title" id="form-anu-title">Crear Anuncio</span>
+                        <button class="btn btn-secondary" id="btn-cancel-anu-edit" style="display:none;padding:4px 10px;font-size:12px;" onclick="cancelarEdicionAnuncio()">Cancelar edición</button>
+                    </div>
+                    <div class="card-body" style="padding:20px 24px;display:flex;flex-direction:column;gap:14px;">
+                        <input type="hidden" id="f-anu-id">
+                        <input type="hidden" id="f-anu-imagen-existente">
+
+                        <!-- Selector de Categoría / Tipo -->
+                        <div>
+                            <label class="form-label" style="font-size:11px;font-weight:600;text-transform:uppercase;color:var(--text-soft);margin-bottom:6px;display:block;">1. Tipo de Anuncio</label>
+                            <select id="f-anu-tipo" class="form-control" style="width:100%;padding:10px 12px;border:1.5px solid rgba(92,52,32,0.2);border-radius:8px;font-size:13.5px;background:white;font-weight:500;" onchange="cambiarTipoAnuncio(this.value, true)">
+                                <option value="partido">⚽ Transmisión de Partido / Deporte en Vivo</option>
+                                <option value="promo">🏷️ Promoción / Descuento / Oferta Especial</option>
+                                <option value="evento">🎉 Evento Especial / Noche de Música / Cata</option>
+                                <option value="general">📢 Comunicado General / Horarios / Novedades</option>
+                            </select>
+                        </div>
+
+                        <!-- Textos Principales -->
+                        <div>
+                            <label class="form-label" style="font-size:11px;font-weight:600;text-transform:uppercase;color:var(--text-soft);margin-bottom:4px;display:block;">2. Título Principal *</label>
+                            <input type="text" id="f-anu-titulo" class="form-control" style="width:100%;padding:9px 12px;border:1px solid rgba(92,52,32,0.18);border-radius:8px;font-size:13.5px;" placeholder="Ej: La Selección Colombia se vive diferente aquí">
+                            <small style="color:var(--text-soft);font-size:11px;display:block;margin-top:2px;">El texto se mostrará con la tipografía editorial de Tantico.</small>
+                        </div>
+
+                        <div>
+                            <label class="form-label" style="font-size:11px;font-weight:600;text-transform:uppercase;color:var(--text-soft);margin-bottom:4px;display:block;">3. Subtítulo / Descripción</label>
+                            <textarea id="f-anu-subtitulo" class="form-control" rows="2" style="width:100%;padding:8px 12px;border:1px solid rgba(92,52,32,0.18);border-radius:8px;font-size:13px;font-family:sans-serif;" placeholder="Cada gol y cada jugada en pantallas de alto nivel. Café, comida y el mejor ambiente..."></textarea>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                            <div>
+                                <label class="form-label" style="font-size:11px;font-weight:600;text-transform:uppercase;color:var(--text-soft);margin-bottom:4px;display:block;">Etiqueta Superior (Eyebrow)</label>
+                                <input type="text" id="f-anu-eyebrow" class="form-control" style="width:100%;padding:8px 10px;border:1px solid rgba(92,52,32,0.18);border-radius:8px;font-size:13px;" placeholder="Transmisión en vivo · Neiva, Huila">
+                            </div>
+                            <div>
+                                <label class="form-label" style="font-size:11px;font-weight:600;text-transform:uppercase;color:var(--text-soft);margin-bottom:4px;display:block;">Insignia Inferior (Badge)</label>
+                                <input type="text" id="f-anu-badge" class="form-control" style="width:100%;padding:8px 10px;border:1px solid rgba(92,52,32,0.18);border-radius:8px;font-size:13px;" placeholder="Café Región · Neiva, Huila">
+                            </div>
+                        </div>
+
+                        <!-- Carga de Imagen -->
+                        <div>
+                            <label class="form-label" style="font-size:11px;font-weight:600;text-transform:uppercase;color:var(--text-soft);margin-bottom:4px;display:block;">4. Fotografía Lateral</label>
+                            <div class="upload-area" id="anuUploadArea" onclick="document.getElementById('anuImagenInput').click()" style="border:1.5px dashed rgba(92,52,32,0.25);border-radius:10px;padding:14px;text-align:center;cursor:pointer;position:relative;background:var(--cafe-50);">
+                                <input type="file" id="anuImagenInput" accept="image/*" style="display:none;" onchange="previewAnuImagen(event)">
+                                <img id="anuPreview" src="" alt="" style="max-height:100px;border-radius:8px;display:none;margin:0 auto 8px;">
+                                <div id="anuUploadPrompt">
+                                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" style="color:var(--cafe-500);margin:0 auto 4px;display:block;"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                                    <span style="font-size:12px;color:var(--text-soft);">Click para subir foto (JPG, PNG, WebP) o se usará la foto predeterminada</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ══ PANEL DINÁMICO SEGÚN LA CATEGORÍA ══ -->
+                        <div id="panel-categoria-wrap" style="background:#FAF4EE;border:1.5px solid rgba(196,137,95,0.25);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:12px;">
+
+                            <!-- Sub-bloque 1: Si es PARTIDO -->
+                            <div id="box-partido" style="display:flex;flex-direction:column;gap:10px;">
+                                <div style="display:flex;align-items:center;justify-content:space-between;">
+                                    <span style="font-size:12px;font-weight:700;color:var(--cafe-800);text-transform:uppercase;letter-spacing:0.5px;">⚽ Datos del Partido &amp; Cuenta Regresiva</span>
+                                    <input type="hidden" id="f-anu-mostrar-partido" value="1">
+                                </div>
+
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                                    <div>
+                                        <label style="font-size:10.5px;font-weight:600;color:var(--text-soft);display:block;margin-bottom:2px;">Fecha del Partido (Texto)</label>
+                                        <input type="text" id="f-anu-fecha-texto" class="form-control" style="width:100%;padding:7px 8px;font-size:12.5px;border:1px solid rgba(92,52,32,0.18);border-radius:6px;background:white;" placeholder="Lunes 01 de Junio - 6:00 PM">
+                                    </div>
+                                    <div>
+                                        <label style="font-size:10.5px;font-weight:600;color:var(--text-soft);display:block;margin-bottom:2px;">Inicio del Partido (Reloj Cuenta Regresiva)</label>
+                                        <input type="datetime-local" id="f-anu-fecha-objetivo" class="form-control" style="width:100%;padding:7px 8px;font-size:12.5px;border:1px solid rgba(92,52,32,0.18);border-radius:6px;background:white;">
+                                    </div>
+                                </div>
+
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                                    <div>
+                                        <label style="font-size:10.5px;font-weight:600;color:var(--text-soft);display:block;margin-bottom:2px;">Equipo 1 (Local)</label>
+                                        <div style="display:flex;gap:4px;">
+                                            <input type="text" id="f-anu-eq1-nom" placeholder="Colombia" style="flex:1.8;padding:7px 8px;font-size:12px;border:1px solid rgba(92,52,32,0.18);border-radius:6px;background:white;">
+                                            <select id="f-anu-eq1-ban" style="flex:1.4;padding:7px 4px;font-size:12px;border:1px solid rgba(92,52,32,0.18);border-radius:6px;background:white;">
+                                                <option value="co">🇨🇴 Colombia</option>
+                                                <option value="cr">🇨🇷 Costa Rica</option>
+                                                <option value="ar">🇦🇷 Argentina</option>
+                                                <option value="br">🇧🇷 Brasil</option>
+                                                <option value="es">🇪🇸 España</option>
+                                                <option value="us">🇺🇸 EE.UU.</option>
+                                                <option value="mx">🇲🇽 México</option>
+                                                <option value="de">🇩🇪 Alemania</option>
+                                                <option value="pe">🇵🇪 Perú</option>
+                                                <option value="uy">🇺🇾 Uruguay</option>
+                                                <option value="cl">🇨🇱 Chile</option>
+                                                <option value="ec">🇪🇨 Ecuador</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label style="font-size:10.5px;font-weight:600;color:var(--text-soft);display:block;margin-bottom:2px;">Equipo 2 (Visitante)</label>
+                                        <div style="display:flex;gap:4px;">
+                                            <input type="text" id="f-anu-eq2-nom" placeholder="Costa Rica" style="flex:1.8;padding:7px 8px;font-size:12px;border:1px solid rgba(92,52,32,0.18);border-radius:6px;background:white;">
+                                            <select id="f-anu-eq2-ban" style="flex:1.4;padding:7px 4px;font-size:12px;border:1px solid rgba(92,52,32,0.18);border-radius:6px;background:white;">
+                                                <option value="cr">🇨🇷 Costa Rica</option>
+                                                <option value="co">🇨🇴 Colombia</option>
+                                                <option value="ar">🇦🇷 Argentina</option>
+                                                <option value="br">🇧🇷 Brasil</option>
+                                                <option value="es">🇪🇸 España</option>
+                                                <option value="us">🇺🇸 EE.UU.</option>
+                                                <option value="mx">🇲🇽 México</option>
+                                                <option value="de">🇩🇪 Alemania</option>
+                                                <option value="pe">🇵🇪 Perú</option>
+                                                <option value="uy">🇺🇾 Uruguay</option>
+                                                <option value="cl">🇨🇱 Chile</option>
+                                                <option value="ec">🇪🇨 Ecuador</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sub-bloque 2: Si es PROMO / EVENTO / GENERAL (Campos de Botón de Acción y Vigencia) -->
+                            <div id="box-no-partido" style="display:none;flex-direction:column;gap:10px;">
+                                <div style="display:flex;align-items:center;justify-content:space-between;">
+                                    <span style="font-size:12px;font-weight:700;color:var(--cafe-800);text-transform:uppercase;letter-spacing:0.5px;">🏷️ Botón de Acción &amp; Llamado</span>
+                                </div>
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                                    <div>
+                                        <label style="font-size:10.5px;font-weight:600;color:var(--text-soft);display:block;margin-bottom:2px;">Texto del Botón (Opcional)</label>
+                                        <input type="text" id="f-anu-btn-txt" class="form-control" style="width:100%;padding:7px 8px;font-size:12.5px;border:1px solid rgba(92,52,32,0.18);border-radius:6px;background:white;" placeholder="Ej: Ver Catálogo de Productos">
+                                    </div>
+                                    <div>
+                                        <label style="font-size:10.5px;font-weight:600;color:var(--text-soft);display:block;margin-bottom:2px;">Enlace de Destino</label>
+                                        <input type="text" id="f-anu-btn-link" class="form-control" style="width:100%;padding:7px 8px;font-size:12.5px;border:1px solid rgba(92,52,32,0.18);border-radius:6px;background:white;" placeholder="Ej: /cafe/includes/servicios.php">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- ══ 3 PUNTOS DESTACADOS CON SELECTORES VISUALES ══ -->
+                        <div>
+                            <label style="font-size:11px;font-weight:600;text-transform:uppercase;color:var(--text-soft);margin-bottom:6px;display:block;">
+                                5. Tres Puntos Destacados (Selecciona el Icono y escribe el Texto)
+                            </label>
+                            
+                            <div style="display:flex;flex-direction:column;gap:8px;">
+                                
+                                <!-- Punto 1 -->
+                                <div style="display:flex;gap:8px;align-items:center;background:var(--cafe-50);padding:8px 10px;border-radius:8px;border:1px solid rgba(92,52,32,0.1);">
+                                    <span style="font-size:11px;font-weight:700;color:var(--cafe-600);width:16px;">#1</span>
+                                    <select id="f-anu-f1-ico" style="flex:1.4;padding:6px 8px;font-size:12px;border:1px solid rgba(92,52,32,0.18);border-radius:6px;background:white;">
+                                        <option value="fa-solid fa-tv">📺 Pantallas 4K / TV</option>
+                                        <option value="fa-solid fa-users">👥 Ambiente / Grupos</option>
+                                        <option value="fa-brands fa-java">☕ Bebidas / Café</option>
+                                        <option value="fa-solid fa-mug-hot">☕ Café Caliente / Taza</option>
+                                        <option value="fa-solid fa-tag">🏷️ Descuento / Oferta</option>
+                                        <option value="fa-solid fa-cake-candles">🎂 Repostería / Tartas</option>
+                                        <option value="fa-solid fa-bread-slice">🥐 Panadería Artesanal</option>
+                                        <option value="fa-solid fa-gift">🎁 Regalo / Cortesía</option>
+                                        <option value="fa-solid fa-music">🎵 Música en Vivo</option>
+                                        <option value="fa-solid fa-martini-glass-citrus">🍸 Coctelería de Café</option>
+                                        <option value="fa-solid fa-wifi">📶 Wi-Fi &amp; Coworking</option>
+                                        <option value="fa-solid fa-paw">🐾 Pet Friendly</option>
+                                        <option value="fa-solid fa-snowflake">❄️ Aire Acondicionado</option>
+                                        <option value="fa-solid fa-ticket">🎟️ Entrada / Reserva</option>
+                                        <option value="fa-solid fa-star">⭐ Calidad SCA / Especial</option>
+                                        <option value="fa-solid fa-clock">🕒 Horario / Atención</option>
+                                        <option value="fa-solid fa-location-dot">📍 Ubicación / Sede</option>
+                                    </select>
+                                    <input type="text" id="f-anu-f1-txt" placeholder="Texto (ej: Pantallas 4K)" style="flex:1.6;padding:6px 8px;font-size:12px;border:1px solid rgba(92,52,32,0.18);border-radius:6px;background:white;">
+                                </div>
+
+                                <!-- Punto 2 -->
+                                <div style="display:flex;gap:8px;align-items:center;background:var(--cafe-50);padding:8px 10px;border-radius:8px;border:1px solid rgba(92,52,32,0.1);">
+                                    <span style="font-size:11px;font-weight:700;color:var(--cafe-600);width:16px;">#2</span>
+                                    <select id="f-anu-f2-ico" style="flex:1.4;padding:6px 8px;font-size:12px;border:1px solid rgba(92,52,32,0.18);border-radius:6px;background:white;">
+                                        <option value="fa-solid fa-users" selected>👥 Ambiente / Grupos</option>
+                                        <option value="fa-solid fa-tv">📺 Pantallas 4K / TV</option>
+                                        <option value="fa-brands fa-java">☕ Bebidas / Café</option>
+                                        <option value="fa-solid fa-mug-hot">☕ Café Caliente / Taza</option>
+                                        <option value="fa-solid fa-tag">🏷️ Descuento / Oferta</option>
+                                        <option value="fa-solid fa-cake-candles">🎂 Repostería / Tartas</option>
+                                        <option value="fa-solid fa-bread-slice">🥐 Panadería Artesanal</option>
+                                        <option value="fa-solid fa-gift">🎁 Regalo / Cortesía</option>
+                                        <option value="fa-solid fa-music">🎵 Música en Vivo</option>
+                                        <option value="fa-solid fa-martini-glass-citrus">🍸 Coctelería de Café</option>
+                                        <option value="fa-solid fa-wifi">📶 Wi-Fi &amp; Coworking</option>
+                                        <option value="fa-solid fa-paw">🐾 Pet Friendly</option>
+                                        <option value="fa-solid fa-snowflake">❄️ Aire Acondicionado</option>
+                                        <option value="fa-solid fa-ticket">🎟️ Entrada / Reserva</option>
+                                        <option value="fa-solid fa-star">⭐ Calidad SCA / Especial</option>
+                                        <option value="fa-solid fa-clock">🕒 Horario / Atención</option>
+                                        <option value="fa-solid fa-location-dot">📍 Ubicación / Sede</option>
+                                    </select>
+                                    <input type="text" id="f-anu-f2-txt" placeholder="Texto (ej: Ambiente futbolero)" style="flex:1.6;padding:6px 8px;font-size:12px;border:1px solid rgba(92,52,32,0.18);border-radius:6px;background:white;">
+                                </div>
+
+                                <!-- Punto 3 -->
+                                <div style="display:flex;gap:8px;align-items:center;background:var(--cafe-50);padding:8px 10px;border-radius:8px;border:1px solid rgba(92,52,32,0.1);">
+                                    <span style="font-size:11px;font-weight:700;color:var(--cafe-600);width:16px;">#3</span>
+                                    <select id="f-anu-f3-ico" style="flex:1.4;padding:6px 8px;font-size:12px;border:1px solid rgba(92,52,32,0.18);border-radius:6px;background:white;">
+                                        <option value="fa-brands fa-java" selected>☕ Bebidas / Café</option>
+                                        <option value="fa-solid fa-tv">📺 Pantallas 4K / TV</option>
+                                        <option value="fa-solid fa-users">👥 Ambiente / Grupos</option>
+                                        <option value="fa-solid fa-mug-hot">☕ Café Caliente / Taza</option>
+                                        <option value="fa-solid fa-tag">🏷️ Descuento / Oferta</option>
+                                        <option value="fa-solid fa-cake-candles">🎂 Repostería / Tartas</option>
+                                        <option value="fa-solid fa-bread-slice">🥐 Panadería Artesanal</option>
+                                        <option value="fa-solid fa-gift">🎁 Regalo / Cortesía</option>
+                                        <option value="fa-solid fa-music">🎵 Música en Vivo</option>
+                                        <option value="fa-solid fa-martini-glass-citrus">🍸 Coctelería de Café</option>
+                                        <option value="fa-solid fa-wifi">📶 Wi-Fi &amp; Coworking</option>
+                                        <option value="fa-solid fa-paw">🐾 Pet Friendly</option>
+                                        <option value="fa-solid fa-snowflake">❄️ Aire Acondicionado</option>
+                                        <option value="fa-solid fa-ticket">🎟️ Entrada / Reserva</option>
+                                        <option value="fa-solid fa-star">⭐ Calidad SCA / Especial</option>
+                                        <option value="fa-solid fa-clock">🕒 Horario / Atención</option>
+                                        <option value="fa-solid fa-location-dot">📍 Ubicación / Sede</option>
+                                    </select>
+                                    <input type="text" id="f-anu-f3-txt" placeholder="Texto (ej: Bebidas premium)" style="flex:1.6;padding:6px 8px;font-size:12px;border:1px solid rgba(92,52,32,0.18);border-radius:6px;background:white;">
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Estado Activo & Preview -->
+                        <div style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid rgba(92,52,32,0.08);">
+                            <label class="switch-wrap">
+                                <input type="checkbox" id="f-anu-activo" class="switch-input" checked>
+                                <span class="switch-slider"></span>
+                                <span class="switch-label">Publicar y activar popup de inmediato</span>
+                            </label>
+                            <button type="button" class="btn-preview-popup" onclick="probarPreviewFormulario()">
+                                👁️ Vista previa
+                            </button>
+                        </div>
+
+                        <button id="btnGuardarAnuncio" class="btn-submit" onclick="guardarAnuncio()" style="margin-top:6px;">
+                            Guardar Anuncio
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
 </main>
 
 <!-- ══════════ MODAL DETALLE CLIENTE ══════════ -->
@@ -1096,6 +1545,13 @@ textarea { resize: vertical; min-height: 68px; }
     </div>
 </div>
 
+<!-- ══════════ MODAL PREVIEW ANUNCIO ══════════ -->
+<div class="modal-overlay" id="modal-preview-anuncio" onclick="if(event.target===this)cerrarModalPreviewAnuncio()">
+    <div class="modal-box modal-anu-preview-box">
+        <div id="anu-modal-preview-container"></div>
+    </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1103,6 +1559,7 @@ const API     = '../api/products.php';
 const API_CLI = '../api/clientes.php';
 const API_PED = '../api/orders.php';
 const API_RPT = '../api/reports.php';
+const API_ANU = '../api/announcements.php';
 const token   = localStorage.getItem('token');
 
 if (!token) location.href = 'login.php';
@@ -1123,7 +1580,13 @@ try {
 }
 
 // ── Navegación ──
-const titulos = { productos: 'Gestión de Productos', pedidos: 'Gestión de Pedidos', clientes: 'Base de Clientes', reportes: 'Reportes y Analítica' };
+const titulos = {
+    productos: 'Gestión de Productos',
+    pedidos: 'Gestión de Pedidos',
+    clientes: 'Base de Clientes',
+    anuncios: 'Gestión de Anuncios & Popups',
+    reportes: 'Reportes y Analítica'
+};
 
 function mostrarSeccion(nombre, el) {
     document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activa'));
@@ -1131,9 +1594,10 @@ function mostrarSeccion(nombre, el) {
     document.getElementById('sec-' + nombre).classList.add('activa');
     el.classList.add('active');
     document.getElementById('topbar-titulo').textContent = titulos[nombre];
-    if (nombre === 'clientes') cargarClientes();
+    if (nombre === 'clientes')  cargarClientes();
     if (nombre === 'productos') cargar();
     if (nombre === 'pedidos')   cargarPedidos();
+    if (nombre === 'anuncios')  cargarAnuncios();
     if (nombre === 'reportes')  rptFiltroRapido('30dias');
     return false;
 }
@@ -1168,8 +1632,23 @@ function actualizarBadgePreview() {
     el.className   = 'badge ' + (tipo ? getBadgeClass(tipo) : 'badge-default');
 }
 
-const CATEGORIAS = { 'tueste-claro':'Tueste Claro','tueste-medio':'Tueste Medio','tueste-oscuro':'Tueste Oscuro','capsulas':'Cápsulas','origen-especial':'Origen Especial' };
+const CATEGORIAS = {
+    'tueste-claro':    'Tueste Claro',
+    'tueste-medio':    'Tueste Medio',
+    'tueste-oscuro':   'Tueste Oscuro',
+    'capsulas':        'Cápsulas',
+    'origen-especial': 'Origen Especial',
+    'reposteria':      'Tortas & Repostería',
+    'panaderia':       'Panadería Artesanal',
+    'desayunos':       'Desayunos & Brunch'
+};
 let todosLosProductos = [];
+
+function resolverRutaImg(img) {
+    if (!img) return '';
+    if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('//')) return img;
+    return '../' + img.replace(/^\/+/, '');
+}
 
 function renderTabla(productos) {
     const tbody = document.getElementById('tabla');
@@ -1178,7 +1657,8 @@ function renderTabla(productos) {
         return;
     }
     tbody.innerHTML = productos.map(p => {
-        const thumb = p.imagen ? `<div class="prod-thumb"><img src="../${p.imagen}" alt="${p.nombre}"></div>` : `<div class="prod-thumb">☕</div>`;
+        const ruta = resolverRutaImg(p.imagen);
+        const thumb = ruta ? `<div class="prod-thumb"><img src="${ruta}" alt="${p.nombre}"></div>` : `<div class="prod-thumb">☕</div>`;
         const catNombre   = CATEGORIAS[p.categoria] || p.categoria || '—';
         const precioAntes = p.precio_antes ? `<div class="precio-antes">$${formatPrecio(p.precio_antes)}</div>` : '';
         const badgeCell   = p.badge ? `<span class="badge ${getBadgeClass(p.badge_tipo)}">${p.badge}</span>` : '—';
@@ -1186,7 +1666,10 @@ function renderTabla(productos) {
             <td><div class="prod-info">${thumb}<div><div class="prod-name">${p.nombre}</div><div class="prod-cat">${catNombre}${p.unidad ? ' · ' + p.unidad : ''}</div></div></div></td>
             <td><div class="precio">$${formatPrecio(p.precio)}</div>${precioAntes}</td>
             <td>${badgeCell}</td>
-            <td><button class="btn-delete" onclick="eliminar(${p.id})">Eliminar</button></td>
+            <td style="white-space:nowrap">
+                <button class="btn-edit" onclick="editarProducto(${p.id})">Editar</button>
+                <button class="btn-delete" onclick="eliminar(${p.id})">Eliminar</button>
+            </td>
         </tr>`;
     }).join('');
 }
@@ -1225,25 +1708,85 @@ function quitarImagen(e) {
     document.getElementById('uploadArea').classList.remove('has-image');
 }
 
+function editarProducto(id) {
+    const p = todosLosProductos.find(x => x.id == id);
+    if (!p) return;
+
+    document.getElementById('f-id').value           = p.id;
+    document.getElementById('f-nombre').value       = p.nombre || '';
+    document.getElementById('f-descripcion').value  = p.descripcion || '';
+    document.getElementById('f-categoria').value    = p.categoria || '';
+    document.getElementById('f-unidad').value       = p.unidad || '';
+    document.getElementById('f-precio').value       = p.precio || '';
+    document.getElementById('f-precio-antes').value = p.precio_antes || '';
+    document.getElementById('f-badge').value        = p.badge || '';
+    document.getElementById('f-badge-tipo').value   = p.badge_tipo || '';
+
+    actualizarBadgePreview();
+
+    const ruta = resolverRutaImg(p.imagen);
+    if (ruta) {
+        document.getElementById('preview').src = ruta;
+        document.getElementById('uploadArea').classList.add('has-image');
+    } else {
+        quitarImagen({ stopPropagation: () => {}, preventDefault: () => {} });
+    }
+
+    document.getElementById('form-card-title').textContent = 'Editar producto #' + p.id;
+    document.getElementById('btnAgregarTexto').textContent  = 'Actualizar producto';
+    document.getElementById('btn-cancel-edit').style.display = 'inline-block';
+
+    document.querySelector('.form-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function cancelarEdicion() {
+    limpiarFormulario();
+    document.getElementById('form-card-title').textContent = 'Agregar producto';
+    document.getElementById('btnAgregarTexto').textContent  = 'Agregar producto';
+    document.getElementById('btn-cancel-edit').style.display = 'none';
+}
+
 function agregar() {
+    const id        = document.getElementById('f-id').value;
     const nombre    = document.getElementById('f-nombre').value.trim();
     const precio    = document.getElementById('f-precio').value;
     const categoria = document.getElementById('f-categoria').value;
     if (!nombre || !precio || !categoria) { mostrarToast('Nombre, precio y categoría son obligatorios', 'error'); return; }
+    
     const btn = document.getElementById('btnAgregar');
+    const textoOriginal = document.getElementById('btnAgregarTexto').textContent;
     btn.disabled = true; btn.innerHTML = '⏳ Guardando…';
+    
     const fd = new FormData();
-    fd.append('nombre', nombre); fd.append('descripcion', document.getElementById('f-descripcion').value.trim());
-    fd.append('precio', precio); fd.append('precio_antes', document.getElementById('f-precio-antes').value || '');
-    fd.append('categoria', categoria); fd.append('unidad', document.getElementById('f-unidad').value.trim());
-    fd.append('badge', document.getElementById('f-badge').value.trim()); fd.append('badge_tipo', document.getElementById('f-badge-tipo').value);
+    if (id) fd.append('id', id);
+    fd.append('nombre', nombre);
+    fd.append('descripcion', document.getElementById('f-descripcion').value.trim());
+    fd.append('precio', precio);
+    fd.append('precio_antes', document.getElementById('f-precio-antes').value || '');
+    fd.append('categoria', categoria);
+    fd.append('unidad', document.getElementById('f-unidad').value.trim());
+    fd.append('badge', document.getElementById('f-badge').value.trim());
+    fd.append('badge_tipo', document.getElementById('f-badge-tipo').value);
+    
     const imgFile = document.getElementById('imagenInput').files[0];
     if (imgFile) fd.append('imagen', imgFile);
+
     fetch(API, { method:'POST', headers:{'Authorization':'Bearer '+token}, body:fd })
         .then(r => r.json())
-        .then(d => { if (d.success) { mostrarToast('Producto agregado ✓'); limpiarFormulario(); cargar(); } else mostrarToast(d.error||'Error al guardar','error'); })
-        .catch(() => mostrarToast('Error de conexión','error'))
-        .finally(() => { btn.disabled=false; btn.innerHTML=`<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Agregar producto`; });
+        .then(d => {
+            if (d.success) {
+                mostrarToast(id ? 'Producto actualizado ✓' : 'Producto agregado ✓');
+                cancelarEdicion();
+                cargar();
+            } else {
+                mostrarToast(d.error || 'Error al guardar', 'error');
+            }
+        })
+        .catch(() => mostrarToast('Error de conexión', 'error'))
+        .finally(() => {
+            btn.disabled = false;
+            btn.innerHTML = `<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> <span id="btnAgregarTexto">${textoOriginal}</span>`;
+        });
 }
 
 function eliminar(id) {
@@ -1254,7 +1797,7 @@ function eliminar(id) {
 }
 
 function limpiarFormulario() {
-    ['f-nombre','f-descripcion','f-precio','f-precio-antes','f-unidad','f-badge'].forEach(id => { document.getElementById(id).value=''; });
+    ['f-id','f-nombre','f-descripcion','f-precio','f-precio-antes','f-unidad','f-badge'].forEach(id => { document.getElementById(id).value=''; });
     document.getElementById('f-categoria').value=''; document.getElementById('f-badge-tipo').value='';
     document.getElementById('imagenInput').value=''; document.getElementById('preview').src='';
     document.getElementById('uploadArea').classList.remove('has-image');
@@ -1892,6 +2435,590 @@ function rptExportarExcel() {
 /* ── Exportar PDF (print) ── */
 function rptExportarPDF() {
     window.print();
+}
+
+// ══════════════════════════════════
+// ── ANUNCIOS & POPUPS ──
+// ══════════════════════════════════
+let todosLosAnuncios = [];
+let intervalCountdownPreview = null;
+
+const BANDERAS_MAP = {
+    co: 'linear-gradient(to bottom, #FCD116 0%, #FCD116 50%, #003893 50%, #003893 75%, #CE1126 75%, #CE1126 100%)',
+    cr: 'linear-gradient(to bottom, #002B7F 0%, #002B7F 20%, #fff 20%, #fff 40%, #CE1126 40%, #CE1126 60%, #fff 60%, #fff 80%, #002B7F 80%, #002B7F 100%)',
+    ar: 'linear-gradient(to bottom, #74ACDF 0%, #74ACDF 33%, #fff 33%, #fff 66%, #74ACDF 66%, #74ACDF 100%)',
+    br: 'linear-gradient(to bottom, #009C3B 0%, #009C3B 100%)',
+    es: 'linear-gradient(to bottom, #AA151B 0%, #AA151B 25%, #F1BF00 25%, #F1BF00 75%, #AA151B 75%, #AA151B 100%)',
+    us: 'linear-gradient(to bottom, #B22234 0%, #B22234 50%, #3C3B6E 50%, #3C3B6E 100%)',
+    mx: 'linear-gradient(to right, #006847 0%, #006847 33%, #fff 33%, #fff 66%, #CE1126 66%, #CE1126 100%)',
+    de: 'linear-gradient(to bottom, #000 0%, #000 33%, #D00 33%, #D00 66%, #FFCE00 66%, #FFCE00 100%)',
+    pe: 'linear-gradient(to right, #D91023 0%, #D91023 33%, #fff 33%, #fff 66%, #D91023 66%, #D91023 100%)',
+    uy: 'linear-gradient(to bottom, #fff 0%, #fff 20%, #0038A8 20%, #0038A8 40%, #fff 40%, #fff 60%, #0038A8 60%, #0038A8 80%, #fff 80%, #fff 100%)',
+    cl: 'linear-gradient(to bottom, #0039A6 0%, #0039A6 50%, #D52B1E 50%, #D52B1E 100%)',
+    ec: 'linear-gradient(to bottom, #FFDD00 0%, #FFDD00 50%, #034EA2 50%, #034EA2 75%, #ED1C24 75%, #ED1C24 100%)'
+};
+
+function cargarAnuncios() {
+    const tbody = document.getElementById('tabla-anuncios');
+    tbody.innerHTML = '<tr class="loading-row"><td colspan="4">Cargando anuncios…</td></tr>';
+    
+    fetch(API_ANU, { headers: { 'Authorization': 'Bearer ' + token } })
+        .then(r => {
+            if (r.status === 401) {
+                localStorage.removeItem('token');
+                location.href = 'login.php';
+                throw new Error('Token expirado');
+            }
+            return r.json();
+        })
+        .then(d => {
+            if (d.success) {
+                todosLosAnuncios = d.anuncios || [];
+                actualizarStatsAnuncios(todosLosAnuncios);
+                renderTablaAnuncios(todosLosAnuncios);
+            } else {
+                mostrarToast('Error al cargar anuncios', 'error');
+                tbody.innerHTML = '<tr class="loading-row"><td colspan="4">No se pudieron cargar los anuncios.</td></tr>';
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            mostrarToast('Error de conexión al cargar anuncios', 'error');
+            tbody.innerHTML = '<tr class="loading-row"><td colspan="4">Error de conexión al cargar anuncios.</td></tr>';
+        });
+}
+
+function actualizarStatsAnuncios(anuncios) {
+    document.getElementById('stat-anu-total').textContent = anuncios.length;
+    const activo = anuncios.find(a => parseInt(a.activo) === 1);
+    if (activo) {
+        document.getElementById('stat-anu-activo').innerHTML = activo.titulo.replace(/<[^>]*>?/gm, ' ');
+        document.getElementById('stat-anu-estado').innerHTML = '<span style="color:#27704a;font-weight:600;">🟢 Activado</span>';
+        document.getElementById('stat-anu-sub').textContent = 'Tipo: ' + (activo.tipo || 'partido');
+    } else {
+        document.getElementById('stat-anu-activo').textContent = 'Ninguno (Pausado)';
+        document.getElementById('stat-anu-estado').innerHTML = '<span style="color:#c0392b;font-weight:600;">🔴 Desactivado</span>';
+        document.getElementById('stat-anu-sub').textContent = 'El popup no se mostrará a los clientes';
+    }
+}
+
+function renderTablaAnuncios(anuncios) {
+    const tbody = document.getElementById('tabla-anuncios');
+    if (!anuncios.length) {
+        tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><p>No hay anuncios creados aún. ¡Crea el primero a la derecha!</p></div></td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = anuncios.map(a => {
+        const ruta = resolverRutaImg(a.imagen) || '../assets/imagenes/tantoooo.png';
+        const isActivo = parseInt(a.activo) === 1;
+        const tipoCls = a.tipo || 'partido';
+        const tipoTexto = a.tipo ? a.tipo.charAt(0).toUpperCase() + a.tipo.slice(1) : 'General';
+        const tituloLimpio = a.titulo.replace(/<[^>]*>?/gm, ' ');
+
+        return `<tr>
+            <td>
+                <div class="anu-info">
+                    <div class="anu-thumb"><img src="${ruta}" alt="" onerror="this.src='../assets/imagenes/tantoooo.png'"></div>
+                    <div>
+                        <div class="anu-title">${tituloLimpio}</div>
+                        <div class="anu-eyebrow">${a.eyebrow || '—'}</div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <span class="anu-badge-tipo ${tipoCls}">${tipoTexto}</span>
+                ${parseInt(a.mostrar_partido) === 1 ? `<div style="font-size:11px;color:var(--text-soft);margin-top:2px;">${a.equipo1_nombre||''} vs ${a.equipo2_nombre||''}</div>` : ''}
+            </td>
+            <td>
+                <label class="switch-wrap" title="${isActivo ? 'Click para pausar' : 'Click para activar'}">
+                    <input type="checkbox" class="switch-input" ${isActivo ? 'checked' : ''} onchange="toggleActivoAnuncio(${a.id}, ${isActivo ? 1 : 0})">
+                    <span class="switch-slider"></span>
+                    <span style="font-size:11.5px;color:${isActivo ? '#27704a' : 'var(--text-soft)'};font-weight:${isActivo ? '600' : '400'};">
+                        ${isActivo ? 'Visible' : 'Pausado'}
+                    </span>
+                </label>
+            </td>
+            <td style="white-space:nowrap;">
+                <button class="btn-preview-popup" onclick="abrirModalPreviewAnuncio(${a.id})" title="Ver vista previa de cómo lo verán los clientes">
+                    👁️ Ver
+                </button>
+                <button class="btn-edit" onclick="editarAnuncio(${a.id})">Editar</button>
+                <button class="btn-delete" onclick="eliminarAnuncio(${a.id})">Eliminar</button>
+            </td>
+        </tr>`;
+    }).join('');
+}
+
+function filtrarAnuncios() {
+    const q = document.getElementById('buscador-anu').value.toLowerCase();
+    const filtrados = todosLosAnuncios.filter(a => {
+        return (a.titulo || '').toLowerCase().includes(q) ||
+               (a.subtitulo || '').toLowerCase().includes(q) ||
+               (a.eyebrow || '').toLowerCase().includes(q) ||
+               (a.tipo || '').toLowerCase().includes(q) ||
+               (a.equipo1_nombre || '').toLowerCase().includes(q) ||
+               (a.equipo2_nombre || '').toLowerCase().includes(q);
+    });
+    renderTablaAnuncios(filtrados);
+}
+
+function toggleActivoAnuncio(id, estadoActual) {
+    const nuevoEstado = estadoActual === 1 ? 0 : 1;
+    fetch(API_ANU + '?action=toggle', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: id, activo: nuevoEstado })
+    })
+    .then(r => r.json())
+    .then(d => {
+        if (d.success) {
+            mostrarToast(d.mensaje || (nuevoEstado ? 'Anuncio activado ✓' : 'Anuncio pausado ✓'));
+            cargarAnuncios();
+        } else {
+            mostrarToast(d.error || 'Error al cambiar estado', 'error');
+            cargarAnuncios();
+        }
+    })
+    .catch(() => {
+        mostrarToast('Error de conexión', 'error');
+        cargarAnuncios();
+    });
+}
+
+function previewAnuImagen(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+        mostrarToast('La imagen no debe superar 5 MB', 'error');
+        e.target.value = '';
+        return;
+    }
+    const reader = new FileReader();
+    reader.onload = ev => {
+        const preview = document.getElementById('anuPreview');
+        preview.src = ev.target.result;
+        preview.style.display = 'block';
+        document.getElementById('anuUploadPrompt').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+}
+
+function cambiarTipoAnuncio(tipo, esManual = false) {
+    const boxPartido = document.getElementById('box-partido');
+    const boxNoPartido = document.getElementById('box-no-partido');
+    const hidPartido = document.getElementById('f-anu-mostrar-partido');
+
+    if (tipo === 'partido') {
+        if (boxPartido) boxPartido.style.display = 'flex';
+        if (boxNoPartido) boxNoPartido.style.display = 'none';
+        if (hidPartido) hidPartido.value = '1';
+
+        if (esManual) {
+            document.getElementById('f-anu-eyebrow').value = 'Transmisión en vivo · Neiva, Huila';
+            document.getElementById('f-anu-badge').value = 'Café Región · Neiva, Huila';
+            document.getElementById('f-anu-f1-ico').value = 'fa-solid fa-tv';
+            document.getElementById('f-anu-f1-txt').value = 'Pantallas<br>4K';
+            document.getElementById('f-anu-f2-ico').value = 'fa-solid fa-users';
+            document.getElementById('f-anu-f2-txt').value = 'Ambiente<br>futbolero';
+            document.getElementById('f-anu-f3-ico').value = 'fa-brands fa-java';
+            document.getElementById('f-anu-f3-txt').value = 'Bebidas<br>premium';
+        }
+    } else {
+        if (boxPartido) boxPartido.style.display = 'none';
+        if (boxNoPartido) boxNoPartido.style.display = 'flex';
+        if (hidPartido) hidPartido.value = '0';
+
+        if (esManual) {
+            if (tipo === 'promo') {
+                document.getElementById('f-anu-eyebrow').value = 'Descuento Especial · Tiempo Limitado';
+                document.getElementById('f-anu-badge').value = 'Tantico Café · Tienda Física & Online';
+                document.getElementById('f-anu-btn-txt').value = 'Ver Catálogo y Pedir';
+                document.getElementById('f-anu-btn-link').value = 'includes/servicios.php';
+                document.getElementById('f-anu-f1-ico').value = 'fa-solid fa-tag';
+                document.getElementById('f-anu-f1-txt').value = 'Descuento<br>Especial';
+                document.getElementById('f-anu-f2-ico').value = 'fa-solid fa-cake-candles';
+                document.getElementById('f-anu-f2-txt').value = 'Repostería<br>& Café';
+                document.getElementById('f-anu-f3-ico').value = 'fa-solid fa-store';
+                document.getElementById('f-anu-f3-txt').value = 'Válido en<br>Tienda';
+            } else if (tipo === 'evento') {
+                document.getElementById('f-anu-eyebrow').value = 'Noche Especial · Experiencia Tantico';
+                document.getElementById('f-anu-badge').value = 'Tantico Café · Neiva, Huila';
+                document.getElementById('f-anu-btn-txt').value = 'Reservar Mesa Ahora';
+                document.getElementById('f-anu-btn-link').value = 'includes/contacto.php';
+                document.getElementById('f-anu-f1-ico').value = 'fa-solid fa-music';
+                document.getElementById('f-anu-f1-txt').value = 'Música en<br>Vivo';
+                document.getElementById('f-anu-f2-ico').value = 'fa-solid fa-martini-glass-citrus';
+                document.getElementById('f-anu-f2-txt').value = 'Coctelería<br>de Café';
+                document.getElementById('f-anu-f3-ico').value = 'fa-solid fa-ticket';
+                document.getElementById('f-anu-f3-txt').value = 'Entrada<br>Libre';
+            } else {
+                document.getElementById('f-anu-eyebrow').value = 'Comunicado Oficial · Novedades';
+                document.getElementById('f-anu-badge').value = 'Tantico Café de Especialidad';
+                document.getElementById('f-anu-btn-txt').value = 'Conocer Más';
+                document.getElementById('f-anu-btn-link').value = 'index.php';
+                document.getElementById('f-anu-f1-ico').value = 'fa-solid fa-mug-hot';
+                document.getElementById('f-anu-f1-txt').value = 'Café de<br>Especialidad';
+                document.getElementById('f-anu-f2-ico').value = 'fa-solid fa-wifi';
+                document.getElementById('f-anu-f2-txt').value = 'Wi-Fi &<br>Coworking';
+                document.getElementById('f-anu-f3-ico').value = 'fa-solid fa-paw';
+                document.getElementById('f-anu-f3-txt').value = 'Pet<br>Friendly';
+            }
+        }
+    }
+}
+
+function editarAnuncio(id) {
+    const a = todosLosAnuncios.find(x => x.id == id);
+    if (!a) return;
+
+    document.getElementById('f-anu-id').value = a.id;
+    document.getElementById('f-anu-titulo').value = a.titulo || '';
+    document.getElementById('f-anu-subtitulo').value = a.subtitulo || '';
+    document.getElementById('f-anu-eyebrow').value = a.eyebrow || '';
+    document.getElementById('f-anu-badge').value = a.badge_texto || '';
+    document.getElementById('f-anu-tipo').value = a.tipo || 'partido';
+    document.getElementById('f-anu-imagen-existente').value = a.imagen || '';
+
+    cambiarTipoAnuncio(a.tipo || 'partido', false);
+
+    document.getElementById('f-anu-fecha-texto').value = a.fecha_evento_texto || '';
+    if (a.fecha_objetivo) {
+        const dt = new Date(a.fecha_objetivo);
+        const pad = n => String(n).padStart(2, '0');
+        const formatted = `${dt.getFullYear()}-${pad(dt.getMonth()+1)}-${pad(dt.getDate())}T${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
+        document.getElementById('f-anu-fecha-objetivo').value = formatted;
+    }
+
+    document.getElementById('f-anu-eq1-nom').value = a.equipo1_nombre || '';
+    document.getElementById('f-anu-eq1-ban').value = a.equipo1_bandera || 'co';
+    document.getElementById('f-anu-eq2-nom').value = a.equipo2_nombre || '';
+    document.getElementById('f-anu-eq2-ban').value = a.equipo2_bandera || 'cr';
+
+    document.getElementById('f-anu-btn-txt').value = a.boton_texto || '';
+    document.getElementById('f-anu-btn-link').value = a.boton_enlace || '';
+
+    document.getElementById('f-anu-f1-ico').value = a.feat1_icono || 'fa-solid fa-tv';
+    document.getElementById('f-anu-f1-txt').value = a.feat1_texto || '';
+    document.getElementById('f-anu-f2-ico').value = a.feat2_icono || 'fa-solid fa-users';
+    document.getElementById('f-anu-f2-txt').value = a.feat2_texto || '';
+    document.getElementById('f-anu-f3-ico').value = a.feat3_icono || 'fa-brands fa-java';
+    document.getElementById('f-anu-f3-txt').value = a.feat3_texto || '';
+
+    document.getElementById('f-anu-activo').checked = parseInt(a.activo) === 1;
+
+    // Preview de imagen
+    const ruta = resolverRutaImg(a.imagen);
+    if (ruta) {
+        const prev = document.getElementById('anuPreview');
+        prev.src = ruta;
+        prev.style.display = 'block';
+        document.getElementById('anuUploadPrompt').style.display = 'none';
+    } else {
+        document.getElementById('anuPreview').style.display = 'none';
+        document.getElementById('anuUploadPrompt').style.display = 'block';
+    }
+
+    document.getElementById('form-anu-title').textContent = 'Editar Anuncio #' + a.id;
+    document.getElementById('btnGuardarAnuncio').textContent = 'Actualizar Anuncio';
+    document.getElementById('btn-cancel-anu-edit').style.display = 'inline-block';
+
+    document.getElementById('form-anu-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function cancelarEdicionAnuncio() {
+    limpiarFormularioAnuncio();
+    document.getElementById('form-anu-title').textContent = 'Crear Anuncio';
+    document.getElementById('btnGuardarAnuncio').textContent = 'Guardar Anuncio';
+    document.getElementById('btn-cancel-anu-edit').style.display = 'none';
+}
+
+function limpiarFormularioAnuncio() {
+    ['f-anu-id', 'f-anu-titulo', 'f-anu-subtitulo', 'f-anu-eyebrow', 'f-anu-badge',
+     'f-anu-fecha-texto', 'f-anu-fecha-objetivo', 'f-anu-eq1-nom', 'f-anu-eq2-nom',
+     'f-anu-btn-txt', 'f-anu-btn-link',
+     'f-anu-f1-txt', 'f-anu-f2-txt', 'f-anu-f3-txt',
+     'f-anu-imagen-existente'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+    });
+
+    document.getElementById('anuImagenInput').value = '';
+    document.getElementById('anuPreview').src = '';
+    document.getElementById('anuPreview').style.display = 'none';
+    document.getElementById('anuUploadPrompt').style.display = 'block';
+    document.getElementById('f-anu-tipo').value = 'partido';
+    cambiarTipoAnuncio('partido', true);
+    document.getElementById('f-anu-activo').checked = true;
+}
+
+function guardarAnuncio() {
+    const id = document.getElementById('f-anu-id').value;
+    const titulo = document.getElementById('f-anu-titulo').value.trim();
+
+    if (!titulo) {
+        mostrarToast('El título del anuncio es obligatorio', 'error');
+        return;
+    }
+
+    const btn = document.getElementById('btnGuardarAnuncio');
+    const textoOriginal = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = '⏳ Guardando…';
+
+    const tipo = document.getElementById('f-anu-tipo').value;
+    const esPartido = tipo === 'partido';
+
+    const fd = new FormData();
+    if (id) fd.append('id', id);
+    fd.append('titulo', titulo);
+    fd.append('subtitulo', document.getElementById('f-anu-subtitulo').value.trim());
+    fd.append('eyebrow', document.getElementById('f-anu-eyebrow').value.trim());
+    fd.append('badge_texto', document.getElementById('f-anu-badge').value.trim());
+    fd.append('tipo', tipo);
+    fd.append('mostrar_partido', esPartido ? 1 : 0);
+    fd.append('fecha_evento_texto', document.getElementById('f-anu-fecha-texto').value.trim());
+    fd.append('fecha_objetivo', document.getElementById('f-anu-fecha-objetivo').value);
+    fd.append('equipo1_nombre', document.getElementById('f-anu-eq1-nom').value.trim());
+    fd.append('equipo1_bandera', document.getElementById('f-anu-eq1-ban').value);
+    fd.append('equipo2_nombre', document.getElementById('f-anu-eq2-nom').value.trim());
+    fd.append('equipo2_bandera', document.getElementById('f-anu-eq2-ban').value);
+    fd.append('boton_texto', document.getElementById('f-anu-btn-txt').value.trim());
+    fd.append('boton_enlace', document.getElementById('f-anu-btn-link').value.trim());
+    fd.append('feat1_icono', document.getElementById('f-anu-f1-ico').value.trim());
+    fd.append('feat1_texto', document.getElementById('f-anu-f1-txt').value.trim());
+    fd.append('feat2_icono', document.getElementById('f-anu-f2-ico').value.trim());
+    fd.append('feat2_texto', document.getElementById('f-anu-f2-txt').value.trim());
+    fd.append('feat3_icono', document.getElementById('f-anu-f3-ico').value.trim());
+    fd.append('feat3_texto', document.getElementById('f-anu-f3-txt').value.trim());
+    fd.append('activo', document.getElementById('f-anu-activo').checked ? 1 : 0);
+
+    const imgExistente = document.getElementById('f-anu-imagen-existente').value;
+    if (imgExistente) fd.append('imagen_existente', imgExistente);
+
+    const imgFile = document.getElementById('anuImagenInput').files[0];
+    if (imgFile) fd.append('imagen', imgFile);
+
+    fetch(API_ANU, {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + token },
+        body: fd
+    })
+    .then(r => r.json())
+    .then(d => {
+        if (d.success) {
+            mostrarToast(id ? 'Anuncio actualizado con éxito ✓' : 'Anuncio creado con éxito ✓');
+            cancelarEdicionAnuncio();
+            cargarAnuncios();
+        } else {
+            mostrarToast(d.error || 'Error al guardar anuncio', 'error');
+        }
+    })
+    .catch(() => {
+        mostrarToast('Error de conexión al guardar anuncio', 'error');
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.textContent = textoOriginal;
+    });
+}
+
+function eliminarAnuncio(id) {
+    if (!confirm('¿Seguro que deseas eliminar este anuncio?')) return;
+
+    fetch(API_ANU + '?action=delete', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: id })
+    })
+    .then(r => r.json())
+    .then(d => {
+        if (d.success) {
+            mostrarToast('Anuncio eliminado ✓');
+            cargarAnuncios();
+        } else {
+            mostrarToast(d.error || 'Error al eliminar', 'error');
+        }
+    })
+    .catch(() => {
+        mostrarToast('Error de conexión', 'error');
+    });
+}
+
+// ── VISTA PREVIA MODAL POPUP EN ADMIN ──
+function probarPreviewFormulario() {
+    const tipo = document.getElementById('f-anu-tipo').value;
+    const esPartido = tipo === 'partido';
+    const anu = {
+        titulo: document.getElementById('f-anu-titulo').value || 'Título del anuncio de prueba',
+        subtitulo: document.getElementById('f-anu-subtitulo').value || 'Subtítulo y descripción del anuncio...',
+        eyebrow: document.getElementById('f-anu-eyebrow').value || 'Transmisión en vivo · Neiva, Huila',
+        badge_texto: document.getElementById('f-anu-badge').value || 'Café Región · Neiva, Huila',
+        imagen: document.getElementById('anuPreview').src || '../assets/imagenes/tantoooo.png',
+        tipo: tipo,
+        mostrar_partido: esPartido ? 1 : 0,
+        fecha_evento_texto: document.getElementById('f-anu-fecha-texto').value || 'Lunes 01 de Junio',
+        fecha_objetivo: document.getElementById('f-anu-fecha-objetivo').value || new Date(Date.now() + 7*86400000).toISOString(),
+        equipo1_nombre: document.getElementById('f-anu-eq1-nom').value || 'Colombia',
+        equipo1_bandera: document.getElementById('f-anu-eq1-ban').value || 'co',
+        equipo2_nombre: document.getElementById('f-anu-eq2-nom').value || 'Costa Rica',
+        equipo2_bandera: document.getElementById('f-anu-eq2-ban').value || 'cr',
+        boton_texto: document.getElementById('f-anu-btn-txt').value,
+        boton_enlace: document.getElementById('f-anu-btn-link').value,
+        feat1_icono: document.getElementById('f-anu-f1-ico').value || 'fa-solid fa-tv',
+        feat1_texto: document.getElementById('f-anu-f1-txt').value || 'Pantallas<br>4K',
+        feat2_icono: document.getElementById('f-anu-f2-ico').value || 'fa-solid fa-users',
+        feat2_texto: document.getElementById('f-anu-f2-txt').value || 'Ambiente<br>futbolero',
+        feat3_icono: document.getElementById('f-anu-f3-ico').value || 'fa-brands fa-java',
+        feat3_texto: document.getElementById('f-anu-f3-txt').value || 'Bebidas<br>premium'
+    };
+    renderPreviewModalContent(anu);
+    document.getElementById('modal-preview-anuncio').classList.add('open');
+}
+
+function abrirModalPreviewAnuncio(id) {
+    const a = todosLosAnuncios.find(x => x.id == id);
+    if (!a) return;
+    renderPreviewModalContent(a);
+    document.getElementById('modal-preview-anuncio').classList.add('open');
+}
+
+function cerrarModalPreviewAnuncio() {
+    document.getElementById('modal-preview-anuncio').classList.remove('open');
+    if (intervalCountdownPreview) {
+        clearInterval(intervalCountdownPreview);
+        intervalCountdownPreview = null;
+    }
+}
+
+function renderPreviewModalContent(anu) {
+    const rutaImg = anu.imagen && anu.imagen.startsWith('data:') ? anu.imagen : resolverRutaImg(anu.imagen || 'assets/imagenes/tantoooo.png');
+    const flag1Bg = BANDERAS_MAP[anu.equipo1_bandera] || BANDERAS_MAP.co;
+    const flag2Bg = BANDERAS_MAP[anu.equipo2_bandera] || BANDERAS_MAP.cr;
+    const tienePartido = parseInt(anu.mostrar_partido) === 1;
+
+    const html = `
+    <div style="background:#28040A;border-radius:22px;overflow:hidden;border:1px solid rgba(212,168,67,0.22);display:flex;position:relative;box-shadow:0 30px 80px rgba(0,0,0,0.8);max-width:680px;width:100%;font-family:'Inter',sans-serif;">
+        <button onclick="cerrarModalPreviewAnuncio()" style="position:absolute;top:12px;right:12px;z-index:20;width:32px;height:32px;border-radius:50%;border:1px solid rgba(252,246,219,0.2);background:rgba(28,4,10,0.7);color:#FAF6EE;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;">✕</button>
+        
+        <div style="flex:1;padding:26px 24px;color:#FAF6EE;display:flex;flex-direction:column;">
+            <div style="height:3px;background:linear-gradient(90deg, #FCD116 0%, #FCD116 50%, #003893 50%, #003893 75%, #CE1126 75%, #CE1126 100%);border-radius:2px;margin-bottom:14px;"></div>
+            
+            <div style="font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:#D4A843;display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+                <span style="width:7px;height:7px;border-radius:50%;background:#2ECC71;box-shadow:0 0 6px #2ECC71;display:inline-block;"></span>
+                ${anu.eyebrow || 'Transmisión en vivo · Neiva, Huila'}
+            </div>
+
+            <div style="font-family:'Goudy Bookletter 1911','Playfair Display',serif;font-size:22px;line-height:1.2;color:#FCF6DB;margin-bottom:8px;">
+                ${anu.titulo || ''}
+            </div>
+
+            <p style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5;margin-bottom:14px;">
+                ${anu.subtitulo || ''}
+            </p>
+
+            <div style="display:flex;border:1px solid rgba(212,168,67,0.2);border-radius:10px;background:rgba(212,168,67,0.04);margin-bottom:14px;">
+                <div style="flex:1;padding:10px 4px;text-align:center;border-right:1px solid rgba(212,168,67,0.15);">
+                    <i class="${anu.feat1_icono||'fa-solid fa-tv'}" style="color:#D4A843;font-size:16px;"></i>
+                    <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:rgba(212,168,67,0.85);margin-top:4px;">${anu.feat1_texto||'Pantallas 4K'}</div>
+                </div>
+                <div style="flex:1;padding:10px 4px;text-align:center;border-right:1px solid rgba(212,168,67,0.15);">
+                    <i class="${anu.feat2_icono||'fa-solid fa-users'}" style="color:#D4A843;font-size:16px;"></i>
+                    <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:rgba(212,168,67,0.85);margin-top:4px;">${anu.feat2_texto||'Ambiente'}</div>
+                </div>
+                <div style="flex:1;padding:10px 4px;text-align:center;">
+                    <i class="${anu.feat3_icono||'fa-brands fa-java'}" style="color:#D4A843;font-size:16px;"></i>
+                    <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:rgba(212,168,67,0.85);margin-top:4px;">${anu.feat3_texto||'Bebidas'}</div>
+                </div>
+            </div>
+
+            ${tienePartido ? `
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(212,168,67,0.18);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;">
+                <div style="font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#D4A843;text-align:center;">
+                    ${anu.fecha_evento_texto || 'Próximo Encuentro'}
+                </div>
+                <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;min-width:60px;">
+                        <div style="width:34px;height:22px;border-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,0.5);background:${flag1Bg};"></div>
+                        <span style="font-size:9.5px;font-weight:700;color:#FCF6DB;text-transform:uppercase;">${anu.equipo1_nombre||'Equipo 1'}</span>
+                    </div>
+                    <span style="font-family:'Playfair Display',serif;font-size:13px;font-weight:900;color:rgba(212,168,67,0.6);">VS</span>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;min-width:60px;">
+                        <div style="width:34px;height:22px;border-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,0.5);background:${flag2Bg};"></div>
+                        <span style="font-size:9.5px;font-weight:700;color:#FCF6DB;text-transform:uppercase;">${anu.equipo2_nombre||'Equipo 2'}</span>
+                    </div>
+                </div>
+                <div style="display:flex;justify-content:center;gap:6px;margin-top:2px;">
+                    <div style="background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.2);border-radius:6px;padding:3px 6px;text-align:center;min-width:38px;">
+                        <div id="prev-dias" style="font-size:16px;font-weight:800;color:#F0C96A;line-height:1;">00</div>
+                        <div style="font-size:7.5px;text-transform:uppercase;color:rgba(252,246,219,0.4);">Días</div>
+                    </div>
+                    <div style="color:rgba(212,168,67,0.4);font-weight:bold;line-height:22px;">:</div>
+                    <div style="background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.2);border-radius:6px;padding:3px 6px;text-align:center;min-width:38px;">
+                        <div id="prev-horas" style="font-size:16px;font-weight:800;color:#F0C96A;line-height:1;">00</div>
+                        <div style="font-size:7.5px;text-transform:uppercase;color:rgba(252,246,219,0.4);">Horas</div>
+                    </div>
+                    <div style="color:rgba(212,168,67,0.4);font-weight:bold;line-height:22px;">:</div>
+                    <div style="background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.2);border-radius:6px;padding:3px 6px;text-align:center;min-width:38px;">
+                        <div id="prev-mins" style="font-size:16px;font-weight:800;color:#F0C96A;line-height:1;">00</div>
+                        <div style="font-size:7.5px;text-transform:uppercase;color:rgba(252,246,219,0.4);">Mins</div>
+                    </div>
+                    <div style="color:rgba(212,168,67,0.4);font-weight:bold;line-height:22px;">:</div>
+                    <div style="background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.2);border-radius:6px;padding:3px 6px;text-align:center;min-width:38px;">
+                        <div id="prev-segs" style="font-size:16px;font-weight:800;color:#F0C96A;line-height:1;">00</div>
+                        <div style="font-size:7.5px;text-transform:uppercase;color:rgba(252,246,219,0.4);">Segs</div>
+                    </div>
+                </div>
+            </div>` : ''}
+
+            ${!tienePartido && anu.boton_texto ? `
+            <div style="margin-top:10px;text-align:center;">
+                <a href="${anu.boton_enlace || '#'}" onclick="event.preventDefault()" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#D4A843 0%,#F0C96A 100%);color:#28040A;font-weight:700;font-size:11.5px;padding:9px 20px;border-radius:25px;text-decoration:none;text-transform:uppercase;letter-spacing:1px;box-shadow:0 4px 15px rgba(212,168,67,0.35);">
+                    <span>${anu.boton_texto}</span>
+                    <i class="fa-solid fa-arrow-right" style="font-size:10px;"></i>
+                </a>
+            </div>` : ''}
+
+            <div style="margin-top:14px;text-align:center;">
+                <span style="display:inline-block;background:rgba(40,4,10,0.7);border:1px solid rgba(212,168,67,0.3);border-radius:20px;padding:4px 12px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(212,168,67,0.9);">
+                    ☕ ${anu.badge_texto || 'Café Región · Neiva, Huila'}
+                </span>
+            </div>
+        </div>
+
+        <div style="width:260px;position:relative;background:#1a0305;flex-shrink:0;">
+            <img src="${rutaImg}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.src='../assets/imagenes/tantoooo.png'">
+            <div style="position:absolute;inset:0;background:linear-gradient(to right, rgba(40,4,10,0.5) 0%, transparent 50%), linear-gradient(to top, rgba(40,4,10,0.7) 0%, transparent 50%);"></div>
+        </div>
+    </div>`;
+
+    document.getElementById('anu-modal-preview-container').innerHTML = html;
+
+    // Countdown loop
+    if (tienePartido && anu.fecha_objetivo) {
+        const targetMs = new Date(anu.fecha_objetivo).getTime();
+        const pad = n => String(n).padStart(2, '0');
+        const updateTick = () => {
+            const diff = Math.max(0, targetMs - Date.now());
+            const dEl = document.getElementById('prev-dias');
+            const hEl = document.getElementById('prev-horas');
+            const mEl = document.getElementById('prev-mins');
+            const sEl = document.getElementById('prev-segs');
+            if (dEl) dEl.textContent = pad(Math.floor(diff / 86400000));
+            if (hEl) hEl.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+            if (mEl) mEl.textContent = pad(Math.floor((diff % 3600000) / 60000));
+            if (sEl) sEl.textContent = pad(Math.floor((diff % 60000) / 1000));
+        };
+        updateTick();
+        if (intervalCountdownPreview) clearInterval(intervalCountdownPreview);
+        intervalCountdownPreview = setInterval(updateTick, 1000);
+    }
 }
 
 </script>

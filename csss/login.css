@@ -73,12 +73,13 @@ body {
 }
 
 .login-box h2 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 28px;
-  font-weight: 600;
+  font-family: 'Goudy Bookletter 1911', 'Playfair Display', Georgia, serif;
+  font-size: 30px;
+  font-weight: 400;
   color: #28040A;
   line-height: 1.2;
   margin-bottom: 6px;
+  letter-spacing: -0.2px;
 }
 
 .login-box h2 em {

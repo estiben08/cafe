@@ -1,183 +1,57 @@
-<!DOCTYPE html>
-<html lang="es">
+<?php
+// Determinar si se incluye desde la raíz (index.php) o desde la carpeta includes/
+$isRoot = !str_contains($_SERVER['PHP_SELF'] ?? '', '/includes/');
+$basePath = $isRoot ? '' : '../';
+$incPath  = $isRoot ? 'includes/' : '';
+?>
+<link rel="stylesheet" href="<?= $basePath ?>css/footer.css">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tantico - Pie de Página</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<footer class="tantico-global-footer">
+    <div class="footer-main-container">
 
-        .footer-wrapper {
-            display: flex;
-            flex-direction: column;
-        }
+        <!-- Logo & Marca -->
+        <div class="footer-brand-wrap">
+            <a href="<?= $basePath ?>index.php">
+                <img src="<?= $basePath ?>assets/imagenes/tantico.png" alt="Tantico Café de Especialidad" class="footer-brand-logo" />
+            </a>
+            <p class="footer-brand-slogan">Café de Especialidad · Origen Huila · Neiva, Colombia</p>
+        </div>
 
-        .footer-coffeecol {
-            background-image: url('assets/imagenes/banner17.jpeg');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 40px 20px;
-            position: relative;
-            overflow: hidden;
-        }
+        <!-- Enlaces de Navegación -->
+        <nav class="footer-links-nav">
+            <a href="<?= $basePath ?>index.php">Inicio</a>
+            <a href="<?= $incPath ?>nosotros.php">Nosotros</a>
+            <a href="<?= $incPath ?>servicios.php">Productos</a>
+            <a href="<?= $incPath ?>contacto.php">Contáctanos</a>
+        </nav>
 
-        .footer-coffeecol::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-color: rgba(13, 43, 2, 0.9);
-            /* superposición oscura */
-            z-index: 0;
-        }
+        <!-- Redes Sociales -->
+        <div class="footer-social-row">
+            <a href="#" class="footer-social-btn" aria-label="Instagram" target="_blank" rel="noopener">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="#" class="footer-social-btn" aria-label="Facebook" target="_blank" rel="noopener">
+                <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="#" class="footer-social-btn" aria-label="WhatsApp" target="_blank" rel="noopener">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            z-index: 1;
-            position: relative;
-            /* ← para que esté encima de la capa oscura */
-        }
+        <div class="footer-divider-line"></div>
 
-        .footer-logo {
-            width: 164px;
-            height: 155px;
-            object-fit: contain;
-        }
-
-        .footer-nav {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 10px 0;
-        }
-
-        .footer-nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .footer-nav a:hover {
-            color: #E8E8E8;
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-        }
-
-
-        .footer-social {
-            display: flex;
-            gap: 0px;
-            margin-top: 5px;
-        }
-
-        .footer-social a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 19px;
-            height: 19px;
-            color: white;
-        }
-
-        .footer-social a,
-        .footer-social a i {
-            text-decoration: none !important;
-            border: none !important;
-            box-shadow: none !important;
-        }
-
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .footer-coffeecol {
-                padding: 30px 15px;
-            }
-
-            .footer-content {
-                gap: 20px;
-            }
-
-            .footer-logo {
-                width: 60px;
-                height: 60px;
-            }
-
-            .footer-company {
-                font-size: 24px;
-            }
-
-            .footer-company span {
-                font-size: 14px;
-            }
-
-            .footer-nav {
-                gap: 25px;
-            }
-
-            .footer-nav a {
-                font-size: 14px;
-            }
-
-            .footer-social {
-                gap: 20px;
-            }
-
-            .footer-social a {
-                width: 36px;
-                height: 36px;
-                font-size: 18px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .footer-nav {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .footer-social {
-                gap: 15px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <div class="footer-wrapper">
-        <footer class="footer-coffeecol">
-            <div class="footer-content">
-                <img src="assets/imagenes/tantico.png" alt="Logo de Tantico" class="footer-logo" />
-
-                <nav class="footer-nav">
-                    <a href="../index.php">Inicio</a>
-                    <a href="includes/nosotros.php">Nosotros</a>
-                    <a href="includes/servicios.php">Productos</a>
-                    <a href="includes/contacto.php">Contáctanos</a>
-                </nav>
-
-                <div class="footer-social">
-                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                </div>
+        <!-- Badges & Copyright -->
+        <div class="footer-bottom-info">
+            <div class="footer-badges-pill-row">
+                <span class="footer-badge-item"><i class="fa-solid fa-mountain"></i> 100% Café Huilense</span>
+                <span class="footer-badge-item"><i class="fa-solid fa-fire-burner"></i> Tueste Artesanal</span>
+                <span class="footer-badge-item"><i class="fa-solid fa-handshake-angle"></i> Trato Directo</span>
+                <span class="footer-badge-item"><i class="fa-solid fa-award"></i> Calidad SCA</span>
             </div>
-        </footer>
-    </div>
-</body>
+            <p class="footer-copyright-text">
+                © <?= date('Y') ?> Tantico Café de Especialidad. Todos los derechos reservados.
+            </p>
+        </div>
 
-</html>
+    </div>
+</footer>

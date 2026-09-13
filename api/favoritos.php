@@ -9,32 +9,19 @@ header('Access-Control-Allow-Headers: Content-Type');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
 
-require 'C:/xampp/htdocs/cafe/vendor/autoload.php';
+require_once __DIR__ . '/../includes/auth_helper.php';
 
-$token = $_COOKIE['fb_token'] ?? '';
-if (!$token) {
+$user = getAuthenticatedUser();
+if (!$user || empty($user['uid'])) {
     http_response_code(401);
-    echo json_encode(['success' => false, 'error' => 'No autenticado']);
+    echo json_encode(['success' => false, 'error' => 'No autenticado o sesión expirada']);
     exit;
 }
 
-try {
-    $firebase = (new Kreait\Firebase\Factory)
-        ->withServiceAccount('C:/xampp/htdocs/cafetantico-firebase-adminsdk-fbsvc-a449960bbb.json');
-    $fbAuth       = $firebase->createAuth();
-    $verified     = $fbAuth->verifyIdToken($token);
-    $firebase_uid = $verified->claims()->get('sub');
-} catch (Exception $e) {
-    http_response_code(401);
-    echo json_encode(['success' => false, 'error' => 'Sesión expirada']);
-    exit;
-}
+$firebase_uid = $user['uid'];
 
 try {
-    $pdo = new PDO('mysql:host=127.0.0.1;dbname=coffeecol;charset=utf8mb4', 'root', '', [
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
+    $pdo = getCafePdo();
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'Error de base de datos']);
