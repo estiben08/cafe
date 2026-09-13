@@ -968,6 +968,24 @@ function mostrarExitoCheckout(btn, pedidoId, data = null) {
     }
     btn.disabled = false;
     btn.innerHTML = '<i class="fas fa-check-circle"></i> Confirmar pedido';
+
+    // Notificar en tiempo real a las pestañas abiertas de Admin y Mi Perfil
+    try {
+        const payload = {
+            type: 'nuevo_pedido',
+            pedido_id: pedidoId,
+            numero_pedido: data?.numero_pedido || (`#TC-${pedidoId}`),
+            puntos_ganados: data?.puntos_ganados || 0,
+            puntos_totales: data?.puntos_totales || null,
+            timestamp: Date.now()
+        };
+        localStorage.setItem('tantico_nuevo_pedido', JSON.stringify(payload));
+        if (data?.puntos_totales !== undefined && data?.puntos_totales !== null) {
+            localStorage.setItem('tantico_puntos_actualizados', JSON.stringify({ puntos: data.puntos_totales, timestamp: Date.now() }));
+        }
+        const bc = new BroadcastChannel('tantico_channel');
+        bc.postMessage(payload);
+    } catch (_) {}
 }
 
 /* ============================================================

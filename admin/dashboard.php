@@ -1688,8 +1688,19 @@ function filtrar() {
 function cargar() {
     fetch(API)
         .then(r => r.json())
-        .then(d => { if (d.success) { todosLosProductos = d.productos; renderTabla(todosLosProductos); actualizarStats(todosLosProductos); } })
-        .catch(() => mostrarToast('Error al cargar productos', 'error'));
+        .then(d => {
+            if (d.success) {
+                todosLosProductos = d.productos || [];
+                renderTabla(todosLosProductos);
+                actualizarStats(todosLosProductos);
+            } else {
+                document.getElementById('tabla').innerHTML = '<tr><td colspan="4"><div class="empty-state"><p>No se pudieron cargar los productos.</p></div></td></tr>';
+            }
+        })
+        .catch(() => {
+            document.getElementById('tabla').innerHTML = '<tr><td colspan="4"><div class="empty-state"><p>Error de conexión al cargar productos.</p></div></td></tr>';
+            mostrarToast('Error al cargar productos', 'error');
+        });
 }
 
 function previewImagen(e) {
@@ -1805,10 +1816,10 @@ function limpiarFormulario() {
 }
 
 // ══════════════════════════════════
-// ── PEDIDOS ──
-// ══════════════════════════════════
 let todosLosPedidos = [];
 let filtroPedidoActivo = 'todos';
+let pedidoAbiertoId = null;
+let pedidosInited = false;
 
 const ESTADO_BADGE = {
     pendiente:  'badge-pendiente',
@@ -1826,8 +1837,29 @@ function estadoBadge(estado) {
     return `<span class="badge ${cls}">${label}</span>`;
 }
 
-function cargarPedidos() {
-    document.getElementById('tabla-pedidos').innerHTML = '<tr class="loading-row"><td colspan="6">Cargando pedidos…</td></tr>';
+function reproducirNotificacionSonora() {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+        osc.frequency.setValueAtTime(880, ctx.currentTime + 0.12); // A5
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.4);
+    } catch (_) {}
+}
+
+function cargarPedidos(silencioso = false) {
+    if (!silencioso && !pedidosInited) {
+        document.getElementById('tabla-pedidos').innerHTML = '<tr class="loading-row"><td colspan="6">Cargando pedidos…</td></tr>';
+    }
     fetch(API_PED, { headers: { 'Authorization': 'Bearer ' + token } })
         .then(r => {
             if (r.status === 401) {
@@ -1839,17 +1871,46 @@ function cargarPedidos() {
         })
         .then(d => {
             if (d.success) {
-                todosLosPedidos = d.pedidos;
-                actualizarStatsPedidos(d.pedidos);
-                renderPedidos(d.pedidos);
-            } else {
+                const previos = todosLosPedidos;
+                const nuevos = d.pedidos || [];
+
+                // Detectar pedidos nuevos si ya estaba inicializado
+                if (pedidosInited && previos.length > 0) {
+                    const idsPrevios = new Set(previos.map(p => p.id));
+                    const nuevosIngresados = nuevos.filter(p => !idsPrevios.has(p.id));
+                    if (nuevosIngresados.length > 0) {
+                        const ult = nuevosIngresados[0];
+                        const cod = ult.numero_pedido || ('#' + ult.id);
+                        mostrarToast(`🔔 ¡Nuevo pedido recibido! ${cod}`, 'success');
+                        reproducirNotificacionSonora();
+                    }
+                }
+
+                todosLosPedidos = nuevos;
+                pedidosInited = true;
+                actualizarStatsPedidos(todosLosPedidos);
+                filtrarPedidos();
+
+                // Si el modal de detalle de un pedido está abierto, actualizar sus datos en vivo
+                if (pedidoAbiertoId) {
+                    const act = todosLosPedidos.find(x => x.id == pedidoAbiertoId);
+                    if (act) {
+                        const selectEl = document.getElementById('modal-estado-select');
+                        if (selectEl && selectEl.value !== act.estado) {
+                            selectEl.value = act.estado;
+                        }
+                    }
+                }
+            } else if (!silencioso) {
                 mostrarToast('Error al cargar pedidos', 'error');
                 document.getElementById('tabla-pedidos').innerHTML = '<tr class="loading-row"><td colspan="6">No se pudieron cargar los pedidos.</td></tr>';
             }
         })
         .catch(() => {
-            mostrarToast('Error de conexión', 'error');
-            document.getElementById('tabla-pedidos').innerHTML = '<tr class="loading-row"><td colspan="6">Error de conexión.</td></tr>';
+            if (!silencioso) {
+                mostrarToast('Error de conexión', 'error');
+                document.getElementById('tabla-pedidos').innerHTML = '<tr class="loading-row"><td colspan="6">Error de conexión.</td></tr>';
+            }
         });
 }
 
@@ -1874,9 +1935,10 @@ function renderPedidos(pedidos) {
     }
     tbody.innerHTML = pedidos.map(p => {
         const nombre = [p.nombre, p.apellido].filter(Boolean).join(' ') || '—';
+        const numPed = p.numero_pedido || ('#' + p.id);
         return `<tr>
             <td>
-                <div class="pedido-id">#${p.id}</div>
+                <div class="pedido-id">${numPed}</div>
                 <div class="pedido-fecha">${formatFecha(p.fecha)}</div>
             </td>
             <td>
@@ -1892,10 +1954,11 @@ function renderPedidos(pedidos) {
 }
 
 function filtrarPedidos() {
-    const q = document.getElementById('buscador-ped').value.toLowerCase();
+    const q = (document.getElementById('buscador-ped')?.value || '').toLowerCase();
     let lista = todosLosPedidos.filter(p => {
         const nombre = [p.nombre, p.apellido].filter(Boolean).join(' ').toLowerCase();
-        return nombre.includes(q) || (p.email||'').toLowerCase().includes(q);
+        const num = (p.numero_pedido || ('#' + p.id)).toLowerCase();
+        return nombre.includes(q) || (p.email||'').toLowerCase().includes(q) || num.includes(q);
     });
     if (filtroPedidoActivo !== 'todos') lista = lista.filter(p => p.estado === filtroPedidoActivo);
     renderPedidos(lista);
@@ -1911,6 +1974,7 @@ function setFiltroPedido(filtro, el) {
 function verPedido(id) {
     const p = todosLosPedidos.find(x => x.id == id);
     if (!p) return;
+    pedidoAbiertoId = id;
     const modal = document.getElementById('modal-pedido');
     const body  = document.getElementById('modal-pedido-body');
 
@@ -1950,10 +2014,10 @@ function verPedido(id) {
     body.innerHTML = `
         <div class="pedido-detalle-header">
             <div>
-                <div class="pedido-detalle-id">Pedido #${p.id}</div>
+                <div class="pedido-detalle-id">Pedido ${p.numero_pedido || ('#' + p.id)}</div>
                 <div class="pedido-detalle-fecha">${formatFecha(p.fecha)}</div>
             </div>
-            ${estadoBadge(p.estado)}
+            <div id="modal-ped-badge-wrap">${estadoBadge(p.estado)}</div>
         </div>
 
         <div class="pedido-info-grid">
@@ -2014,6 +2078,14 @@ function guardarEstado(pedidoId) {
             cerrarModalPedido();
             filtrarPedidos();
             actualizarStatsPedidos(todosLosPedidos);
+
+            // Sincronización instantánea cross-tab y tiempo real
+            try {
+                const payload = { type: 'pedido_actualizado', id: pedidoId, estado: nuevoEstado, timestamp: Date.now() };
+                localStorage.setItem('tantico_pedido_actualizado', JSON.stringify(payload));
+                const bc = new BroadcastChannel('tantico_channel');
+                bc.postMessage(payload);
+            } catch (_) {}
         } else {
             mostrarToast(d.error || 'Error al actualizar', 'error');
         }
@@ -2022,6 +2094,7 @@ function guardarEstado(pedidoId) {
 }
 
 function cerrarModalPedido() {
+    pedidoAbiertoId = null;
     document.getElementById('modal-pedido').classList.remove('open');
 }
 
@@ -2034,21 +2107,27 @@ document.getElementById('modal-pedido').addEventListener('click', function(e) {
 // ══════════════════════════════════
 let todosLosClientes = [];
 let filtroActivo = 'todos';
+let clientesInited = false;
 
-function cargarClientes() {
-    document.getElementById('tabla-clientes').innerHTML = '<tr class="loading-row"><td colspan="8">Cargando clientes…</td></tr>';
+function cargarClientes(silencioso = false) {
+    if (!silencioso && !clientesInited) {
+        document.getElementById('tabla-clientes').innerHTML = '<tr class="loading-row"><td colspan="8">Cargando clientes…</td></tr>';
+    }
     fetch(API_CLI, { headers:{'Authorization':'Bearer '+token} })
         .then(r => r.json())
         .then(d => {
             if (d.success) {
                 todosLosClientes = d.clientes;
+                clientesInited = true;
                 actualizarStatsClientes(d.clientes);
                 renderClientes(d.clientes);
-            } else {
+            } else if (!silencioso) {
                 mostrarToast('Error al cargar clientes', 'error');
             }
         })
-        .catch(() => mostrarToast('Error de conexión', 'error'));
+        .catch(() => {
+            if (!silencioso) mostrarToast('Error de conexión', 'error');
+        });
 }
 
 function actualizarStatsClientes(clientes) {
@@ -2170,6 +2249,35 @@ document.getElementById('modal-cliente').addEventListener('click', function(e) {
 function cerrarSesion() { localStorage.removeItem('token'); location.href = 'login.php'; }
 
 cargar();
+
+// ── Sincronización continua en vivo (sin recargar página) ──
+setInterval(() => {
+    if (token) {
+        cargarPedidos(true);
+        const secCli = document.getElementById('sec-clientes');
+        if (secCli && secCli.classList.contains('activa')) {
+            cargarClientes(true);
+        }
+    }
+}, 2000);
+
+// Escuchar eventos en tiempo real entre pestañas y compras de clientes (latencia cero)
+try {
+    const adminBC = new BroadcastChannel('tantico_channel');
+    adminBC.onmessage = (e) => {
+        if (e.data && (e.data.type === 'nuevo_pedido' || e.data.type === 'pedido_actualizado' || e.data.type === 'puntos_actualizados')) {
+            cargarPedidos(true);
+            cargarClientes(true);
+        }
+    };
+} catch (_) {}
+
+window.addEventListener('storage', (e) => {
+    if (e.key === 'tantico_nuevo_pedido' || e.key === 'tantico_pedido_actualizado' || e.key === 'tantico_puntos_actualizados') {
+        cargarPedidos(true);
+        cargarClientes(true);
+    }
+});
 
 // ══════════════════════════════════
 // ── REPORTES ──

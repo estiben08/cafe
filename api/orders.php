@@ -89,14 +89,74 @@ $method = $_SERVER['REQUEST_METHOD'];
    GET — listar pedidos (admin)
 ════════════════════════════════════════════════ */
 if ($method === 'GET') {
+    // Si viene de la vista del cliente (Mi Perfil)
+    if (isset($_GET['mis_pedidos'])) {
+        $authUser = getAuthenticatedUser();
+        if (!$authUser || empty($authUser['uid'])) {
+            http_response_code(401);
+            echo json_encode(['success' => false, 'error' => 'No autenticado']);
+            exit;
+        }
+
+        $stmtU = $pdo->prepare("SELECT email FROM usuarios WHERE firebase_uid = ? LIMIT 1");
+        $stmtU->execute([$authUser['uid']]);
+        $uEmail = $stmtU->fetchColumn() ?: ($authUser['email'] ?? '');
+
+        $stmt = $pdo->prepare('
+            SELECT id, numero_pedido, nombre, apellido, email, telefono, ciudad, direccion,
+                   total, estado, fecha, firebase_uid
+            FROM pedidos
+            WHERE firebase_uid = ? OR (email = ? AND ? != "")
+            ORDER BY fecha DESC
+        ');
+        $stmt->execute([$authUser['uid'], $uEmail, $uEmail]);
+        $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!$pedidos) {
+            echo json_encode(['success' => true, 'pedidos' => []]);
+            exit;
+        }
+
+        $ids = implode(',', array_map('intval', array_column($pedidos, 'id')));
+        $itemsQuery = $pdo->query("
+            SELECT pi.pedido_id, pi.producto_id, pi.cantidad, pi.precio_unitario,
+                   p.nombre, p.imagen, p.icono, p.descripcion
+            FROM pedido_items pi
+            LEFT JOIN productos p ON p.id = pi.producto_id
+            WHERE pi.pedido_id IN ($ids)
+        ")->fetchAll(PDO::FETCH_ASSOC);
+
+        $itemsPorPedido = [];
+        foreach ($itemsQuery as $item) {
+            $itemsPorPedido[$item['pedido_id']][] = $item;
+        }
+
+        foreach ($pedidos as &$pedido) {
+            $items = $itemsPorPedido[$pedido['id']] ?? [];
+            $pedido['items'] = $items;
+            $resumenParts = [];
+            foreach ($items as $it) {
+                $resumenParts[] = ($it['cantidad'] ?? 1) . 'x ' . ($it['nombre'] ?? 'Café');
+            }
+            $pedido['productos_resumen'] = !empty($resumenParts) ? implode(' + ', $resumenParts) : 'Productos de especialidad Tantico';
+            $pedido['total'] = (float)$pedido['total'];
+            $pedido['id']    = (int)$pedido['id'];
+        }
+        unset($pedido);
+
+        echo json_encode(['success' => true, 'pedidos' => $pedidos]);
+        exit;
+    }
+
+    // Si es para el panel de administración
     verificarAdmin();
 
     $pedidos = $pdo->query('
-        SELECT id, nombre, apellido, email, telefono, ciudad, direccion,
-               total, estado, fecha
+        SELECT id, numero_pedido, nombre, apellido, email, telefono, ciudad, direccion,
+               total, estado, fecha, firebase_uid
         FROM pedidos
         ORDER BY fecha DESC
-    ')->fetchAll();
+    ')->fetchAll(PDO::FETCH_ASSOC);
 
     if (!$pedidos) {
         echo json_encode(['success' => true, 'pedidos' => []]);
@@ -106,11 +166,11 @@ if ($method === 'GET') {
     $ids        = implode(',', array_column($pedidos, 'id'));
     $itemsQuery = $pdo->query("
         SELECT pi.pedido_id, pi.producto_id, pi.cantidad, pi.precio_unitario,
-               p.nombre
+               p.nombre, p.imagen, p.icono
         FROM pedido_items pi
         LEFT JOIN productos p ON p.id = pi.producto_id
         WHERE pi.pedido_id IN ($ids)
-    ")->fetchAll();
+    ")->fetchAll(PDO::FETCH_ASSOC);
 
     $itemsPorPedido = [];
     foreach ($itemsQuery as $item) {
